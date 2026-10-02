@@ -1,0 +1,60 @@
+.slot {
+  position: relative;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--paper-bright);
+  border: 10px solid var(--paper-bright);
+  outline: 1px solid var(--line);
+  box-shadow: 0 18px 30px -22px rgba(42, 29, 21, 0.55);
+  background-image: repeating-linear-gradient(-45deg, transparent 0 10px, rgba(42, 29, 21, 0.035) 10px 11px);
+  transition: rotate 600ms var(--ease-out);
+}
+
+.slot:hover {
+  rotate: 0deg !important;
+}
+
+.tape {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 92px;
+  height: 26px;
+  translate: -50% 0;
+  rotate: 3deg;
+  background: rgba(227, 169, 53, 0.45);
+  clip-path: polygon(3% 0, 97% 6%, 100% 92%, 0 100%);
+}
+
+.sketch {
+  width: 40%;
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.6;
+}
+
+.caption {
+  display: grid;
+  text-align: center;
+  gap: 2px;
+  color: var(--ink-soft);
+}
+
+.meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot {
+    transition: none;
+  }
+}

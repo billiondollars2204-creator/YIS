@@ -1,0 +1,275 @@
+.panel {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  line-height: 1.1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+}
+
+.per {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--ink-soft);
+}
+
+.priceNote {
+  flex-basis: 100%;
+  margin-top: var(--space-1);
+  font: 500 var(--step--1) / 1.4 var(--font-body);
+  color: var(--ink-soft);
+}
+
+.group {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chipPrice {
+  font-size: 0.8em;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.stock {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: var(--step--1);
+  color: var(--cardamom);
+}
+
+.stock[data-stock="low_stock"] {
+  color: var(--saffron);
+}
+.stock[data-stock="out_of_stock"] {
+  color: var(--chilli);
+}
+
+.stockNote {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.stepper button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: var(--paper-bright);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 120ms ease;
+}
+
+.stepper button:hover:not(:disabled) {
+  background: var(--wash-turmeric);
+}
+.stepper button:active:not(:disabled) {
+  transform: scale(0.92);
+}
+.stepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.stepper input {
+  width: 3.5rem;
+  height: 44px;
+  text-align: center;
+  font: 600 var(--step-0) var(--font-body);
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  background: transparent;
+  -moz-appearance: textfield;
+}
+
+.stepper input::-webkit-outer-spin-button,
+.stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.total {
+  margin-left: var(--space-2);
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--ink-soft);
+}
+
+/* Customise — a folded "recipe card" note rather than a boxed widget */
+.custom {
+  position: relative;
+  border-top: 1.5px dashed var(--line);
+  border-bottom: 1.5px dashed var(--line);
+}
+
+.customToggle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0 var(--space-3);
+  padding: var(--space-4) 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.customTitle {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+.customSub {
+  grid-row: 2;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.chev {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg);
+  transition: transform 300ms var(--ease-out);
+}
+
+.customToggle[aria-expanded="true"] .chev {
+  transform: rotate(-135deg);
+}
+
+.customBody {
+  display: grid;
+  gap: var(--space-5);
+  padding-bottom: var(--space-5);
+  animation: unfold 400ms var(--ease-out);
+}
+
+@keyframes unfold {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.gate {
+  padding: var(--space-4);
+  border-radius: 4px 14px 6px 16px;
+  background: var(--wash-saffron);
+  background: color-mix(in srgb, var(--wash-saffron) 55%, var(--paper));
+}
+
+.gate[data-unlocked] {
+  background: color-mix(in srgb, var(--wash-cardamom) 60%, var(--paper));
+}
+
+.gate p {
+  margin: 0;
+}
+
+.gateActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.customFields {
+  display: grid;
+  gap: var(--space-5);
+  transition: opacity 200ms ease;
+}
+
+.customFields:disabled {
+  opacity: 0.55;
+}
+
+.subgroup {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.customNote {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.addBtn {
+  justify-content: space-between;
+  font-size: var(--step-1);
+  min-height: 58px;
+}
+
+.addPrice {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.addedRegion {
+  min-height: 1.5rem;
+}
+
+.added {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  animation: unfold 400ms var(--ease-out);
+}
+
+.tick {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--cardamom);
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .customBody,
+  .added {
+    animation: none;
+  }
+}

@@ -1,0 +1,161 @@
+.section {
+  position: relative;
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+}
+
+.stickyArt {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 1;
+  /* Matches the body paper so text scrolling beneath is hidden without a visible box */
+  background-color: var(--paper);
+  background-image: var(--grain);
+  background-attachment: fixed;
+  padding-block: var(--space-2);
+  mask-image: linear-gradient(to bottom, #000 88%, transparent);
+}
+
+.svg {
+  --p: 1;
+  display: block;
+  width: 100%;
+  max-height: 46vh;
+  margin-inline: auto;
+}
+
+:global(.js) .svg {
+  --p: 0;
+}
+
+.ink {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ink path {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: calc(1 - clamp(0, (var(--p) - var(--s)) / var(--d), 1));
+}
+
+.thin {
+  stroke-width: 1.5;
+}
+
+.bindi {
+  fill: var(--saffron);
+  stroke: none;
+  opacity: clamp(0, (var(--p) - 0.3) * 10, 1);
+}
+
+.washes {
+  opacity: clamp(0, (var(--p) - 0.55) / 0.3, 1);
+}
+
+.arm {
+  transform-box: view-box;
+  transform-origin: 272px 206px;
+  transform: rotate(calc(sin(var(--p) * 36rad) * 3deg));
+}
+
+.steam {
+  transform: translateY(calc((1 - var(--p)) * 12px));
+}
+
+.copy {
+  position: relative;
+  max-width: 34rem;
+}
+
+.title {
+  font-size: var(--step-4);
+  margin-block: var(--space-2) var(--space-6);
+}
+
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-8);
+}
+
+.step {
+  position: relative;
+  padding-left: 3.25rem;
+  min-height: 30vh;
+}
+
+.step h3 {
+  font-size: var(--step-2);
+  margin: 0 0 var(--space-2);
+}
+
+.step p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.num {
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  font-family: var(--font-hand);
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  transition: color 300ms ease, transform 300ms var(--ease-out);
+}
+
+.step[data-active] .num {
+  color: var(--saffron);
+  transform: rotate(-6deg) scale(1.12);
+}
+
+.note {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .section {
+    grid-template-columns: 1.15fr 1fr;
+    align-items: start;
+    gap: var(--space-8);
+  }
+
+  .stickyArt {
+    top: calc(var(--header-h) + 6vh);
+    background: none;
+    mask-image: none;
+  }
+
+  .svg {
+    max-height: 72vh;
+  }
+
+  .step {
+    min-height: 52vh;
+  }
+
+  .copy {
+    padding-top: 12vh;
+    padding-bottom: 20vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arm,
+  .steam {
+    transform: none;
+  }
+  .num {
+    transition: none;
+  }
+}

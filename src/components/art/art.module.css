@@ -1,0 +1,67 @@
+.art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.blob {
+  transform-origin: 50% 50%;
+  transition: transform 700ms var(--ease-out);
+}
+
+.ink {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.thin {
+  stroke-width: 1.4;
+}
+
+.highlight {
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 3;
+}
+
+.icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.squiggle {
+  display: block;
+  width: 100%;
+  height: 0.45em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.edge {
+  display: block;
+  width: 100%;
+  height: clamp(18px, 2.5vw, 36px);
+  margin-bottom: -1px;
+}
+
+.arrow {
+  display: block;
+  width: 64px;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

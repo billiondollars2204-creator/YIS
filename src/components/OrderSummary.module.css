@@ -1,20 +1,6 @@
 .summary {
-  position: relative;
   padding: var(--space-6) var(--space-5);
-  background: var(--paper-bright);
-  border-radius: 6px 18px 8px 22px;
-  box-shadow: 0 18px 30px -24px rgba(42, 29, 21, 0.6);
-}
-
-.summary::before {
-  /* Torn top edge, like a receipt */
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -8px;
-  height: 10px;
-  background: radial-gradient(circle at 6px 10px, var(--paper-bright) 6px, transparent 6.5px) 0 0 / 12px 10px repeat-x;
+  background: var(--paper-deep);
 }
 
 .title {
@@ -23,11 +9,12 @@
 
 .lines {
   list-style: none;
-  padding: 0;
+  padding: 0 0 var(--space-4);
   margin: 0 0 var(--space-4);
   display: grid;
   gap: var(--space-2);
   font-size: var(--step--1);
+  border-bottom: 1px solid var(--line);
 }
 
 .lines li {
@@ -55,9 +42,9 @@
 .total {
   padding-top: var(--space-3);
   margin-top: var(--space-1);
-  border-top: 1.5px dashed var(--line);
-  font-family: var(--font-display);
-  font-size: var(--step-2);
+  border-top: 1px solid var(--ink);
+  font-size: var(--step-1);
+  font-weight: 600;
 }
 
 .muted {

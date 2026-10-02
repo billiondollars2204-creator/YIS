@@ -82,17 +82,21 @@
   align-items: center;
   gap: var(--space-3);
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 100, "WONK" 1;
   font-size: var(--step-2);
   margin-bottom: var(--space-4);
 }
 
 .num {
-  font-family: var(--font-hand);
-  font-weight: 700;
-  font-size: 1.6em;
-  line-height: 1;
-  color: var(--saffron);
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .row2,
@@ -122,8 +126,8 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-4);
-  border: 1.5px solid #8a7564;
-  border-radius: 10px 16px 10px 18px;
+  border: 1px solid var(--field);
+  border-radius: var(--radius);
   background: var(--paper-bright);
   cursor: pointer;
   transition: border-color 160ms ease, background-color 160ms ease;
@@ -135,8 +139,8 @@
 
 .option:has(input:checked) {
   border-color: var(--ink);
-  border-width: 2px;
-  background: color-mix(in srgb, var(--wash-turmeric) 40%, var(--paper-bright));
+  box-shadow: inset 0 0 0 1px var(--ink);
+  background: var(--paper-bright);
 }
 
 .option input {
@@ -164,7 +168,7 @@
   padding: var(--space-4) var(--space-5);
   border-left: 5px solid var(--chilli);
   background: #fbeae4;
-  border-radius: 4px 12px 12px 4px;
+  
 }
 
 .errorSummary:focus-visible {
@@ -205,8 +209,8 @@
 
 .placeholderNote {
   padding: var(--space-3) var(--space-4);
-  border: 1.5px dashed var(--saffron);
-  border-radius: 10px;
+  border-left: 2px solid var(--saffron);
+  background: var(--paper-deep);
   font-size: var(--step--1);
   margin-block: var(--space-5);
 }

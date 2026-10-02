@@ -4,7 +4,7 @@ import { showPlaceholderMarkers } from "@/lib/site";
 export function Placeholder({ children, note = "To be confirmed" }: { children: React.ReactNode; note?: string }) {
   if (!showPlaceholderMarkers) return <>{children}</>;
   return (
-    <span className="ph" title={`Placeholder: ${note}`}>
+    <span title={`Placeholder: ${note}`}>
       {children}
       <span className="ph-tag">
         TBC<span className="visually-hidden"> — placeholder, {note}</span>

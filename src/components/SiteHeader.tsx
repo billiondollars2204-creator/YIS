@@ -3,81 +3,142 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { categories, productsIn } from "@/data/products";
+import { benefits } from "@/data/content";
+import { images } from "@/data/images";
 import { nav, site } from "@/lib/site";
-import { useCart, useHydrated } from "@/lib/cart";
-import { Sprig } from "./art/Marks";
+import { useCart, useCartUI, useHydrated } from "@/lib/cart";
+import { SmartImage } from "./SmartImage";
+import { SearchDialog } from "./SearchDialog";
+import { MobileMenu } from "./MobileMenu";
+import { ArrowRight, BagIcon, ChevronDown, MenuIcon, SearchIcon, UserIcon } from "./icons";
 import styles from "./SiteHeader.module.css";
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [mega, setMega] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const [search, setSearch] = useState(false);
+  const openCart = useCartUI((s) => s.setOpen);
   const hydrated = useHydrated();
   const count = useCart((s) => s.lines.reduce((n, l) => n + l.qty, 0));
-  const shownCount = hydrated ? count : 0;
+  const shown = hydrated ? count : 0;
 
-  // Close the mobile menu on navigation
   const [lastPath, setLastPath] = useState(pathname);
   if (pathname !== lastPath) {
     setLastPath(pathname);
-    setOpen(false);
+    setMega(false);
+    setMenu(false);
+    setSearch(false);
   }
 
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    if (!mega) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMega(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [mega]);
+
+  const closeMega = () => setMega(false);
 
   return (
-    <header className={styles.header} data-open={open || undefined}>
+    <header className={styles.header} onMouseLeave={closeMega}>
       <div className={`wrap ${styles.bar}`}>
-        <Link href="/" className={styles.logo} aria-label={`${site.name} — home`}>
-          <Sprig className={styles.sprig} />
-          <span>
-            Immunity<em>wize</em>
-          </span>
-        </Link>
-
-        <nav aria-label="Main" className={styles.nav} id="main-nav">
-          <ul>
-            {nav.map((item) => {
-              const current = item.href === pathname || (item.href !== "/" && !item.href.includes("#") && pathname.startsWith(item.href));
-              return (
-                <li key={item.href}>
-                  <Link href={item.href} aria-current={current ? "page" : undefined} className={styles.navLink}>
-                    {item.label}
+        <div className={styles.left}>
+          <button type="button" className={`icon-btn ${styles.mobileOnly}`} onClick={() => setMenu(true)} aria-label="Open menu">
+            <MenuIcon />
+          </button>
+          <nav aria-label="Main" className={styles.nav}>
+            <ul>
+              <li>
+                <button
+                  type="button"
+                  className={styles.navLink}
+                  aria-expanded={mega}
+                  aria-controls="mega-menu"
+                  onClick={() => setMega((m) => !m)}
+                  onMouseEnter={() => setMega(true)}
+                >
+                  Shop <ChevronDown className={styles.chev} />
+                </button>
+              </li>
+              {nav.map((n) => (
+                <li key={n.href}>
+                  <Link href={n.href} className={styles.navLink} onMouseEnter={closeMega} aria-current={pathname === n.href ? "page" : undefined}>
+                    {n.label}
                   </Link>
                 </li>
-              );
-            })}
-          </ul>
-        </nav>
+              ))}
+            </ul>
+          </nav>
+        </div>
 
-        <div className={styles.actions}>
-          <Link href="/cart" className={styles.cart} aria-current={pathname === "/cart" ? "page" : undefined}>
-            <svg viewBox="0 0 32 32" aria-hidden="true" className={styles.cartIcon}>
-              <path d="M6 12C6 11 7 10 8 10L24 10C25 10 26 11 26 12L24.5 25C24.3 26.5 23 27.5 21.5 27.5L10.5 27.5C9 27.5 7.7 26.5 7.5 25Z" />
-              <path d="M11.5 13.5L11.5 9C11.5 6.5 13.5 4.5 16 4.5C18.5 4.5 20.5 6.5 20.5 9L20.5 13.5" />
-            </svg>
-            <span className="visually-hidden">Cart, </span>
-            <span className={styles.count} data-empty={shownCount === 0 || undefined} aria-live="polite">
-              {shownCount}
-              <span className="visually-hidden"> {shownCount === 1 ? "item" : "items"}</span>
-            </span>
+        <Link href="/" className={styles.logo} aria-label={`${site.name}, home`}>
+          Immunitywize
+        </Link>
+
+        <div className={styles.right}>
+          <button type="button" className="icon-btn" onClick={() => setSearch(true)} aria-label="Search">
+            <SearchIcon />
+          </button>
+          <Link href="/account" className={`icon-btn ${styles.desktopOnly}`} aria-label="Account">
+            <UserIcon />
           </Link>
-          <button
-            type="button"
-            className={styles.menuBtn}
-            aria-expanded={open}
-            aria-controls="main-nav"
-            onClick={() => setOpen((o) => !o)}
-          >
-            <span className={styles.burger} aria-hidden="true" />
-            <span className="visually-hidden">{open ? "Close menu" : "Open menu"}</span>
+          <button type="button" className="icon-btn" onClick={() => openCart(true)} aria-label={`Cart, ${shown} ${shown === 1 ? "item" : "items"}`}>
+            <BagIcon />
+            {shown > 0 && (
+              <span className={styles.count} aria-hidden="true">
+                {shown}
+              </span>
+            )}
           </button>
         </div>
       </div>
+
+      <div id="mega-menu" className={styles.mega} hidden={!mega}>
+        <div className={`wrap ${styles.megaGrid}`}>
+          <div>
+            <p className={styles.megaLabel}>Categories</p>
+            <ul className={styles.megaList}>
+              <li>
+                <Link href="/shop" onClick={closeMega}>
+                  Shop all
+                </Link>
+              </li>
+              {categories.map((c) => (
+                <li key={c.slug}>
+                  <Link href={`/shop?category=${c.slug}`} onClick={closeMega}>
+                    {c.name}
+                    <span className={styles.megaMeta}>{c.comingSoon ? "Coming soon" : productsIn(c.slug).length}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className={styles.megaLabel}>Shop by need</p>
+            <ul className={styles.megaList}>
+              {benefits.map((b) => (
+                <li key={b.slug}>
+                  <Link href={`/shop?need=${b.slug}`} onClick={closeMega}>
+                    {b.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Link href="/shop?custom=1" className={styles.feature} onClick={closeMega}>
+            <SmartImage image={images.customise} sizes="360px" ratio="16 / 10" decorative />
+            <span className={styles.featureTitle}>Build a custom batch</span>
+            <span className={styles.featureText}>
+              Panjiri and laddus, adjusted to your taste, from 500 g <ArrowRight />
+            </span>
+          </Link>
+        </div>
+      </div>
+
+      <SearchDialog open={search} onClose={() => setSearch(false)} />
+      <MobileMenu open={menu} onClose={() => setMenu(false)} />
     </header>
   );
 }

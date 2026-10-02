@@ -1,10 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#f8f1e4"/>
-  <path d="M760 120C860 60 1080 80 1120 220C1160 360 1060 520 900 540C740 560 640 440 650 320C656 230 690 160 760 120Z" fill="#f4dc9f"/>
-  <g fill="#c98b4e" stroke="#2a1d15" stroke-width="4">
-    <circle cx="830" cy="380" r="58"/><circle cx="950" cy="380" r="58"/><circle cx="890" cy="290" r="56"/>
-  </g>
-  <text x="90" y="290" font-family="Georgia, serif" font-size="88" fill="#2a1d15">Immunitywize</text>
-  <text x="94" y="370" font-family="Georgia, serif" font-style="italic" font-size="40" fill="#6b3e1f">Slow-roasted at home. Shared by the spoonful.</text>
-  <text x="94" y="560" font-family="sans-serif" font-size="22" fill="#5c4636">OPEN GRAPH PLACEHOLDER — replace with a real photograph (1200×630)</text>
+  <rect width="1200" height="630" fill="#fbf8f3"/>
+  <text x="600" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="92" fill="#1e1915">Immunitywize</text>
+  <text x="600" y="370" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="36" fill="#5f564d">Made at home, the slow way.</text>
+  <text x="600" y="580" text-anchor="middle" font-family="sans-serif" font-size="18" letter-spacing="3" fill="#8f8478">PLACEHOLDER — REPLACE WITH public/images/og.jpg</text>
 </svg>

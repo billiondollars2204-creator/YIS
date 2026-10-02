@@ -26,6 +26,12 @@ type CartState = {
 
 export const MAX_QTY = 20;
 
+/** UI state for the slide-out cart drawer. */
+export const useCartUI = create<{ open: boolean; setOpen: (open: boolean) => void }>()((set) => ({
+  open: false,
+  setOpen: (open) => set({ open }),
+}));
+
 export const useCart = create<CartState>()(
   persist(
     (set) => ({

@@ -1,0 +1,49 @@
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--paper-deep);
+  container-type: inline-size;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 0.75rem;
+  background: linear-gradient(165deg, #f1eadf 0%, #e6dccd 100%);
+}
+
+.frame[data-tone="clay"] .placeholder {
+  background: linear-gradient(165deg, #f1e6dc 0%, #e3cfbe 100%);
+}
+
+.frame[data-tone="sage"] .placeholder {
+  background: linear-gradient(165deg, #edede3 0%, #d9dbc9 100%);
+}
+
+.label {
+  max-width: 100%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5f564d;
+  background: rgba(255, 253, 249, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Thumbnails are too small for a readable label. */
+@container (max-width: 140px) {
+  .label {
+    display: none;
+  }
+}

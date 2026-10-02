@@ -1,0 +1,32 @@
+.form {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  gap: var(--space-2);
+  max-width: 24rem;
+}
+
+.ok,
+.err {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+  min-height: 1.4em;
+}
+
+.ok {
+  color: var(--cardamom);
+}
+
+.err {
+  color: var(--chilli);
+}

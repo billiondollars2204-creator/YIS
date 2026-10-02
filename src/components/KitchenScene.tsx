@@ -190,7 +190,7 @@ export function KitchenScene() {
       </div>
 
       <div className={styles.copy}>
-        <p className="eyebrow">From our kitchen</p>
+        <p className="eyebrow">How it’s made</p>
         <h2 id="kitchen-title" className={styles.title}>
           Every jar starts on a slow flame
         </h2>

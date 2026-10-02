@@ -1,0 +1,20 @@
+.wrap {
+  font-size: var(--step--1);
+}
+
+.wrap p {
+  margin: 0 0 0.5rem;
+}
+
+.track {
+  height: 4px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.track span {
+  display: block;
+  height: 100%;
+  background: var(--cardamom);
+  transition: width 500ms var(--ease-out);
+}

@@ -3,11 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCategory, getProduct, isSoldOut, products } from "@/data/products";
 import { benefitTitle } from "@/data/content";
+import { productImages, resolveImage } from "@/data/images";
 import { site } from "@/lib/site";
-import { ProductArt } from "@/components/art/ProductArt";
-import { BenefitIcon } from "@/components/art/Marks";
+import { ProductGallery } from "@/components/ProductGallery";
 import { ProductPurchase } from "@/components/ProductPurchase";
-import { ProductTile } from "@/components/ProductTile";
+import { ProductCard } from "@/components/ProductCard";
+import { SectionHead } from "@/components/SectionHead";
 import { Placeholder } from "@/components/Placeholder";
 import { JsonLd } from "@/components/JsonLd";
 import styles from "./product.module.css";
@@ -24,11 +25,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const p = getProduct(slug);
   if (!p) return {};
+  const img = resolveImage(productImages(p)[0].src);
   return {
     title: p.name,
     description: p.tagline,
     alternates: { canonical: `/shop/${p.slug}` },
-    openGraph: { title: p.name, description: p.tagline, type: "website" },
+    openGraph: { title: p.name, description: p.tagline, type: "website", ...(img ? { images: [img] } : {}) },
   };
 }
 
@@ -37,8 +39,9 @@ export default async function ProductPage({ params }: Params) {
   const product = getProduct(slug);
   if (!product) notFound();
   const category = getCategory(product.category);
+  const imgs = productImages(product);
   const others = products.filter((p) => p.slug !== product.slug && !isSoldOut(p));
-  const related = [...others.filter((p) => p.category === product.category), ...others.filter((p) => p.category !== product.category)].slice(0, 3);
+  const related = [...others.filter((p) => p.category === product.category), ...others.filter((p) => p.category !== product.category)].slice(0, 4);
 
   const productLd = {
     "@context": "https://schema.org",
@@ -47,7 +50,8 @@ export default async function ProductPage({ params }: Params) {
     description: product.description,
     category: category?.name,
     brand: { "@type": "Brand", name: site.name },
-    // PLACEHOLDER: add image URLs, sku/gtin and aggregateRating once available.
+    image: imgs.map((i) => resolveImage(i.src)).filter(Boolean).map((src) => `${site.url}${src}`),
+    // PLACEHOLDER: add sku/gtin and aggregateRating once available.
     offers: product.variants.map((v) => ({
       "@type": "Offer",
       sku: `${product.slug}-${v.id}`,
@@ -63,113 +67,146 @@ export default async function ProductPage({ params }: Params) {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: site.url },
-      { "@type": "ListItem", position: 2, name: "Shop", item: `${site.url}/shop` },
+      { "@type": "ListItem", position: 2, name: category?.name ?? "Shop", item: `${site.url}/shop?category=${product.category}` },
       { "@type": "ListItem", position: 3, name: product.name, item: `${site.url}/shop/${product.slug}` },
     ],
   };
 
   return (
-    <>
-      <div className="wrap">
-        <nav aria-label="Breadcrumb" className={styles.crumbs}>
-          <ol>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href={`/shop#${product.category}`}>{category?.name ?? "Shop"}</Link>
-            </li>
-            <li aria-current="page">{product.name}</li>
-          </ol>
-        </nav>
+    <div className="wrap">
+      <nav aria-label="Breadcrumb" className="crumbs">
+        <ol>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href={`/shop?category=${product.category}`}>{category?.name ?? "Shop"}</Link>
+          </li>
+          <li aria-current="page">{product.name}</li>
+        </ol>
+      </nav>
 
-        <div className={styles.layout}>
-          <div className={styles.gallery}>
-            <div className={styles.mainArt}>
-              <ProductArt kind={product.art} variant={1} title={`Illustration of ${product.name} — product photography placeholder`} />
-            </div>
-            <p className={styles.galleryNote}>Illustration placeholder — product photos go here.</p>
-          </div>
-
-          <div className={styles.info}>
-            <p className="eyebrow">{category?.name}</p>
-            <h1 className={styles.title}>{product.name}</h1>
-            <p className={styles.tagline}>{product.tagline}</p>
-            <ul className={styles.tags} aria-label="Traditionally enjoyed for">
-              {product.enjoyedFor.map((b) => (
-                <li key={b}>
-                  <span className={styles.tagIcon}>
-                    <BenefitIcon slug={b} />
-                  </span>
-                  {benefitTitle[b]}
-                </li>
-              ))}
-            </ul>
-            <ProductPurchase product={product} />
-          </div>
+      <div className={styles.layout}>
+        <div className={styles.gallery}>
+          <ProductGallery images={imgs} name={product.name} />
         </div>
 
-        <div className={styles.details}>
-          <section aria-labelledby="about-title" className={styles.about}>
-            <h2 id="about-title">About this batch</h2>
-            <p>{product.description}</p>
-          </section>
-
-          <section aria-labelledby="ing-title">
-            <h2 id="ing-title">What’s inside</h2>
-            <ul className={styles.ingredients}>
-              {product.ingredients.map((i) => (
-                <li key={i}>{i}</li>
-              ))}
-            </ul>
-            <p className={styles.small}>
-              <Placeholder note="final ingredient list from the kitchen">Full ingredient list and allergen information to be confirmed.</Placeholder>
+        <div className={styles.info}>
+          {(product.badge || product.customizable) && (
+            <p className={styles.badges}>
+              {product.badge && <span className={styles.badge}>{product.badge}</span>}
+              {product.customizable && <span className={styles.badge} data-kind="outline">Customisable from 500 g</span>}
             </p>
-          </section>
+          )}
+          <h1 className={styles.title}>{product.name}</h1>
+          <p className={styles.tagline}>{product.tagline}</p>
+          <p className={styles.enjoyed}>
+            Traditionally enjoyed for {product.enjoyedFor.map((b) => benefitTitle[b].toLowerCase()).join(", ")}
+          </p>
 
-          <section aria-labelledby="nut-title">
-            <h2 id="nut-title">Nutrition</h2>
-            <table className={styles.nutrition}>
-              <caption className="visually-hidden">Nutrition information per 100 g (placeholder values)</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Typical values</th>
-                  <th scope="col">per 100 g</th>
-                </tr>
-              </thead>
-              <tbody>
-                {product.nutrition.map((n) => (
-                  <tr key={n.label}>
-                    <th scope="row">{n.label}</th>
-                    <td>{n.value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p className={styles.small}>
-              <Placeholder note="lab-tested values">Values to be added after lab testing.</Placeholder>
-            </p>
-          </section>
+          <ProductPurchase product={product} />
 
-          <section aria-labelledby="prep-title">
-            <h2 id="prep-title">How it’s made</h2>
-            <p>{product.preparation}</p>
-            <h3 className={styles.subhead}>Keeping it fresh</h3>
-            <p>{product.storage}</p>
-          </section>
-        </div>
+          <ul className={styles.assure}>
+            <li>Cooked by hand in small batches</li>
+            <li>Packed fresh, close to the day it’s made</li>
+            <li>
+              <Placeholder note="confirm serviceable regions">Delivery across India</Placeholder>
+            </li>
+          </ul>
 
-        <section className={styles.related} aria-labelledby="related-title">
-          <h2 id="related-title">You might also like</h2>
-          <div className={styles.relatedGrid}>
-            {related.map((p, i) => (
-              <ProductTile key={p.slug} product={p} index={i + 1} />
-            ))}
+          <div className={styles.details}>
+            <details className="acc" open>
+              <summary>Description</summary>
+              <div className="acc-body">
+                <p>{product.description}</p>
+              </div>
+            </details>
+            <details className="acc">
+              <summary>Ingredients</summary>
+              <div className="acc-body">
+                <ul className={styles.list}>
+                  {product.ingredients.map((i) => (
+                    <li key={i}>{i}</li>
+                  ))}
+                </ul>
+                <p>
+                  <Placeholder note="final ingredient list from the kitchen">Full ingredient and allergen list to be confirmed.</Placeholder>
+                </p>
+              </div>
+            </details>
+            <details className="acc">
+              <summary>Nutrition</summary>
+              <div className="acc-body">
+                <table className={styles.nutrition}>
+                  <caption className="visually-hidden">Typical values per 100 g (placeholder)</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Typical values</th>
+                      <th scope="col">per 100 g</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {product.nutrition.map((n) => (
+                      <tr key={n.label}>
+                        <th scope="row">{n.label}</th>
+                        <td>{n.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p>
+                  <Placeholder note="lab-tested values">Values to be added after lab testing.</Placeholder>
+                </p>
+              </div>
+            </details>
+            <details className="acc">
+              <summary>How it’s made</summary>
+              <div className="acc-body">
+                <p>{product.preparation}</p>
+              </div>
+            </details>
+            <details className="acc">
+              <summary>Storage &amp; shelf life</summary>
+              <div className="acc-body">
+                <p>{product.storage}</p>
+              </div>
+            </details>
+            <details className="acc">
+              <summary>Shipping &amp; returns</summary>
+              <div className="acc-body">
+                <p>
+                  Free standard delivery over ₹999. Damaged or incorrect orders are replaced or refunded.{" "}
+                  <Link href="/shipping-returns" className="link">
+                    Read the full policy
+                  </Link>
+                  .
+                </p>
+              </div>
+            </details>
           </div>
-        </section>
+        </div>
       </div>
+
+      <section className={styles.reviews} aria-labelledby="reviews-title">
+        <SectionHead id="reviews-title" title="Reviews" />
+        <div className={styles.reviewsEmpty}>
+          <p>No reviews yet.</p>
+          <p className={styles.muted}>
+            <Placeholder note="connect a reviews provider">Reviews from verified buyers will appear here.</Placeholder>
+          </p>
+        </div>
+      </section>
+
+      <section className={styles.related} aria-labelledby="related-title">
+        <SectionHead id="related-title" title="You may also like" href="/shop" linkLabel="Shop all" />
+        <div className={styles.relatedGrid}>
+          {related.map((p) => (
+            <ProductCard key={p.slug} product={p} />
+          ))}
+        </div>
+      </section>
       <JsonLd data={productLd} />
       <JsonLd data={breadcrumbLd} />
-    </>
+    </div>
   );
 }

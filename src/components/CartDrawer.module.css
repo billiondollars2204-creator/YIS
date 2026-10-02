@@ -1,0 +1,73 @@
+.inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--step-2);
+}
+
+.count {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--ink-soft);
+}
+
+.ship {
+  padding: var(--space-4) var(--space-5);
+  background: var(--paper-deep);
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-5) 0;
+}
+
+.foot {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+.note {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.viewCart {
+  justify-self: center;
+  font-size: var(--step--1);
+  font-weight: 600;
+  padding: 0.4rem;
+}
+
+.empty {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--ink-soft);
+}

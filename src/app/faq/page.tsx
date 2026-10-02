@@ -32,9 +32,11 @@ export default function FaqPage() {
           <section key={g.group} className={styles.faqGroup} aria-labelledby={`faq-${g.group}`}>
             <h2 id={`faq-${g.group}`}>{g.group}</h2>
             {g.items.map((i) => (
-              <details key={i.q} className={styles.faq}>
+              <details key={i.q} className="acc">
                 <summary>{i.q}</summary>
-                <p>{i.a}</p>
+                <div className="acc-body">
+                  <p>{i.a}</p>
+                </div>
               </details>
             ))}
           </section>

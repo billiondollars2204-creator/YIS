@@ -1,0 +1,40 @@
+.bar {
+  background: var(--jaggery);
+  color: #f4ece1;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.bar p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 2.25rem;
+  margin: 0;
+  text-align: center;
+}
+
+.sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.link {
+  color: #fff;
+  text-underline-offset: 0.2em;
+}
+
+.link:focus-visible {
+  outline-color: #fff;
+}
+
+@media (max-width: 699px) {
+  .sep,
+  .second {
+    display: none;
+  }
+}

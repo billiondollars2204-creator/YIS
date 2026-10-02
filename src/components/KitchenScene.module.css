@@ -2,17 +2,15 @@
   position: relative;
   display: grid;
   gap: var(--space-6);
-  padding-block: var(--space-8);
+  padding-block: var(--space-8) var(--space-6);
 }
 
 .stickyArt {
   position: sticky;
   top: var(--header-h);
   z-index: 1;
-  /* Matches the body paper so text scrolling beneath is hidden without a visible box */
-  background-color: var(--paper);
-  background-image: var(--grain);
-  background-attachment: fixed;
+  /* Same colour as the band so text scrolling beneath is hidden without a visible box */
+  background-color: var(--paper-deep);
   padding-block: var(--space-2);
   mask-image: linear-gradient(to bottom, #000 88%, transparent);
 }
@@ -103,17 +101,18 @@
 .num {
   position: absolute;
   left: 0;
-  top: 0.1em;
-  font-family: var(--font-hand);
-  font-size: 1.9rem;
+  top: 0.45em;
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.1em;
   line-height: 1;
   color: var(--ink-soft);
-  transition: color 300ms ease, transform 300ms var(--ease-out);
+  transition: color 300ms ease;
 }
 
 .step[data-active] .num {
   color: var(--saffron);
-  transform: rotate(-6deg) scale(1.12);
 }
 
 .note {
@@ -141,12 +140,12 @@
   }
 
   .step {
-    min-height: 52vh;
+    min-height: 44vh;
   }
 
   .copy {
-    padding-top: 12vh;
-    padding-bottom: 20vh;
+    padding-top: 10vh;
+    padding-bottom: 14vh;
   }
 }
 

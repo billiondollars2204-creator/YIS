@@ -1,303 +1,238 @@
 import Link from "next/link";
-import { products } from "@/data/products";
-import { benefits } from "@/data/content";
-import { ProductArt } from "@/components/art/ProductArt";
-import { Arrow, BenefitIcon, PaperEdge, Squiggle } from "@/components/art/Marks";
+import { getImageProps } from "next/image";
+import { categories, products, productsIn } from "@/data/products";
+import { benefits, faqs } from "@/data/content";
+import { categoryImage, images, resolveImage } from "@/data/images";
 import { KitchenScene } from "@/components/KitchenScene";
-import { ProductTile } from "@/components/ProductTile";
-import { PhotoSlot } from "@/components/PhotoSlot";
+import { ProductCard } from "@/components/ProductCard";
+import { SectionHead } from "@/components/SectionHead";
+import { SmartImage } from "@/components/SmartImage";
 import { Placeholder } from "@/components/Placeholder";
+import { ArrowRight } from "@/components/icons";
 import styles from "./home.module.css";
 
-const differences = [
-  {
-    title: "Cooked in a home kitchen",
-    body: "Not a factory line. The same kadhai, the same slow flame, a few kilos at a time.",
-  },
-  {
-    title: "Ingredients you can pronounce",
-    body: "Pantry staples you’d recognise from your own kitchen — listed in full on every product.",
-  },
-  {
-    title: "Made to order, not to sit",
-    body: "We cook in small runs so what reaches you is fresh, not months old in a warehouse.",
-  },
+const promises = [
+  { title: "Cooked in a home kitchen", body: "Not a factory line — a few kilos at a time, on a slow flame." },
+  { title: "Ingredients you can read", body: "Every ingredient listed in full on every product page." },
+  { title: "Made in small runs", body: "Packed close to the day it’s cooked, so it reaches you fresh." },
+  { title: "Custom batches from 500 g", body: "Adjust ingredients and sweetness to your family’s taste." },
 ];
 
-const testimonials = [
-  { quote: "Customer review placeholder — a short, specific line about taste or the memory it brought back.", who: "Name, City" },
-  { quote: "Customer review placeholder — something about ordering for a new mother in the family.", who: "Name, City" },
-  { quote: "Customer review placeholder — a line about the kids actually eating it.", who: "Name, City" },
+const reviews = [
+  { quote: "Review placeholder — a short, specific line about the taste of the panjiri.", who: "Customer name", where: "City" },
+  { quote: "Review placeholder — ordering the new-mother panjiri for a sister after her delivery.", who: "Customer name", where: "City" },
+  { quote: "Review placeholder — the kids finishing a jar of laddus in a week.", who: "Customer name", where: "City" },
 ];
+
+function HeroImage() {
+  const desktop = resolveImage(images.hero.src);
+  const mobile = resolveImage(images.heroMobile.src);
+  if (!desktop || !mobile) {
+    return <SmartImage image={images.hero} sizes="100vw" preload className={styles.heroImage} />;
+  }
+  // Art-directed: square crop on phones, wide crop from 700px.
+  const common = { alt: images.hero.alt, sizes: "100vw", preload: true };
+  const { props: { srcSet: wide } } = getImageProps({ ...common, src: desktop, width: 2400, height: 1050 });
+  const { props: { srcSet: square, ...rest } } = getImageProps({ ...common, src: mobile, width: 1200, height: 1200 });
+  return (
+    <div className={styles.heroImage}>
+      <picture>
+        <source media="(min-width: 700px)" srcSet={wide} />
+        <img {...rest} srcSet={square} className={styles.heroPicture} alt={images.hero.alt} />
+      </picture>
+    </div>
+  );
+}
 
 export default function HomePage() {
-  const featured = products.filter((p) => p.featured).slice(0, 4);
+  const bestsellers = products.filter((p) => p.featured).slice(0, 4);
+  const homeFaqs = faqs.flatMap((g) => g.items).slice(0, 4);
 
   return (
     <>
-      {/* 1 — Hero */}
-      <section className={`wrap ${styles.hero}`} aria-labelledby="hero-title">
-        <div className={styles.heroCopy}>
-          <p className="eyebrow">Ghar ka bana, haath se</p>
+      {/* Hero — centred, stacked */}
+      <section className={styles.hero} aria-labelledby="hero-title">
+        <div className={`wrap ${styles.heroText}`}>
+          <p className="eyebrow">Homemade in small batches</p>
           <h1 id="hero-title" className={styles.heroTitle}>
-            Slow-roasted at home.{" "}
-            <em className={styles.underlined}>
-              Shared by the{" "}
-              <span className={styles.squiggleWord}>
-                spoonful.
-                <Squiggle className={styles.heroSquiggle} />
-              </span>
-            </em>
+            Made at home, the slow way.
           </h1>
-          <p className="lede">
-            Panjiri, pinni, dry-fruit laddus and mewa mixes — cooked by hand in small batches from our family’s recipes, with
-            real ingredients and nothing you wouldn’t keep in your own kitchen.
+          <p className={styles.heroSub}>
+            Panjiri, pinni, dry-fruit laddus and mixes — roasted by hand in our family kitchen, with ingredients you’d keep in your own.
           </p>
-          <div className={styles.heroActions}>
-            <Link href="/shop" className="btn">
-              Shop the pantry
+          <div className={styles.heroCtas}>
+            <Link href="/shop" className="btn btn--lg">
+              Shop all products
             </Link>
-            <Link href="#kitchen" className="arrow-link">
-              See how it’s made <span aria-hidden="true">→</span>
+            <Link href="/shop?custom=1" className="btn btn--outline btn--lg">
+              Build a custom batch
             </Link>
           </div>
-          <ul className={styles.assurances} aria-label="Our promises">
-            <li>Small batches</li>
-            <li>
-              <Placeholder note="confirm wording after ingredient review">No preservatives</Placeholder>
-            </li>
-            <li>
-              <Placeholder note="confirm serviceable regions">Ships across India</Placeholder>
-            </li>
-          </ul>
         </div>
-
-        <div className={styles.heroArt} aria-hidden="true">
-          <div className={styles.heroMain}>
-            <ProductArt kind="laddu" variant={1} />
-          </div>
-          <div className={styles.heroSideA}>
-            <ProductArt kind="panjiri" variant={0} />
-          </div>
-          <div className={styles.heroSideB}>
-            <ProductArt kind="pinni" variant={2} />
-          </div>
-          <p className={`${styles.note} ${styles.noteA}`}>
-            rolled one by one
-            <Arrow className={styles.noteArrow} />
-          </p>
-          <p className={`${styles.note} ${styles.noteB}`}>
-            <Arrow className={styles.noteArrowB} flip />
-            roasted till golden
-          </p>
+        <div className={`wrap ${styles.heroMedia}`}>
+          <HeroImage />
         </div>
       </section>
 
-      {/* 2 — Who we are */}
-      <section className={`wrap section ${styles.who}`} aria-labelledby="who-title">
-        <div className={styles.whoPhoto} data-reveal>
-          <PhotoSlot label="Mum at the stove, Sunday morning" tilt={-3} />
-        </div>
-        <div className={styles.whoCopy} data-reveal style={{ "--delay": 120 } as React.CSSProperties}>
-          <p className="eyebrow">Who we are</p>
-          <h2 id="who-title">A family kitchen that started cooking for more than the family</h2>
-          <p className={styles.dropcap}>
-            Immunitywize began the way most good food does — someone asking for the recipe, and then asking if we could just
-            make them a jar instead. Today we cook the panjiri, pinni and laddus we grew up on, the same way, for homes across
-            India.
-          </p>
-          <p>
-            <Placeholder note="replace with the founders’ own story">
-              Founder story placeholder: who cooks, where the recipes come from, and why the brand exists.
-            </Placeholder>
-          </p>
-          <Link href="/our-story" className="arrow-link">
-            Read our story <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* 3 — What makes us different */}
-      <section className="band" aria-labelledby="diff-title">
-        <PaperEdge color="var(--paper-deep)" />
-        <div className={`wrap section ${styles.diff}`}>
-          <div className={styles.diffHead} data-reveal>
-            <p className="eyebrow">Why it’s different</p>
-            <h2 id="diff-title">What you won’t find on a supermarket shelf</h2>
-          </div>
-          <ol className={styles.diffList}>
-            {differences.map((d, i) => (
-              <li key={d.title} data-reveal style={{ "--delay": i * 120 } as React.CSSProperties}>
-                <span className={styles.diffNum} aria-hidden="true">
-                  {i + 1}
-                </span>
-                <h3>{d.title}</h3>
-                <p>{d.body}</p>
+      {/* Categories */}
+      <section className="wrap section" aria-labelledby="cats-title">
+        <SectionHead id="cats-title" title="Shop by category" href="/shop" linkLabel="Shop all" />
+        <ul className={styles.cats}>
+          {categories.map((c) => {
+            const count = productsIn(c.slug).length;
+            return (
+              <li key={c.slug}>
+                <Link href={`/shop?category=${c.slug}`} className={styles.cat}>
+                  <SmartImage image={categoryImage(c.slug, c.name)} sizes="(min-width: 1000px) 18vw, 42vw" ratio="4 / 5" decorative />
+                  <span className={styles.catName}>{c.name}</span>
+                  <span className={styles.catMeta}>{c.comingSoon ? "Coming soon" : `${count} ${count === 1 ? "product" : "products"}`}</span>
+                </Link>
               </li>
-            ))}
-          </ol>
-        </div>
-        <PaperEdge color="var(--paper)" />
+            );
+          })}
+        </ul>
       </section>
 
-      {/* 4 — Scroll-driven kitchen story */}
-      <div className="wrap">
-        <KitchenScene />
+      {/* Bestsellers */}
+      <section className="wrap" aria-labelledby="best-title">
+        <SectionHead id="best-title" title="Bestsellers" href="/shop" />
+        <div className={styles.grid}>
+          {bestsellers.map((p) => (
+            <ProductCard key={p.slug} product={p} />
+          ))}
+        </div>
+      </section>
+
+      {/* Promises */}
+      <section className="wrap section" aria-label="Why Immunitywize">
+        <ul className={styles.promises}>
+          {promises.map((p) => (
+            <li key={p.title}>
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Kitchen story (scroll-drawn) */}
+      <div className="band">
+        <div className="wrap">
+          <KitchenScene />
+        </div>
       </div>
 
-      {/* 5 — Benefits */}
-      <section className={`section ${styles.benefits}`} aria-labelledby="benefits-title">
-        <div className="wrap">
-          <div className={styles.benefitsHead} data-reveal>
-            <p className="eyebrow">Made with intention</p>
-            <h2 id="benefits-title">Foods our grandmothers made for a reason</h2>
-            <p className="lede">
-              Each recipe comes from a tradition of cooking for the people you love — through winters, new babies, exams and
-              long days.
-            </p>
-          </div>
-          <ul className={styles.benefitList}>
-            {benefits.map((b, i) => (
-              <li key={b.slug} data-reveal style={{ "--delay": i * 90 } as React.CSSProperties}>
-                <span className={styles.benefitIcon}>
-                  <BenefitIcon slug={b.slug} />
-                </span>
-                <h3>{b.title}</h3>
-                <p>{b.line}</p>
+      {/* Shop by need */}
+      <section className={`wrap section ${styles.need}`} aria-labelledby="need-title">
+        <SmartImage image={images.ingredients} sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" className={styles.needImage} />
+        <div>
+          <p className="eyebrow">Shop by need</p>
+          <h2 id="need-title" className={styles.needTitle}>
+            Recipes made for a reason
+          </h2>
+          <p className={styles.needIntro}>Each recipe comes from a tradition of cooking for family — through winters, new babies, exams and long days.</p>
+          <ul className={styles.needList}>
+            {benefits.map((b) => (
+              <li key={b.slug}>
+                <Link href={`/shop?need=${b.slug}`}>
+                  <span>
+                    <span className={styles.needName}>{b.title}</span>
+                    <span className={styles.needLine}>{b.line}</span>
+                  </span>
+                  <ArrowRight className={styles.needArrow} />
+                </Link>
               </li>
             ))}
           </ul>
           <p className={styles.disclaimer}>
-            <Placeholder note="regulatory review of all benefit copy">
-              These describe how such foods are traditionally enjoyed. They are not medical claims and not a substitute for
-              advice from your doctor.
+            <Placeholder note="regulatory review of benefit copy">
+              Describes traditional use, not medical claims. Please ask your doctor about diet during pregnancy, postpartum or illness.
             </Placeholder>
           </p>
         </div>
       </section>
 
-      {/* 6 — Featured products */}
-      <section className="wrap section" aria-labelledby="featured-title">
-        <div className={styles.featuredHead}>
-          <div data-reveal>
-            <p className="eyebrow">From the pantry</p>
-            <h2 id="featured-title">Start with a favourite</h2>
-          </div>
-          <Link href="/shop" className="arrow-link">
-            See everything <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-        <div className={styles.featuredGrid}>
-          {featured.map((p, i) => (
-            <ProductTile key={p.slug} product={p} index={i} />
-          ))}
-        </div>
-      </section>
-
-      {/* 7 — Customise teaser */}
-      <section className={`wrap ${styles.customise}`} aria-labelledby="custom-title">
-        <div className={styles.customiseInner} data-reveal>
-          <div className={styles.customiseArt} aria-hidden="true">
-            <ProductArt kind="panjiri" variant={2} />
-          </div>
-          <div>
-            <p className="eyebrow">Make it yours</p>
-            <h2 id="custom-title">Less sweet? No nuts? Extra for Nani?</h2>
-            <p>
-              Panjiri and laddus can be cooked to your taste. Add or leave out ingredients and choose your sweetness — we’ll
-              make a batch just for you.
-            </p>
-            <p className={styles.rule}>
-              <strong>Custom batches start at 500 g</strong> — smaller amounts don’t roast evenly, so we keep them to our
-              standard recipe.
-            </p>
-            <Link href="/shop/classic-panjiri" className="btn">
-              Customise a panjiri
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 8 — Promise: homemade, real ingredients, quality */}
-      <section id="promise" className="band" aria-labelledby="promise-title">
-        <PaperEdge color="var(--paper-deep)" />
-        <div className={`wrap section ${styles.promise}`}>
-          <div className={styles.promiseHead} data-reveal>
-            <p className="eyebrow">Our promise</p>
-            <h2 id="promise-title">What goes in, and what never does</h2>
-            <p>
-              Everything is prepared by hand in our home kitchen. We list every ingredient on the pack, and we don’t add
-              anything we wouldn’t give our own family.
-            </p>
-          </div>
-          <div className={styles.lists}>
-            <div data-reveal>
-              <h3 className={styles.listTitle}>Always</h3>
-              <ul className={styles.yes}>
-                <li>Whole, recognisable pantry ingredients</li>
-                <li>Roasted slowly by hand, in small batches</li>
-                <li>Full ingredient list on every product</li>
-                <li>Packed fresh, close to the day it’s made</li>
-              </ul>
-            </div>
-            <div data-reveal style={{ "--delay": 120 } as React.CSSProperties}>
-              <h3 className={styles.listTitle}>Never</h3>
-              <ul className={styles.no}>
-                <li>
-                  <Placeholder note="confirm with ingredient & lab review">Artificial preservatives</Placeholder>
-                </li>
-                <li>
-                  <Placeholder note="confirm with ingredient review">Artificial colours or flavours</Placeholder>
-                </li>
-                <li>
-                  <Placeholder note="confirm with ingredient review">Refined-sugar syrups or fillers</Placeholder>
-                </li>
-              </ul>
+      {/* Customise */}
+      <section className="band" aria-labelledby="custom-title">
+        <div className={`wrap section ${styles.custom}`}>
+          <div className={styles.customText}>
+            <p className="eyebrow">Made to order</p>
+            <h2 id="custom-title">Your family’s recipe, from 500 g</h2>
+            <p>Panjiri and laddus can be cooked to your taste. We make each custom order as its own batch.</p>
+            <ul className={styles.ticks}>
+              <li>Add more of what you love, or leave things out</li>
+              <li>Choose a lighter sweetness</li>
+              <li>Leave a note for the kitchen</li>
+            </ul>
+            <div className={styles.customCtas}>
+              <Link href="/shop/classic-panjiri" className="btn">
+                Customise panjiri
+              </Link>
+              <Link href="/shop/dry-fruit-laddu" className="btn btn--outline">
+                Customise laddus
+              </Link>
             </div>
           </div>
-          <div className={styles.stamps} aria-label="Certifications and quality assurances (placeholders)" role="list">
-            {["FSSAI licence", "Lab-tested batches", "Hygiene audit", "Your badge here"].map((s, i) => (
-              <div key={s} className={styles.stamp} role="listitem" style={{ rotate: `${[-6, 4, -3, 7][i]}deg` }}>
-                <span className={styles.stampTitle}>{s}</span>
-                <span className={styles.stampSub}>placeholder</span>
-              </div>
-            ))}
-          </div>
+          <SmartImage image={images.customise} sizes="(min-width: 900px) 50vw, 100vw" ratio="5 / 4" />
         </div>
-        <PaperEdge color="var(--paper)" />
       </section>
 
-      {/* 9 — Social proof */}
-      <section className="wrap section" aria-labelledby="love-title">
-        <div data-reveal>
-          <p className="eyebrow">Notes from your kitchens</p>
-          <h2 id="love-title">Kind words, kept on the fridge</h2>
-        </div>
-        <ul className={styles.notes}>
-          {testimonials.map((t, i) => (
-            <li key={i} className={styles.noteCard} data-reveal style={{ "--delay": i * 120, rotate: `${[-2, 1.5, -1][i]}deg` } as React.CSSProperties}>
+      {/* Reviews */}
+      <section className="wrap section" aria-labelledby="reviews-title">
+        <SectionHead id="reviews-title" title="Kind words" eyebrow="From our customers" />
+        <ul className={styles.reviews}>
+          {reviews.map((r, i) => (
+            <li key={i}>
               <blockquote>
-                <p>“{t.quote}”</p>
+                <p>“{r.quote}”</p>
               </blockquote>
-              <p className={styles.noteWho}>— {t.who}</p>
+              <p className={styles.reviewer}>
+                {r.who} <span>· {r.where}</span>
+              </p>
             </li>
           ))}
         </ul>
-        <p className={styles.proofMeta}>
-          <Placeholder note="connect a reviews provider or add verified reviews">
-            Ratings and press mentions will appear here.
-          </Placeholder>
+        <p className={styles.reviewNote}>
+          <Placeholder note="connect a reviews provider">Verified reviews will appear here.</Placeholder>
         </p>
       </section>
 
-      {/* 10 — Closing */}
-      <section className={`wrap ${styles.closing}`} aria-labelledby="closing-title">
-        <h2 id="closing-title" data-reveal>
-          Something warm for the jar on your counter.
-        </h2>
-        <Link href="/shop" className="btn" data-reveal>
-          Browse the pantry
-        </Link>
+      {/* Story teaser */}
+      <section className={`wrap ${styles.story}`} aria-labelledby="story-title">
+        <SmartImage image={images.story} sizes="(min-width: 900px) 50vw, 100vw" ratio="4 / 3" />
+        <div className={styles.storyText}>
+          <p className="eyebrow">Our story</p>
+          <h2 id="story-title">From one family kitchen to yours</h2>
+          <p>
+            It began with friends asking for the recipe, then asking if we could just make them a jar. Today we cook the panjiri, pinni and laddus we grew up
+            on — the same way — for homes across India.
+          </p>
+          <Link href="/our-story" className="arrow-link">
+            Read our story <ArrowRight />
+          </Link>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className={`wrap section ${styles.faq}`} aria-labelledby="faq-title">
+        <div>
+          <h2 id="faq-title" className={styles.faqTitle}>
+            Questions, answered
+          </h2>
+          <Link href="/faq" className="arrow-link">
+            All FAQs <ArrowRight />
+          </Link>
+        </div>
+        <div>
+          {homeFaqs.map((f) => (
+            <details key={f.q} className="acc">
+              <summary>{f.q}</summary>
+              <div className="acc-body">
+                <p>{f.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
       </section>
     </>
   );

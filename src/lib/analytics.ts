@@ -6,6 +6,8 @@
 export type AnalyticsEvent =
   | "page_view"
   | "view_item"
+  | "view_item_list"
+  | "search"
   | "select_variant"
   | "customize_change"
   | "add_to_cart"

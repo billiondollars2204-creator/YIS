@@ -4,7 +4,6 @@
  * only. Every field marked TODO must be confirmed by the Immunitywize kitchen
  * before launch. Do not add health claims here without review.
  */
-export type ArtKind = "panjiri" | "pinni" | "laddu" | "mix" | "gift";
 export type StockStatus = "in_stock" | "low_stock" | "out_of_stock";
 export type BenefitSlug = "immunity" | "wellness" | "postpartum" | "bone" | "clarity";
 
@@ -31,8 +30,11 @@ export type Product = {
   slug: string;
   name: string;
   category: string;
-  art: ArtKind;
+  /** One-line descriptor shown on product cards. */
+  short: string;
   tagline: string;
+  /** PLACEHOLDER merchandising badge. */
+  badge?: "Bestseller" | "New" | "Limited";
   description: string;
   /** Traditional-use tags; copy shown with a "not medical advice" note. */
   enjoyedFor: BenefitSlug[];
@@ -126,7 +128,8 @@ export const products: Product[] = [
     slug: "classic-panjiri",
     name: "Ghar ki Panjiri",
     category: "panjiri",
-    art: "panjiri",
+    short: "Roasted wholewheat crumble",
+    badge: "Bestseller",
     tagline: "The everyday one. Roasted slowly until the kitchen smells right.",
     description:
       "Wholewheat flour roasted low and slow, folded with nuts and a gentle sweetness. Eat a spoonful with your morning chai, or stir into warm milk on cold evenings. (Placeholder description — refine with the family’s own words.)",
@@ -145,7 +148,7 @@ export const products: Product[] = [
     slug: "mothers-panjiri",
     name: "Panjiri for New Mothers",
     category: "panjiri",
-    art: "panjiri",
+    short: "A richer panjiri for new mothers",
     tagline: "Made the way families have long made it for the weeks after a baby arrives.",
     description:
       "A richer panjiri in the tradition of post-delivery foods across North India. Always check with your doctor about diet after childbirth. (Placeholder — all copy and ingredients to be reviewed.)",
@@ -163,7 +166,8 @@ export const products: Product[] = [
     slug: "atta-pinni",
     name: "Atta Pinni",
     category: "pinni",
-    art: "pinni",
+    short: "Hand-pressed winter sweet",
+    badge: "Bestseller",
     tagline: "Pressed in the palm, still warm. Dense, nutty, a little crumbly.",
     description:
       "Roasted flour and ghee pressed into rounds by hand — a winter staple in Punjabi homes. (Placeholder description.)",
@@ -179,7 +183,8 @@ export const products: Product[] = [
     slug: "dry-fruit-laddu",
     name: "Dry-Fruit Laddu",
     category: "laddus",
-    art: "laddu",
+    short: "Fruit and nuts, rolled by hand",
+    badge: "Bestseller",
     tagline: "A little round of something sweet, made without shortcuts.",
     description:
       "Dried fruit and nuts bound together and rolled by hand into small rounds — a sweet that doesn’t feel like a compromise. (Placeholder description.)",
@@ -197,7 +202,8 @@ export const products: Product[] = [
     slug: "seasonal-laddu",
     name: "Seasonal Laddu",
     category: "laddus",
-    art: "laddu",
+    short: "Small seasonal runs",
+    badge: "Limited",
     tagline: "Whatever the season brings in. Small runs, gone quickly.",
     description: "A rotating laddu made with seasonal ingredients. (Placeholder product — recipe and name TBC.)",
     enjoyedFor: ["wellness"],
@@ -213,7 +219,7 @@ export const products: Product[] = [
     slug: "everyday-mix",
     name: "Everyday Mewa Mix",
     category: "mixes",
-    art: "mix",
+    short: "Lightly roasted nuts, seeds and fruit",
     tagline: "A handful for the afternoon slump.",
     description:
       "Lightly roasted nuts, seeds and dried fruit, mixed for snacking between meals. (Placeholder description — exact mix TBC.)",
@@ -229,7 +235,8 @@ export const products: Product[] = [
     slug: "study-table-mix",
     name: "Study-Table Mix",
     category: "mixes",
-    art: "mix",
+    short: "A crunchier mix for desk snacking",
+    badge: "New",
     tagline: "For exam season, long shifts, and late nights.",
     description: "A crunchier mix built for desk snacking. (Placeholder product — composition TBC.)",
     enjoyedFor: ["clarity"],

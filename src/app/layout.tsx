@@ -1,21 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Fraunces, Instrument_Sans } from "next/font/google";
+import { Cormorant_Garamond, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { RevealController } from "@/components/RevealController";
+import { CartDrawer } from "@/components/CartDrawer";
 import { Analytics } from "@/components/Analytics";
 import { JsonLd } from "@/components/JsonLd";
+import { resolveImage } from "@/data/images";
 import { site } from "@/lib/site";
 
-const fraunces = Fraunces({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  axes: ["SOFT", "WONK", "opsz"],
-  variable: "--font-fraunces",
+  weight: ["500", "600"],
+  variable: "--font-cormorant",
   display: "swap",
 });
-const instrument = Instrument_Sans({ subsets: ["latin"], variable: "--font-instrument", display: "swap" });
-const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat", display: "swap", weight: ["500", "700"] });
+const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
+
+const ogImage = resolveImage("/images/og") ?? "/og-placeholder.svg";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -28,14 +31,14 @@ export const metadata: Metadata = {
     locale: site.locale,
     title: `${site.name} — Homemade panjiri, pinni & laddus`,
     description: site.description,
-    images: [{ url: "/og-placeholder.svg", width: 1200, height: 630, alt: "Immunitywize" }],
+    images: [{ url: ogImage, width: 1200, height: 630, alt: site.name }],
   },
   twitter: { card: "summary_large_image" },
   icons: { icon: "/favicon.svg" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f8f1e4",
+  themeColor: "#fbf8f3",
   width: "device-width",
   initialScale: 1,
 };
@@ -52,21 +55,22 @@ const organizationLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${fraunces.variable} ${instrument.variable} ${caveat.variable}`} suppressHydrationWarning>
+    <html lang="en-IN" className={`${cormorant.variable} ${hanken.variable}`} suppressHydrationWarning>
       <head>
-        {/* Marks JS as available before paint so reveal/scroll animations never hide content without JS. */}
+        {/* Lets scroll-driven art start undrawn only when JS can animate it. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body>
         <a className="skip-link" href="#main">
           Skip to content
         </a>
+        <AnnouncementBar />
         <SiteHeader />
         <main id="main" tabIndex={-1}>
           {children}
         </main>
         <SiteFooter />
-        <RevealController />
+        <CartDrawer />
         <Analytics />
         <JsonLd data={organizationLd} />
       </body>

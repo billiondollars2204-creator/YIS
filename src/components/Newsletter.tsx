@@ -31,8 +31,8 @@ export function Newsletter() {
 
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
-      <label htmlFor={`${id}-email`} className={styles.label}>
-        Letters from the kitchen — new batches, seasonal specials. Once a month at most.
+      <label htmlFor={`${id}-email`} className="visually-hidden">
+        Email address
       </label>
       <div className={styles.row}>
         <input
@@ -40,13 +40,13 @@ export function Newsletter() {
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="you@example.com"
+          placeholder="Your email address"
           className={styles.input}
           aria-invalid={state === "error" || undefined}
           aria-describedby={state === "error" ? `${id}-err` : undefined}
         />
         <button type="submit" className={styles.btn}>
-          Sign up
+          Subscribe
         </button>
       </div>
       {state === "error" && (

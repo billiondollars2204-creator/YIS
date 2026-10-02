@@ -1,47 +1,70 @@
 .footer {
   margin-top: var(--space-9);
-  color: #f6ead6;
+  background: var(--ink);
+  color: #d9cfc2;
+  font-size: var(--step--1);
 }
 
-.inner {
-  background: var(--jaggery-deep);
-  padding-block: var(--space-8) var(--space-6);
+.footer a {
+  color: #f4ece1;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.footer :focus-visible {
+  outline-color: #fff;
+}
+
+.newsletter {
+  display: grid;
+  gap: var(--space-5);
+  align-items: end;
+  padding-block: var(--space-8) var(--space-7);
+  border-bottom: 1px solid rgba(244, 236, 225, 0.14);
+}
+
+.nlTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-3);
+  color: #fff;
+}
+
+.nlText {
+  margin: 0;
+  max-width: 42ch;
 }
 
 .grid {
   display: grid;
-  gap: var(--space-7) var(--space-6);
   grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+  padding-block: var(--space-7);
 }
 
 .brand {
   grid-column: 1 / -1;
 }
 
-.signoff {
+.logo {
   font-family: var(--font-display);
-  font-variation-settings: "SOFT" 100, "WONK" 1;
-  font-size: var(--step-3);
-  line-height: 1.15;
-  max-width: 18ch;
-  margin-bottom: var(--space-6);
-}
-
-.sprig {
-  display: inline-block;
-  width: 2.2rem;
-  height: 2.2rem;
-  color: var(--wash-cardamom);
-  vertical-align: -0.2em;
-  margin-right: 0.3rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: var(--space-2);
 }
 
 .colTitle {
-  font-family: var(--font-hand);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--wash-turmeric);
-  margin-bottom: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b8ab9c;
 }
 
 .col ul {
@@ -49,36 +72,23 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--space-1);
+  gap: 0.35rem;
 }
 
 .col a {
   display: inline-block;
-  padding-block: 0.3rem;
-  text-decoration: none;
-  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
-  transition: background-size 300ms var(--ease-out);
-}
-
-.col a:hover {
-  background-size: 100% 1px;
-}
-
-.col a:focus-visible,
-.footer :focus-visible {
-  outline-color: var(--wash-turmeric);
+  padding-block: 0.2rem;
 }
 
 .base {
-  margin-top: var(--space-8);
-  padding-top: var(--space-4);
-  border-top: 1px dashed rgba(246, 234, 214, 0.35);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--space-2) var(--space-6);
-  font-size: var(--step--1);
-  color: #e6d5bb;
+  padding-block: var(--space-5) var(--space-6);
+  border-top: 1px solid rgba(244, 236, 225, 0.14);
+  color: #b8ab9c;
+  font-size: var(--step--2);
 }
 
 .base p {
@@ -86,6 +96,9 @@
 }
 
 @media (min-width: 900px) {
+  .newsletter {
+    grid-template-columns: 1fr 1fr;
+  }
   .grid {
     grid-template-columns: 2fr 1fr 1fr 1fr;
   }

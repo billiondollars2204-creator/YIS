@@ -1,6 +1,6 @@
 # Immunitywize — storefront
 
-A warm, hand-made feeling e-commerce site for **Immunitywize**, a homegrown Indian healthy-snacking brand (panjiri, pinni,
+A clean, premium e-commerce site for **Immunitywize**, a homegrown Indian healthy-snacking brand (panjiri, pinni,
 dry-fruit laddus and dry-fruit mixes).
 
 > **Everything you see is placeholder content**: prices, stock, ingredients, nutrition, certifications, testimonials, contact
@@ -8,8 +8,23 @@ dry-fruit laddus and dry-fruit mixes).
 > [Placeholder markers](#placeholder-markers)). Search the code for `PLACEHOLDER` and `TODO` before launch.
 
 - **Plan & design system:** [`docs/PLAN.md`](docs/PLAN.md)
+- **Images to generate (for Codex):** [`CODEX_IMAGES.md`](CODEX_IMAGES.md) — every image slot, its prompt, file path and exact placement.
 - **Stack:** Next.js 16 (App Router, static generation) · React 19 · TypeScript · Zustand (cart) · CSS Modules + design
-  tokens · hand-authored SVG illustrations · no UI kit, no animation library.
+  tokens · native `<dialog>` for drawers · no UI kit, no animation library.
+
+### What's included
+
+- Announcement bar, sticky header with a desktop **mega menu**, **search** overlay, account link and cart count.
+- Home page: centred hero → shop by category → bestsellers → promises → scroll-drawn kitchen story → shop by need →
+  custom batches → reviews → story → FAQ.
+- **Shop** with category tabs, need filter, in-stock and customisable filters, sorting and search results (all URL-driven, e.g.
+  `/shop?category=laddus&sort=price-asc`).
+- **Product cards** with badges, hover image and one-tap quick add.
+- **Product page**: gallery with thumbnails, size selector with stock, quantity, add to cart / buy it now, the 500 g
+  customisation panel, PIN-code delivery check (placeholder), detail accordions, reviews placeholder, related products and a
+  sticky add-to-cart bar.
+- **Cart drawer** (opens on add), full cart page with suggestions, checkout with validation, account (placeholder),
+  FAQ, shipping & returns, contact, our story, 404.
 
 ## Quick start
 
@@ -25,7 +40,8 @@ pnpm dev                     # http://localhost:3000
 | `pnpm build`     | Production build (all pages prerendered)              |
 | `pnpm start`     | Serve the production build                            |
 | `pnpm typecheck` | TypeScript check                                      |
-| `pnpm test`      | Unit tests for the customisation rule and checkout validation (`node --test`) |
+| `pnpm test`      | Unit tests: customisation rule, checkout validation, catalogue filtering (`node --test`) |
+| `pnpm images:manifest` | Re-scan `public/images` (runs automatically before dev, build and typecheck) |
 
 Node ≥ 20.9 is required (Node 22.6+ for `pnpm test`, which uses built-in TypeScript stripping).
 
@@ -39,22 +55,28 @@ src/
     cart/  checkout/      Cart and checkout (client components)
     support/ faq/ shipping-returns/ contact/ our-story/
     sitemap.ts robots.ts  SEO
-    globals.css           Design tokens + base + primitives (buttons, forms, chips)
+    globals.css           Design tokens + base + primitives (buttons, forms, chips, accordions, sheets)
   components/
-    art/                  Hand-drawn SVG product portraits, icons, paper edges
+    SiteHeader.tsx        Header, mega menu, search + mobile menu triggers
+    CartDrawer.tsx        Slide-out cart (native <dialog>)
+    ProductCard.tsx       Card with badges, hover image, quick add
+    ProductPurchase.tsx   Sizes, quantity, 500 g customisation gate, add to cart / buy now, sticky bar
+    SmartImage.tsx        Renders an image slot or a neutral placeholder if the file is missing
     KitchenScene.tsx      Scroll-driven sketch of a mother cooking
-    ProductPurchase.tsx   Variants, quantity, 500 g customisation gate, add to cart
-    ...                   Header, footer, tiles, summaries, placeholders
   data/
-    products.ts           Catalogue (PLACEHOLDER data) — categories, variants, options
+    products.ts           Catalogue (PLACEHOLDER data) — categories, variants, options, badges
     content.ts            Benefits, FAQ, Indian states
+    images.ts             Image slot registry (paths, alt text) — mirrors CODEX_IMAGES.md
+    image-manifest.json   Generated: which image files exist
   lib/
     customization.ts      The 500 g rule (pure, unit-tested)
     validation.ts         Checkout validation (pure, unit-tested)
-    cart.ts               Zustand cart store, persisted to localStorage
+    catalog.ts            Shop filtering/sorting/search (pure, unit-tested)
+    cart.ts               Zustand cart store (persisted) + cart drawer state
     analytics.ts          Event hooks (dataLayer + DOM event)
     money.ts site.ts      INR formatting, shipping rules, site config
-public/                   favicon, Open Graph placeholder
+scripts/image-manifest.mjs  Builds image-manifest.json from public/images
+public/images/            Generated/real photography goes here (see CODEX_IMAGES.md)
 ```
 
 ## Customising
@@ -79,9 +101,15 @@ and contrast ratios.
 
 ### Images
 
-Product portraits are SVG illustrations (`components/art/ProductArt.tsx`) and "taped photo" frames
-(`components/PhotoSlot.tsx`). To use photography, replace them with `next/image` at the same aspect ratio to avoid layout
-shift. Replace `public/og-placeholder.svg` with a 1200×630 JPG/PNG (most social networks don't render SVG previews).
+Every image on the site is a named slot (see `src/data/images.ts`) that points to a file under `public/images/`.
+**[`CODEX_IMAGES.md`](CODEX_IMAGES.md)** lists all 36 slots with a generation prompt, final size, save path and exactly where
+each appears. Hand that file to Codex (or a photographer) and drop the results in place. No code changes are needed.
+
+- Files can be `.jpg`, `.webp`, `.png` or `.avif`; the manifest picks whichever exists.
+- Missing files render as a quiet tonal block labelled with the slot name (labels hide when
+  `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false`).
+- Images are served through `next/image` (responsive sizes, AVIF/WebP). The hero uses art direction: square on phones, wide on desktop.
+- `public/images/og.jpg` (1200×630) becomes the social share image automatically.
 
 ### Placeholder markers
 
@@ -102,7 +130,7 @@ Set `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false` to hide the tags once copy is c
 ### Analytics events
 
 `track(event, params)` pushes to `window.dataLayer` and dispatches a `iw:analytics` DOM event. Events fired today:
-`page_view`, `view_item`, `select_variant`, `customize_change`, `add_to_cart`, `remove_from_cart`, `view_cart`,
+`page_view`, `view_item`, `view_item_list`, `search`, `select_variant`, `customize_change`, `add_to_cart`, `remove_from_cart`, `view_cart`,
 `begin_checkout`, `purchase`, `contact_submit`, `newsletter_signup`. Nothing is sent anywhere unless you configure a provider.
 
 ## SEO & accessibility
@@ -129,7 +157,7 @@ Set `NEXT_PUBLIC_SITE_URL` in production so canonical URLs, sitemap and structur
 
 - [ ] Replace every `PLACEHOLDER` / `TODO` / TBC item (prices, stock, ingredients, nutrition, policies, contact details).
 - [ ] Legal/regulatory review of benefit copy (no medical claims) and FSSAI labelling details.
-- [ ] Real photography and Open Graph image.
+- [ ] Real photography and Open Graph image (generated images from `CODEX_IMAGES.md` are stand-ins).
 - [ ] Payment, shipping, newsletter and contact integrations; order emails.
 - [ ] Consent banner before analytics.
 - [ ] Set `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false`.

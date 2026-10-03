@@ -20,30 +20,11 @@ export function hasImage(ref?: ImageRef): boolean {
 }
 
 export const images = {
-  hero: {
-    id: "home-hero",
-    src: "/images/home/hero",
-    alt: "A brass kadhai of golden panjiri on a stone counter beside dry-fruit laddus and jars of nuts, in soft morning light",
-    label: "Home · hero",
-  },
-  heroMobile: {
-    id: "home-hero-mobile",
-    src: "/images/home/hero-mobile",
-    alt: "A brass kadhai of golden panjiri on a stone counter beside dry-fruit laddus and jars of nuts, in soft morning light",
-    label: "Home · hero (mobile)",
-  },
-  ingredients: {
-    id: "home-ingredients",
-    src: "/images/home/ingredients",
-    alt: "Whole pantry ingredients in small brass and ceramic bowls on a linen cloth",
-    label: "Home · shop by need",
-    tone: "sage",
-  },
   customise: {
     id: "home-customise",
     src: "/images/home/customise",
     alt: "Hands folding chopped nuts into a bowl of freshly roasted panjiri",
-    label: "Home · customise banner",
+    label: "Mega menu · custom batch",
     tone: "clay",
   },
   story: {
@@ -108,4 +89,9 @@ export function productImages(p: { slug: string; name: string; category: string 
     { id: `${p.slug}-2`, src: `/images/products/${p.slug}/2`, alt: `Close-up of ${p.name}`, label: `${p.name} · close-up`, tone },
     { id: `${p.slug}-3`, src: `/images/products/${p.slug}/3`, alt: `${p.name} served at home`, label: `${p.name} · served`, tone },
   ];
+}
+
+/** Cut-out style photo of a single ingredient, used by the batch builder tiles. */
+export function ingredientImage(id: string, name: string): ImageRef {
+  return { id: `ingredient-${id}`, src: `/images/ingredients/${id}`, alt: name, label: name, tone: "sand" };
 }

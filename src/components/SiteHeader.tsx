@@ -12,7 +12,20 @@ import { SmartImage } from "./SmartImage";
 import { SearchDialog } from "./SearchDialog";
 import { MobileMenu } from "./MobileMenu";
 import { ArrowRight, BagIcon, ChevronDown, MenuIcon, SearchIcon, UserIcon } from "./icons";
+import { BowlArt, piecesFor } from "./art/BowlArt";
+import { recipes } from "@/data/ingredients";
 import styles from "./SiteHeader.module.css";
+
+const megaRecipe = recipes["classic-panjiri"];
+const megaPieces = piecesFor(Object.fromEntries(megaRecipe.ingredients.map((i) => [i.id, i.default])));
+
+function MegaBowl() {
+  return (
+    <div style={{ width: "46%" }}>
+      <BowlArt pieces={megaPieces} tint={megaRecipe.baseTint.atta.light} uid="mega" />
+    </div>
+  );
+}
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -87,7 +100,7 @@ export function SiteHeader() {
           <button type="button" className="icon-btn" onClick={() => openCart(true)} aria-label={`Cart, ${shown} ${shown === 1 ? "item" : "items"}`}>
             <BagIcon />
             {shown > 0 && (
-              <span className={styles.count} aria-hidden="true">
+              <span key={shown} className={styles.count} aria-hidden="true">
                 {shown}
               </span>
             )}
@@ -127,8 +140,8 @@ export function SiteHeader() {
               ))}
             </ul>
           </div>
-          <Link href="/shop?custom=1" className={styles.feature} onClick={closeMega}>
-            <SmartImage image={images.customise} sizes="360px" ratio="16 / 10" decorative />
+          <Link href="/customise" className={styles.feature} onClick={closeMega}>
+            <SmartImage image={images.customise} sizes="360px" ratio="16 / 10" decorative fallback={<MegaBowl />} />
             <span className={styles.featureTitle}>Build a custom batch</span>
             <span className={styles.featureText}>
               Panjiri and laddus, adjusted to your taste, from 500 g <ArrowRight />

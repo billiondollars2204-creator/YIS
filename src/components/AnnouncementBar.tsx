@@ -10,7 +10,7 @@ export function AnnouncementBar() {
         <span className={styles.sep} aria-hidden="true" />
         <span className={styles.second}>
           Custom batches from 500 g —{" "}
-          <Link href="/shop?custom=1" className={styles.link}>
+          <Link href="/customise" className={styles.link}>
             build yours
           </Link>
         </span>

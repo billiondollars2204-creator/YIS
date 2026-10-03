@@ -12,13 +12,15 @@ export type CartLine = {
   variantId: string;
   qty: number;
   customization?: Customization;
+  /** Customisation surcharge per pack (₹). */
+  unitExtra?: number;
 };
 
-export type ResolvedLine = CartLine & { product: Product; variant: Variant; lineTotal: number; minQty: number };
+export type ResolvedLine = CartLine & { product: Product; variant: Variant; unitPrice: number; lineTotal: number; minQty: number };
 
 type CartState = {
   lines: CartLine[];
-  add: (slug: string, variantId: string, qty: number, customization?: Customization) => void;
+  add: (slug: string, variantId: string, qty: number, customization?: Customization, unitExtra?: number) => void;
   setQty: (key: string, qty: number) => void;
   remove: (key: string) => void;
   clear: () => void;
@@ -36,7 +38,7 @@ export const useCart = create<CartState>()(
   persist(
     (set) => ({
       lines: [],
-      add: (slug, variantId, qty, customization) =>
+      add: (slug, variantId, qty, customization, unitExtra = 0) =>
         set((s) => {
           const custom = isCustomized(customization) ? customization : undefined;
           const key = `${slug}:${variantId}:${customizationSignature(custom)}`;
@@ -46,14 +48,17 @@ export const useCart = create<CartState>()(
               lines: s.lines.map((l) => (l.key === key ? { ...l, qty: Math.min(MAX_QTY, l.qty + qty) } : l)),
             };
           }
-          return { lines: [...s.lines, { key, slug, variantId, qty: Math.min(MAX_QTY, qty), customization: custom }] };
+          return {
+            lines: [...s.lines, { key, slug, variantId, qty: Math.min(MAX_QTY, qty), customization: custom, unitExtra: custom ? unitExtra : 0 }],
+          };
         }),
       setQty: (key, qty) =>
         set((s) => ({ lines: s.lines.map((l) => (l.key === key ? { ...l, qty: Math.max(1, Math.min(MAX_QTY, qty)) } : l)) })),
       remove: (key) => set((s) => ({ lines: s.lines.filter((l) => l.key !== key) })),
       clear: () => set({ lines: [] }),
     }),
-    { name: "iw-cart-v1" },
+    // v2: customisation shape changed; old v1 carts are discarded.
+    { name: "iw-cart-v2" },
   ),
 );
 
@@ -64,7 +69,8 @@ export function resolveLines(lines: CartLine[]): ResolvedLine[] {
     if (!product || !variant) return [];
     // Customized lines must stay at or above the 500 g rule.
     const minQty = l.customization ? minQtyForCustom(variant.grams) : 1;
-    return [{ ...l, product, variant, lineTotal: variant.price * l.qty, minQty }];
+    const unitPrice = variant.price + (l.unitExtra ?? 0);
+    return [{ ...l, product, variant, unitPrice, lineTotal: unitPrice * l.qty, minQty }];
   });
 }
 

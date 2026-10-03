@@ -107,7 +107,7 @@ function Strokes({ list }: { list: Stroke[] }) {
   );
 }
 
-export function KitchenScene() {
+export function KitchenScene({ index }: { index?: string }) {
   const sectionRef = useRef<HTMLElement>(null);
   const artRef = useRef<SVGSVGElement>(null);
   const [step, setStep] = useState(0);
@@ -190,9 +190,11 @@ export function KitchenScene() {
       </div>
 
       <div className={styles.copy}>
-        <p className="eyebrow">How it’s made</p>
+        <p className="section-label">
+          {index && <span>{index}</span>}How it’s made
+        </p>
         <h2 id="kitchen-title" className={styles.title}>
-          Every jar starts on a slow flame
+          Every jar starts on <em>a slow flame.</em>
         </h2>
         <ol className={styles.steps}>
           {steps.map((s, i) => (

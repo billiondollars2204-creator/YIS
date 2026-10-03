@@ -557,20 +557,80 @@ legend {
   background: var(--paper-deep);
 }
 .section-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-3) var(--space-6);
-  margin-bottom: var(--space-6);
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
 }
 .section-head h2 {
-  font-size: var(--step-3);
+  font-size: var(--step-4);
   margin: 0;
+  max-width: 18ch;
 }
-.section-head .eyebrow {
-  margin-bottom: var(--space-2);
+.section-head h2 em {
+  color: var(--saffron);
 }
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.section-label span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--saffron);
+  font-variant-numeric: tabular-nums;
+}
+.section-label span::after {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+}
+.section-side {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  max-width: 38ch;
+}
+.section-side p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+@media (min-width: 900px) {
+  .section-head {
+    grid-template-columns: 1.3fr 1fr;
+    align-items: end;
+    gap: var(--space-8);
+  }
+  .section-side {
+    justify-self: end;
+  }
+}
+
+/* Scroll-linked entrance, progressive enhancement only (no JS). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
 .crumbs ol {
   list-style: none;
   display: flex;

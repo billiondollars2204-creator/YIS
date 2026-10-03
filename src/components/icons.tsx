@@ -64,3 +64,30 @@ export const CheckIcon = ({ className }: P) => (
     <path d="m5 12.5 4.5 4.5L19 7.5" />
   </svg>
 );
+export const TruckIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M3 6.5h11v9H3zM14 9.5h3.5L21 13v2.5h-7" />
+    <circle cx="7" cy="17.5" r="1.8" />
+    <circle cx="17" cy="17.5" r="1.8" />
+  </svg>
+);
+export const SlidersIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M5 4v16M12 4v16M19 4v16" />
+    <circle cx="5" cy="14" r="2" fill="var(--paper)" />
+    <circle cx="12" cy="8" r="2" fill="var(--paper)" />
+    <circle cx="19" cy="16" r="2" fill="var(--paper)" />
+  </svg>
+);
+export const WalletIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <rect x="3.5" y="6" width="17" height="12.5" rx="1.5" />
+    <path d="M3.5 10h17M15.5 14.5h2" />
+  </svg>
+);
+export const ShieldIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M12 3.5 19 6v5.5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-2.5Z" />
+    <path d="m9 12 2.2 2.2L15.5 10" />
+  </svg>
+);

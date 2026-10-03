@@ -153,3 +153,51 @@
     gap: var(--space-7) var(--space-5);
   }
 }
+
+.customise {
+  margin-top: var(--space-5);
+}
+
+.subhead {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.inside {
+  padding-block: var(--space-6) var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.glance {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 0 var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.glance div {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.glance div:nth-child(odd) {
+  padding-right: var(--space-4);
+}
+
+.glance dt {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.glance dd {
+  margin: 0.15rem 0 0;
+  font-size: var(--step--1);
+}

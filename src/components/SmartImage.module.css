@@ -19,6 +19,22 @@
   background: linear-gradient(165deg, #f1eadf 0%, #e6dccd 100%);
 }
 
+.drawn {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #efe7da;
+}
+
+.frame[data-tone="clay"] .drawn {
+  background: #efe2d6;
+}
+
+.frame[data-tone="sage"] .drawn {
+  background: #e7e8dc;
+}
+
 .frame[data-tone="clay"] .placeholder {
   background: linear-gradient(165deg, #f1e6dc 0%, #e3cfbe 100%);
 }

@@ -128,106 +128,6 @@
   background: currentColor;
 }
 
-/* Customise */
-.custom {
-  border: 1px solid var(--line);
-  background: var(--paper-bright);
-}
-
-.customToggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  border: 0;
-  background: none;
-  text-align: left;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-}
-
-.customTitle {
-  display: block;
-  font-weight: 600;
-}
-
-.customSub {
-  display: block;
-  font-size: var(--step--1);
-  color: var(--ink-soft);
-}
-
-.plus {
-  flex: none;
-  width: 12px;
-  height: 12px;
-  background:
-    linear-gradient(currentColor, currentColor) center / 12px 1.5px no-repeat,
-    linear-gradient(currentColor, currentColor) center / 1.5px 12px no-repeat;
-  transition: transform 250ms var(--ease-out);
-}
-
-.customToggle[aria-expanded="true"] .plus {
-  transform: rotate(45deg);
-}
-
-.customBody {
-  display: grid;
-  gap: var(--space-5);
-  padding: 0 var(--space-4) var(--space-5);
-}
-
-.gate {
-  padding: var(--space-3) var(--space-4);
-  border-left: 2px solid var(--saffron);
-  background: #f7efe6;
-  font-size: var(--step--1);
-}
-
-.gate[data-unlocked] {
-  border-left-color: var(--cardamom);
-  background: #eef1e8;
-}
-
-.gate p {
-  margin: 0;
-}
-
-.gateActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-3);
-}
-
-.customFields {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.customFields:disabled {
-  opacity: 0.55;
-}
-
-.subgroup {
-  display: grid;
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.customNote {
-  margin: 0;
-  font-size: var(--step--2);
-  color: var(--ink-soft);
-}
-
 /* Actions */
 .actions {
   display: grid;
@@ -282,6 +182,23 @@
 
 .add {
   width: 100%;
+}
+
+.add[data-added] {
+  background: var(--cardamom);
+  border-color: var(--cardamom);
+}
+
+.addIcon {
+  width: 18px;
+  height: 18px;
+  animation: tick 400ms cubic-bezier(0.34, 1.6, 0.64, 1);
+}
+
+@keyframes tick {
+  from {
+    transform: scale(0);
+  }
 }
 
 .addPrice {

@@ -24,8 +24,6 @@ export type Variant = {
   stock: StockStatus;
 };
 
-export type CustomOption = { id: string; label: string; hint?: string };
-
 export type Product = {
   slug: string;
   name: string;
@@ -45,7 +43,6 @@ export type Product = {
   variants: Variant[];
   featured?: boolean;
   customizable?: boolean;
-  custom?: { addable: CustomOption[]; removable: CustomOption[] };
 };
 
 export const categories: Category[] = [
@@ -97,31 +94,6 @@ const nutritionPlaceholder = [
   { label: "Fibre", value: "— g" },
 ];
 
-// TODO(kitchen): replace with kitchen-approved option lists per product.
-const panjiriOptions = {
-  addable: [
-    { id: "extra-nuts", label: "Extra nuts", hint: "Placeholder option" },
-    { id: "seeds", label: "Seed mix", hint: "Placeholder option" },
-    { id: "dried-fruit", label: "More dried fruit", hint: "Placeholder option" },
-    { id: "spice", label: "Warming spice blend", hint: "Placeholder option" },
-  ],
-  removable: [
-    { id: "no-nuts", label: "Leave out nuts", hint: "For allergies — see note" },
-    { id: "no-dried-fruit", label: "Leave out dried fruit" },
-  ],
-};
-
-const ladduOptions = {
-  addable: [
-    { id: "extra-nuts", label: "Extra nuts", hint: "Placeholder option" },
-    { id: "seeds", label: "Seed mix", hint: "Placeholder option" },
-    { id: "coconut", label: "Coconut", hint: "Placeholder option" },
-  ],
-  removable: [
-    { id: "no-nuts", label: "Leave out nuts", hint: "For allergies — see note" },
-    { id: "no-dates", label: "Leave out dates", hint: "Placeholder option" },
-  ],
-};
 
 export const products: Product[] = [
   {
@@ -142,7 +114,6 @@ export const products: Product[] = [
     variants: ladder(349),
     featured: true,
     customizable: true,
-    custom: panjiriOptions,
   },
   {
     slug: "mothers-panjiri",
@@ -160,7 +131,6 @@ export const products: Product[] = [
     variants: ladder(449, ["in_stock", "in_stock", "low_stock"]),
     featured: true,
     customizable: true,
-    custom: panjiriOptions,
   },
   {
     slug: "atta-pinni",
@@ -196,7 +166,6 @@ export const products: Product[] = [
     variants: ladder(499),
     featured: true,
     customizable: true,
-    custom: ladduOptions,
   },
   {
     slug: "seasonal-laddu",
@@ -213,7 +182,6 @@ export const products: Product[] = [
     storage: "Shelf life: TBC.",
     variants: ladder(479, ["out_of_stock", "out_of_stock", "out_of_stock"]),
     customizable: true,
-    custom: ladduOptions,
   },
   {
     slug: "everyday-mix",

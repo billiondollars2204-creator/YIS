@@ -39,17 +39,17 @@ Deferred: commerce backend/CMS, payments, accounts, i18n. The `Product` type is 
 ### Home page order
 
 1. Announcement bar + header (mega menu, search, account, cart)
-2. **Hero, centred and stacked:** eyebrow → headline → one line → [Shop all] [Build a custom batch] → wide image
-3. Shop by category (5 image tiles)
-4. Bestsellers (4 product cards with quick add)
-5. Four promises (one row, text only)
-6. **Kitchen story**: the scroll-drawn sketch of a mother cooking, with four steps
-7. Shop by need (immunity, wellness, postpartum, bone health, clarity → filtered shop), with a disclaimer
-8. Custom batches (500 g rule explained up front)
-9. Reviews (placeholders)
-10. Our story teaser
-11. FAQ (4 questions)
-12. Footer with newsletter
+2. **Hero, centred and stacked, CTA-led:** live kicker → headline with a rotating audience ("for new mothers.") → one line →
+   [Shop bestsellers] [Build your own batch] → "Shop for" need chips, synced with the rotating word
+3. Bestseller rail (4 cards with quick add) and a 4-point trust bar, still inside the hero section
+4. 01 The pantry: categories
+5. 02 Batch builder: a self-playing animated bowl, three benefits and two CTAs
+6. 03 How it's made: the scroll-drawn sketch of a mother cooking
+7. 04 Shop by need: numbered rows linking to a filtered shop
+8. 05 Reviews (placeholders) · 06 Our story · 07 FAQ
+9. Footer with newsletter
+
+Every section uses one anatomy: **number + label → title (with one italic accent phrase) → one-line description → one link**.
 
 ## 4. Design system
 
@@ -103,7 +103,22 @@ Every text pair meets WCAG AA or better on the paper backgrounds. The `--wash-*`
   in, the arm stirs and steam rises.
 - With `prefers-reduced-motion`, everything renders in its finished state. Without JS, nothing is hidden.
 
-## 5. Commerce rules
+## 5. Batch builder
+
+- Route: `/customise/[slug]`, statically generated for every product with a recipe in `src/data/ingredients.ts`.
+- Layout: a sticky stage on the left (animated bowl + receipt with live total + add to cart); steps on the right with a
+  sticky step nav that tracks scroll position. On phones the stage is shown above the steps, and a fixed bar shows a mini live
+  bowl, the last change and the total.
+- Interaction feedback on every change:
+  - **Bowl:** pieces drop in with a spring or lift out, the contents give a short stir, and a coloured note floats up
+    (green for adding, red for removing, ink for swaps).
+  - **Base colour:** the bowl's colour transitions with the base and roast choice.
+  - **Ingredient tile:** the tile pops, its badge updates (+₹, Less, Left out), and removed ingredients turn grey.
+  - **Receipt:** the changed row slides in and the total bumps.
+- Accessibility: every control is a native radio inside a labelled radiogroup or fieldset. A polite live region announces
+  each change with the new total, and all motion stops under `prefers-reduced-motion`.
+
+## 6. Commerce rules
 
 - Variants are pack sizes (250 g / 500 g / 1 kg placeholders) with price and stock. Sold-out sizes are disabled, and
   sold-out products sink to the end of listings.
@@ -112,9 +127,9 @@ Every text pair meets WCAG AA or better on the paper backgrounds. The `--wash-*`
 - Quick add uses the smallest available pack. Adding to cart opens the cart drawer.
 - Free standard delivery over ₹999 (placeholder), with a progress bar in the drawer and cart.
 
-## 6. Next steps
+## 7. Next steps
 
-1. Generate the images in `CODEX_IMAGES.md`, then replace them with real photography.
+1. Generate the images in `CODEX_IMAGES.md`, then replace them with real photography. Explore logos with `LOGO_CONCEPTS.md`.
 2. Commerce backend (e.g. Shopify Storefront API or Medusa) behind the existing `Product` type.
 3. Payments plus order webhooks; courier API for rates and PIN-code serviceability.
 4. Accounts, reviews provider, consent banner and then analytics.

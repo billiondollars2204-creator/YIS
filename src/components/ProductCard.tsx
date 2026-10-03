@@ -4,6 +4,7 @@ import { hasImage, productImages } from "@/data/images";
 import { formatINR } from "@/lib/money";
 import { SmartImage } from "./SmartImage";
 import { QuickAdd } from "./QuickAdd";
+import { ProductSketch } from "./art/ProductSketch";
 import styles from "./ProductCard.module.css";
 
 const SIZES = "(min-width: 1100px) 22vw, (min-width: 700px) 30vw, 46vw";
@@ -17,7 +18,7 @@ export function ProductCard({ product, preload = false }: { product: Product; pr
   return (
     <article className={styles.card} data-soldout={soldOut || undefined}>
       <Link href={href} className={styles.media} tabIndex={-1} aria-hidden="true">
-        <SmartImage image={first} sizes={SIZES} ratio="4 / 5" preload={preload} decorative />
+        <SmartImage image={first} sizes={SIZES} ratio="4 / 5" preload={preload} decorative fallback={<ProductSketch product={product} />} />
         {hasImage(second) && <SmartImage image={second} sizes={SIZES} className={styles.alt} decorative />}
         <span className={styles.badges}>
           {soldOut ? (
@@ -39,6 +40,7 @@ export function ProductCard({ product, preload = false }: { product: Product; pr
           <Link href={href}>{product.name}</Link>
         </h3>
         <p className={styles.short}>{product.short}</p>
+        <p className={styles.sizes}>{product.variants.map((v) => v.label).join(" · ")}</p>
         <p className={styles.price}>
           {soldOut ? (
             <span className={styles.muted}>Back soon</span>

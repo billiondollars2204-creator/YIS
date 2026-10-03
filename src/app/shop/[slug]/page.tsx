@@ -11,6 +11,10 @@ import { ProductCard } from "@/components/ProductCard";
 import { SectionHead } from "@/components/SectionHead";
 import { Placeholder } from "@/components/Placeholder";
 import { JsonLd } from "@/components/JsonLd";
+import { productFallbacks } from "@/components/ProductArtSet";
+import { WhatsInside } from "@/components/WhatsInside";
+import { CustomiseCard } from "@/components/CustomiseCard";
+import { recipes } from "@/data/ingredients";
 import styles from "./product.module.css";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -88,7 +92,7 @@ export default async function ProductPage({ params }: Params) {
 
       <div className={styles.layout}>
         <div className={styles.gallery}>
-          <ProductGallery images={imgs} name={product.name} />
+          <ProductGallery images={imgs} name={product.name} fallbacks={productFallbacks(product)} />
         </div>
 
         <div className={styles.info}>
@@ -106,6 +110,12 @@ export default async function ProductPage({ params }: Params) {
 
           <ProductPurchase product={product} />
 
+          {product.customizable && recipes[product.slug] && !isSoldOut(product) && (
+            <div className={styles.customise}>
+              <CustomiseCard slug={product.slug} name={product.name} />
+            </div>
+          )}
+
           <ul className={styles.assure}>
             <li>Cooked by hand in small batches</li>
             <li>Packed fresh, close to the day it’s made</li>
@@ -113,6 +123,34 @@ export default async function ProductPage({ params }: Params) {
               <Placeholder note="confirm serviceable regions">Delivery across India</Placeholder>
             </li>
           </ul>
+
+          <section className={styles.inside} aria-labelledby="inside-title">
+            <h2 id="inside-title" className={styles.subhead}>
+              What’s inside
+            </h2>
+            <WhatsInside slug={product.slug} />
+          </section>
+
+          <dl className={styles.glance}>
+            <div>
+              <dt>Pack sizes</dt>
+              <dd>{product.variants.map((v) => v.label).join(" · ")}</dd>
+            </div>
+            <div>
+              <dt>Made</dt>
+              <dd>By hand, in small batches</dd>
+            </div>
+            <div>
+              <dt>Best with</dt>
+              <dd>Warm milk or morning chai</dd>
+            </div>
+            <div>
+              <dt>Shelf life</dt>
+              <dd>
+                <Placeholder note="per-product shelf life">To be confirmed</Placeholder>
+              </dd>
+            </div>
+          </dl>
 
           <div className={styles.details}>
             <details className="acc" open>

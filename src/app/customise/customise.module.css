@@ -1,0 +1,144 @@
+.head {
+  padding-block: var(--space-8) var(--space-6);
+  text-align: center;
+  display: grid;
+  justify-items: center;
+}
+
+.head h1 {
+  max-width: 16ch;
+  font-size: var(--step-5);
+}
+
+.head em {
+  color: var(--saffron);
+}
+
+.intro {
+  margin: 0;
+  font-size: var(--step-1);
+  color: var(--ink-soft);
+}
+
+.how {
+  list-style: none;
+  margin: 0 0 var(--space-8);
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.how li {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--ink);
+}
+
+.how span {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--saffron);
+}
+
+.how h2 {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0;
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.how p {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-5);
+  background: var(--paper-deep);
+  text-decoration: none;
+  transition: background-color 250ms ease;
+}
+
+.card:hover {
+  background: #eee5d8;
+}
+
+.bowl {
+  transition: transform 700ms var(--ease-out);
+}
+
+.card:hover .bowl {
+  transform: rotate(14deg) scale(1.03);
+}
+
+.card[data-soldout] .bowl {
+  filter: grayscale(0.7);
+  opacity: 0.6;
+}
+
+.cardBody h2 {
+  font-size: var(--step-3);
+  margin-bottom: var(--space-1);
+}
+
+.cardBody p {
+  margin: 0 0 var(--space-2);
+  color: var(--ink-soft);
+}
+
+.meta {
+  font-size: var(--step--1);
+}
+
+.price {
+  font-weight: 600;
+  color: var(--ink) !important;
+}
+
+.go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  border-bottom: 1px solid currentColor;
+}
+
+.go svg {
+  width: 1em;
+  height: 1em;
+  transition: transform 250ms var(--ease-out);
+}
+
+.card:hover .go svg {
+  transform: translateX(4px);
+}
+
+@media (min-width: 800px) {
+  .how {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bowl {
+    transition: none;
+  }
+}

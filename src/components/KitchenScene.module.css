@@ -9,8 +9,8 @@
   position: sticky;
   top: var(--header-h);
   z-index: 1;
-  /* Same colour as the band so text scrolling beneath is hidden without a visible box */
-  background-color: var(--paper-deep);
+  /* Same colour as the page so text scrolling beneath is hidden without a visible box */
+  background-color: var(--paper);
   padding-block: var(--space-2);
   mask-image: linear-gradient(to bottom, #000 88%, transparent);
 }
@@ -67,6 +67,10 @@
 .copy {
   position: relative;
   max-width: 34rem;
+}
+
+.title em {
+  color: var(--saffron);
 }
 
 .title {

@@ -33,7 +33,7 @@ export function CartLines({ lines, onNavigate }: { lines: ResolvedLine[]; onNavi
                 <p className={styles.total}>{formatINR(l.lineTotal)}</p>
               </div>
               <p className={styles.meta}>
-                {l.variant.label} · {formatINR(l.variant.price)} each
+                {l.variant.label} · {formatINR(l.unitPrice)} each
               </p>
               {l.customization && (
                 <p className={styles.custom}>

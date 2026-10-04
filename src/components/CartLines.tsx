@@ -5,9 +5,9 @@ import { productImages } from "@/data/images";
 import { useCart, MAX_QTY, type ResolvedLine } from "@/lib/cart";
 import { formatINR } from "@/lib/money";
 import { track } from "@/lib/analytics";
-import { customSummary } from "./CustomSummary";
+import { batchLabel, describeChanges } from "@/lib/describe";
 import { SmartImage } from "./SmartImage";
-import { MinusIcon, PlusIcon } from "./icons";
+import { EditIcon, MinusIcon, PlusIcon } from "./icons";
 import styles from "./CartLines.module.css";
 
 export function CartLines({ lines, onNavigate }: { lines: ResolvedLine[]; onNavigate?: () => void }) {
@@ -18,10 +18,11 @@ export function CartLines({ lines, onNavigate }: { lines: ResolvedLine[]; onNavi
     <ul className={styles.lines}>
       {lines.map((l) => {
         const href = `/shop/${l.product.slug}`;
+        const changes = l.customization ? describeChanges(l.slug, l.customization) : [];
         return (
           <li key={l.key} className={styles.line}>
             <Link href={href} className={styles.thumb} tabIndex={-1} aria-hidden="true" onClick={onNavigate}>
-              <SmartImage image={productImages(l.product)[0]} sizes="96px" ratio="4 / 5" decorative />
+              <SmartImage image={productImages(l.product)[0]} sizes="96px" ratio="4 / 5" decorative quiet />
             </Link>
             <div className={styles.info}>
               <div className={styles.top}>
@@ -30,18 +31,40 @@ export function CartLines({ lines, onNavigate }: { lines: ResolvedLine[]; onNavi
                     {l.product.name}
                   </Link>
                 </h3>
-                <p className={styles.total}>{formatINR(l.lineTotal)}</p>
+                <p className={`${styles.total} num`}>{formatINR(l.lineTotal)}</p>
               </div>
               <p className={styles.meta}>
-                {l.variant.label} · {formatINR(l.unitPrice)} each
+                {l.customization ? (
+                  <>
+                    <span className="badge badge--custom">Custom batch</span> {batchLabel(l.variant.grams, 1)} per batch
+                  </>
+                ) : (
+                  l.variant.label
+                )}{" "}
+                · <span className="num">{formatINR(l.unitPrice)}</span> each
               </p>
               {l.customization && (
-                <p className={styles.custom}>
-                  <span className={styles.tag}>Custom batch</span> {customSummary(l.product, l.customization)}
-                </p>
+                <div className={styles.custom}>
+                  {changes.length ? (
+                    <ul aria-label="Changes from the house recipe, per 500 g">
+                      {changes.map((c) => (
+                        <li key={c.key} data-kind={c.kind}>
+                          <strong>{c.label}</strong> {c.detail}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>House recipe</p>
+                  )}
+                  {l.customization.note && <p className={styles.note}>Note: “{l.customization.note}”</p>}
+                  {l.unitExtra > 0 && <p className={styles.extra}>Includes {formatINR(l.unitExtra)} per batch for extra ingredients</p>}
+                  <Link href={`/customise/${l.slug}?edit=${encodeURIComponent(l.key)}`} className={styles.edit} onClick={onNavigate}>
+                    <EditIcon /> Edit mix
+                  </Link>
+                </div>
               )}
               <div className={styles.controls}>
-                <div className={styles.qty} role="group" aria-label={`Quantity for ${l.product.name}`}>
+                <div className="stepper" role="group" aria-label={`Quantity for ${l.product.name}`}>
                   <button type="button" onClick={() => setQty(l.key, l.qty - 1)} disabled={l.qty <= l.minQty} aria-label={`Decrease quantity of ${l.product.name}`}>
                     <MinusIcon />
                   </button>
@@ -61,9 +84,6 @@ export function CartLines({ lines, onNavigate }: { lines: ResolvedLine[]; onNavi
                   Remove<span className="visually-hidden"> {l.product.name}</span>
                 </button>
               </div>
-              {l.customization && l.minQty > 1 && l.qty <= l.minQty && (
-                <p className={styles.hint}>Custom batches need at least 500 g, so this can’t go lower.</p>
-              )}
             </div>
           </li>
         );

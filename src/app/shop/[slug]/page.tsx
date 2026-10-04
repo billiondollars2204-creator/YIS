@@ -4,17 +4,18 @@ import { notFound } from "next/navigation";
 import { getCategory, getProduct, isSoldOut, products } from "@/data/products";
 import { benefitTitle } from "@/data/content";
 import { productImages, resolveImage } from "@/data/images";
+import { customNoun, getFormula } from "@/data/formulations";
+import { ingredients, type Allergen } from "@/data/ingredients";
+import { EMPTY_CUSTOMIZATION, MIN_CUSTOM_GRAMS, resolveFormula } from "@/lib/customization";
+import { formatGrams } from "@/lib/units";
 import { site } from "@/lib/site";
 import { ProductGallery } from "@/components/ProductGallery";
 import { ProductPurchase } from "@/components/ProductPurchase";
 import { ProductCard } from "@/components/ProductCard";
-import { SectionHead } from "@/components/SectionHead";
+import { IngredientSwatch } from "@/components/IngredientSwatch";
 import { Placeholder } from "@/components/Placeholder";
 import { JsonLd } from "@/components/JsonLd";
-import { productFallbacks } from "@/components/ProductArtSet";
-import { WhatsInside } from "@/components/WhatsInside";
-import { CustomiseCard } from "@/components/CustomiseCard";
-import { recipes } from "@/data/ingredients";
+import { ArrowRight } from "@/components/icons";
 import styles from "./product.module.css";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -44,6 +45,10 @@ export default async function ProductPage({ params }: Params) {
   if (!product) notFound();
   const category = getCategory(product.category);
   const imgs = productImages(product);
+  const formula = getFormula(product.slug);
+  const house = formula ? resolveFormula(formula, EMPTY_CUSTOMIZATION).filter((r) => r.grams > 0) : [];
+  const allergens = [...new Set(house.map((r) => ingredients[r.pick]?.allergen).filter(Boolean))] as Allergen[];
+  const adjustable = formula ? formula.lines.filter((l) => !l.fill).map((l) => ingredients[l.options[0]]?.name.toLowerCase()) : [];
   const others = products.filter((p) => p.slug !== product.slug && !isSoldOut(p));
   const related = [...others.filter((p) => p.category === product.category), ...others.filter((p) => p.category !== product.category)].slice(0, 4);
 
@@ -92,57 +97,53 @@ export default async function ProductPage({ params }: Params) {
 
       <div className={styles.layout}>
         <div className={styles.gallery}>
-          <ProductGallery images={imgs} name={product.name} fallbacks={productFallbacks(product)} />
+          <ProductGallery images={imgs} name={product.name} />
         </div>
 
         <div className={styles.info}>
-          {(product.badge || product.customizable) && (
+          <header className={styles.head}>
             <p className={styles.badges}>
-              {product.badge && <span className={styles.badge}>{product.badge}</span>}
-              {product.customizable && <span className={styles.badge} data-kind="outline">Customisable from 500 g</span>}
+              {product.badge && <span className="badge badge--dark">{product.badge}</span>}
+              {product.customizable ? <span className="badge badge--custom">Customisable</span> : <span className="badge badge--muted">Standard recipe</span>}
             </p>
-          )}
-          <h1 className={styles.title}>{product.name}</h1>
-          <p className={styles.tagline}>{product.tagline}</p>
-          <p className={styles.enjoyed}>
-            Traditionally enjoyed for {product.enjoyedFor.map((b) => benefitTitle[b].toLowerCase()).join(", ")}
-          </p>
+            <h1 className={styles.title}>{product.name}</h1>
+            <p className={styles.tagline}>{product.tagline}</p>
+          </header>
 
           <ProductPurchase product={product} />
 
-          {product.customizable && recipes[product.slug] && !isSoldOut(product) && (
-            <div className={styles.customise}>
-              <CustomiseCard slug={product.slug} name={product.name} />
-            </div>
+          {formula && !isSoldOut(product) && (
+            <section className={styles.custom} aria-labelledby="custom-title">
+              <div className={styles.customSwatches} aria-hidden="true">
+                {formula.lines.slice(0, 6).map((l) => (
+                  <IngredientSwatch key={l.key} id={l.options[0]} className={styles.customSwatch} sizes="40px" />
+                ))}
+              </div>
+              <h2 id="custom-title" className={styles.customTitle}>
+                Make it your way
+              </h2>
+              <p className={styles.customText}>
+                Start from our house recipe and adjust {adjustable.slice(0, 3).join(", ")} and {adjustable.length - 3} more ingredients. Cooked as its own batch,
+                from {MIN_CUSTOM_GRAMS} g.
+              </p>
+              <Link href={`/customise/${product.slug}`} className="btn btn--secondary btn--block">
+                Customise this {customNoun[product.category] ?? "batch"} <ArrowRight />
+              </Link>
+            </section>
           )}
 
-          <ul className={styles.assure}>
-            <li>Cooked by hand in small batches</li>
-            <li>Packed fresh, close to the day it’s made</li>
-            <li>
-              <Placeholder note="confirm serviceable regions">Delivery across India</Placeholder>
-            </li>
-          </ul>
-
-          <section className={styles.inside} aria-labelledby="inside-title">
-            <h2 id="inside-title" className={styles.subhead}>
-              What’s inside
-            </h2>
-            <WhatsInside slug={product.slug} />
-          </section>
-
-          <dl className={styles.glance}>
-            <div>
-              <dt>Pack sizes</dt>
-              <dd>{product.variants.map((v) => v.label).join(" · ")}</dd>
-            </div>
+          <dl className={styles.facts}>
             <div>
               <dt>Made</dt>
               <dd>By hand, in small batches</dd>
             </div>
             <div>
-              <dt>Best with</dt>
-              <dd>Warm milk or morning chai</dd>
+              <dt>Traditionally enjoyed for</dt>
+              <dd>{product.enjoyedFor.map((b) => benefitTitle[b]).join(", ")}</dd>
+            </div>
+            <div>
+              <dt>Contains</dt>
+              <dd>{allergens.length ? <Placeholder note="kitchen to confirm allergens">{allergens.join(", ")}</Placeholder> : <Placeholder note="allergen list">To be confirmed</Placeholder>}</dd>
             </div>
             <div>
               <dt>Shelf life</dt>
@@ -154,7 +155,7 @@ export default async function ProductPage({ params }: Params) {
 
           <div className={styles.details}>
             <details className="acc" open>
-              <summary>Description</summary>
+              <summary>About</summary>
               <div className="acc-body">
                 <p>{product.description}</p>
               </div>
@@ -162,20 +163,51 @@ export default async function ProductPage({ params }: Params) {
             <details className="acc">
               <summary>Ingredients</summary>
               <div className="acc-body">
-                <ul className={styles.list}>
-                  {product.ingredients.map((i) => (
-                    <li key={i}>{i}</li>
-                  ))}
-                </ul>
-                <p>
-                  <Placeholder note="final ingredient list from the kitchen">Full ingredient and allergen list to be confirmed.</Placeholder>
-                </p>
+                {house.length ? (
+                  <>
+                    <table className={styles.table}>
+                      <caption className="visually-hidden">House recipe per 500 g</caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">House recipe</th>
+                          <th scope="col">per 500 g</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {house.map((r) => (
+                          <tr key={r.key}>
+                            <th scope="row">
+                              <IngredientSwatch id={r.pick} className={styles.rowSwatch} sizes="24px" />
+                              {ingredients[r.pick]?.name}
+                              <span>{ingredients[r.pick]?.local}</span>
+                            </th>
+                            <td className="num">{formatGrams(r.grams)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <p>
+                      <Placeholder note="kitchen to confirm recipe">Amounts are a draft house recipe awaiting kitchen confirmation.</Placeholder>
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <ul className={styles.list}>
+                      {product.ingredients.map((i) => (
+                        <li key={i}>{i}</li>
+                      ))}
+                    </ul>
+                    <p>
+                      <Placeholder note="final ingredient list from the kitchen">Full ingredient list to be confirmed.</Placeholder>
+                    </p>
+                  </>
+                )}
               </div>
             </details>
             <details className="acc">
               <summary>Nutrition</summary>
               <div className="acc-body">
-                <table className={styles.nutrition}>
+                <table className={styles.table}>
                   <caption className="visually-hidden">Typical values per 100 g (placeholder)</caption>
                   <thead>
                     <tr>
@@ -193,7 +225,7 @@ export default async function ProductPage({ params }: Params) {
                   </tbody>
                 </table>
                 <p>
-                  <Placeholder note="lab-tested values">Values to be added after lab testing.</Placeholder>
+                  <Placeholder note="lab-tested values">Values will be added after lab testing.</Placeholder>
                 </p>
               </div>
             </details>
@@ -204,20 +236,19 @@ export default async function ProductPage({ params }: Params) {
               </div>
             </details>
             <details className="acc">
-              <summary>Storage &amp; shelf life</summary>
+              <summary>Storage</summary>
               <div className="acc-body">
                 <p>{product.storage}</p>
               </div>
             </details>
             <details className="acc">
-              <summary>Shipping &amp; returns</summary>
+              <summary>Delivery &amp; returns</summary>
               <div className="acc-body">
                 <p>
-                  Free standard delivery over ₹999. Damaged or incorrect orders are replaced or refunded.{" "}
+                  Free standard delivery over ₹999. If your order arrives damaged or incorrect, we replace or refund it.{" "}
                   <Link href="/shipping-returns" className="link">
-                    Read the full policy
+                    Full policy
                   </Link>
-                  .
                 </p>
               </div>
             </details>
@@ -226,18 +257,20 @@ export default async function ProductPage({ params }: Params) {
       </div>
 
       <section className={styles.reviews} aria-labelledby="reviews-title">
-        <SectionHead id="reviews-title" title="Reviews" />
-        <div className={styles.reviewsEmpty}>
-          <p>No reviews yet.</p>
-          <p className={styles.muted}>
-            <Placeholder note="connect a reviews provider">Reviews from verified buyers will appear here.</Placeholder>
-          </p>
-        </div>
+        <h2 id="reviews-title">Reviews</h2>
+        <p className="muted">
+          <Placeholder note="connect a reviews provider">Reviews from verified buyers will appear here after launch.</Placeholder>
+        </p>
       </section>
 
       <section className={styles.related} aria-labelledby="related-title">
-        <SectionHead id="related-title" title="You may also like" href="/shop" linkLabel="Shop all" />
-        <div className={styles.relatedGrid}>
+        <div className="section-head">
+          <h2 id="related-title">You may also like</h2>
+          <Link href="/shop" className="arrow-link">
+            Shop all <ArrowRight />
+          </Link>
+        </div>
+        <div className={`${styles.relatedGrid} reveal-group`}>
           {related.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}

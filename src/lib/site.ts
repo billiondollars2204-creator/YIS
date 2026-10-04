@@ -15,7 +15,7 @@ export const site = {
 export const showPlaceholderMarkers = process.env.NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS !== "false";
 
 export const nav = [
-  { href: "/customise", label: "Build your batch" },
+  { href: "/customise", label: "Custom batches" },
   { href: "/our-story", label: "Our story" },
   { href: "/support", label: "Help" },
 ];

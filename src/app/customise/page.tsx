@@ -1,77 +1,98 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getProduct, isSoldOut } from "@/data/products";
-import { recipes } from "@/data/ingredients";
-import { formatINR } from "@/lib/money";
+import { getProduct, isSoldOut, products } from "@/data/products";
+import { CUSTOMISABLE_PRODUCTS, formulas } from "@/data/formulations";
+import { ingredients } from "@/data/ingredients";
+import { productImages } from "@/data/images";
 import { MIN_CUSTOM_GRAMS } from "@/lib/customization";
-import { BowlArt, piecesFor } from "@/components/art/BowlArt";
+import { formatINR } from "@/lib/money";
+import { SmartImage } from "@/components/SmartImage";
+import { IngredientSwatch } from "@/components/IngredientSwatch";
+import { BuilderSteps } from "@/components/formulate/BuilderSteps";
 import { ArrowRight } from "@/components/icons";
 import styles from "./customise.module.css";
 
 export const metadata: Metadata = {
-  title: "Build your own batch",
-  description: "Customise panjiri and dry-fruit laddus: choose the dry fruits, seeds, spices and sweetness. Custom batches from 500 g.",
+  title: "Custom batches",
+  description: "Formulate your own panjiri, pinni or dry-fruit mix — adjust every ingredient within kitchen limits. Custom batches from 500 g.",
   alternates: { canonical: "/customise" },
 };
 
 const how = [
-  { t: "Start from the house recipe", d: "Every builder opens on the recipe we cook every day." },
-  { t: "Adjust each ingredient", d: "More, less or none — dry fruits, seeds, spices, sweetness and texture." },
-  { t: "We cook it just for you", d: `Each custom order is its own batch, from ${MIN_CUSTOM_GRAMS} g.` },
+  { t: "Start from the house recipe", d: "Every batch opens on the recipe we cook every day, with each ingredient weighed out." },
+  { t: "Adjust what goes in", d: "More almonds, no raisins, khand instead of jaggery — within limits that keep the batch sound." },
+  { t: "Review, then we cook it", d: `Check the full recipe and price. We cook it as its own batch, from ${MIN_CUSTOM_GRAMS} g.` },
 ];
 
 export default function CustomiseIndex() {
-  const items = Object.entries(recipes).map(([slug, r]) => ({ product: getProduct(slug)!, recipe: r }));
+  const eligible = CUSTOMISABLE_PRODUCTS.map((slug) => getProduct(slug)!).filter(Boolean);
+  const standard = products.filter((p) => !p.customizable);
+
   return (
     <div className="wrap">
+      <BuilderSteps current={0} />
       <header className={styles.head}>
-        <p className="eyebrow">Batch builder</p>
-        <h1>
-          Your family’s recipe, <em>cooked by ours.</em>
-        </h1>
-        <p className={styles.intro}>Pick a product, then make it yours — ingredient by ingredient.</p>
+        <p className="kicker">Custom batches</p>
+        <h1>Choose what to make</h1>
+        <p className="lede">Pick a product to see its house recipe and everything you can adjust.</p>
       </header>
 
-      <ol className={styles.how}>
-        {how.map((h, i) => (
-          <li key={h.t}>
-            <span>{String(i + 1).padStart(2, "0")}</span>
-            <h2>{h.t}</h2>
-            <p>{h.d}</p>
-          </li>
-        ))}
-      </ol>
-
-      <ul className={styles.grid}>
-        {items.map(({ product, recipe }) => {
-          const levels = Object.fromEntries(recipe.ingredients.map((i) => [i.id, i.default]));
-          const v500 = product.variants.find((v) => v.grams === 500);
-          const soldOut = isSoldOut(product);
-          const tint = Object.values(recipe.baseTint)[0].light;
+      <ul className={styles.list}>
+        {eligible.map((p) => {
+          const f = formulas[p.slug];
+          const v500 = p.variants.find((v) => v.grams === 500);
+          const soldOut = isSoldOut(p);
+          const adjustable = f.lines.filter((l) => !l.fill).length;
           return (
-            <li key={product.slug}>
-              <Link href={`/customise/${product.slug}`} className={styles.card} data-soldout={soldOut || undefined}>
-                <div className={styles.bowl}>
-                  <BowlArt pieces={piecesFor(levels)} tint={tint} uid={`idx-${product.slug}`} />
-                </div>
-                <div className={styles.cardBody}>
-                  <h2>{product.name}</h2>
-                  <p>{product.short}</p>
-                  <p className={styles.meta}>
-                    {recipe.ingredients.length} adjustable ingredients · {recipe.choices.length} choices
-                  </p>
-                  <p className={styles.price}>
-                    {soldOut ? "Sold out — back soon" : v500 ? `From ${formatINR(v500.price)} for 500 g` : ""}
-                  </p>
-                  <span className={styles.go}>
-                    Start building <ArrowRight />
+            <li key={p.slug} className={`${styles.item} reveal`}>
+              <Link href={`/customise/${p.slug}`} className={styles.card} data-soldout={soldOut || undefined}>
+                <SmartImage image={productImages(p)[0]} sizes="(min-width: 900px) 22vw, 40vw" ratio="4 / 5" decorative className={styles.img} />
+                <span className={styles.body}>
+                  <span className={styles.name}>{p.name}</span>
+                  <span className={styles.summary}>{f.summary}</span>
+                  <span className={styles.swatches} aria-hidden="true">
+                    {f.lines.map((l) => (
+                      <IngredientSwatch key={l.key} id={l.options[0]} className={styles.swatch} sizes="32px" />
+                    ))}
                   </span>
-                </div>
+                  <span className={styles.meta}>
+                    {adjustable} adjustable ingredients · base of {ingredients[f.lines.find((l) => l.fill)!.options[0]].name.toLowerCase()}
+                  </span>
+                  <span className={styles.foot}>
+                    <span className="num">{soldOut ? "Sold out" : v500 ? `From ${formatINR(v500.price)} for 500 g` : ""}</span>
+                    <span className={styles.go}>
+                      Start <ArrowRight />
+                    </span>
+                  </span>
+                </span>
               </Link>
             </li>
           );
         })}
       </ul>
+
+      <section className={styles.how} aria-labelledby="how-title">
+        <h2 id="how-title" className="visually-hidden">
+          How custom batches work
+        </h2>
+        <ol>
+          {how.map((h, i) => (
+            <li key={h.t}>
+              <span className="num">0{i + 1}</span>
+              <h3>{h.t}</h3>
+              <p>{h.d}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <p className={styles.note}>
+        Smaller amounts and {standard.map((p) => p.name).slice(0, 2).join(" and ")} are made to our house recipe only —{" "}
+        <Link href="/shop" className="link">
+          shop standard packs
+        </Link>
+        .
+      </p>
     </div>
   );
 }

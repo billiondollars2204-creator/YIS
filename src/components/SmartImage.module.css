@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: var(--paper-deep);
+  background: var(--paper-2);
   container-type: inline-size;
 }
 
@@ -10,37 +10,29 @@
   object-fit: cover;
 }
 
+/* Placeholder: a soft studio backdrop with a floor shadow, so empty slots read
+   as "photo goes here" rather than as broken UI. */
 .placeholder {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: flex-end;
   padding: 0.75rem;
-  background: linear-gradient(165deg, #f1eadf 0%, #e6dccd 100%);
-}
-
-.drawn {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: #efe7da;
-}
-
-.frame[data-tone="clay"] .drawn {
-  background: #efe2d6;
-}
-
-.frame[data-tone="sage"] .drawn {
-  background: #e7e8dc;
+  background:
+    radial-gradient(ellipse 46% 7% at 50% 82%, rgba(31, 26, 22, 0.1), transparent 70%),
+    linear-gradient(180deg, #f2ece3 0%, #ece4d8 72%, #e5dbcc 100%);
 }
 
 .frame[data-tone="clay"] .placeholder {
-  background: linear-gradient(165deg, #f1e6dc 0%, #e3cfbe 100%);
+  background:
+    radial-gradient(ellipse 46% 7% at 50% 82%, rgba(31, 26, 22, 0.1), transparent 70%),
+    linear-gradient(180deg, #f3e9e0 0%, #ecdccf 72%, #e4d0c0 100%);
 }
 
 .frame[data-tone="sage"] .placeholder {
-  background: linear-gradient(165deg, #edede3 0%, #d9dbc9 100%);
+  background:
+    radial-gradient(ellipse 46% 7% at 50% 82%, rgba(31, 26, 22, 0.1), transparent 70%),
+    linear-gradient(180deg, #eeeee5 0%, #e3e4d6 72%, #d9dbca 100%);
 }
 
 .label {
@@ -50,15 +42,14 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #5f564d;
-  background: rgba(255, 253, 249, 0.75);
+  color: var(--ink-2);
+  background: rgba(255, 253, 250, 0.8);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Thumbnails are too small for a readable label. */
-@container (max-width: 140px) {
+@container (max-width: 160px) {
   .label {
     display: none;
   }

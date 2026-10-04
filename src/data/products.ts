@@ -1,3 +1,4 @@
+import { CUSTOMISABLE_PRODUCTS } from "./formulations.ts";
 /**
  * PLACEHOLDER CATALOGUE.
  * Prices, stock, ingredients, nutrition and preparation notes are illustrative
@@ -42,6 +43,7 @@ export type Product = {
   storage: string;
   variants: Variant[];
   featured?: boolean;
+  /** Derived from CUSTOMISABLE_PRODUCTS in formulations.ts — don't set by hand. */
   customizable?: boolean;
 };
 
@@ -113,7 +115,6 @@ export const products: Product[] = [
     storage: "Store in an airtight jar, away from moisture. Shelf life: TBC.",
     variants: ladder(349),
     featured: true,
-    customizable: true,
   },
   {
     slug: "mothers-panjiri",
@@ -130,7 +131,6 @@ export const products: Product[] = [
     storage: "Store in an airtight jar, away from moisture. Shelf life: TBC.",
     variants: ladder(449, ["in_stock", "in_stock", "low_stock"]),
     featured: true,
-    customizable: true,
   },
   {
     slug: "atta-pinni",
@@ -165,7 +165,6 @@ export const products: Product[] = [
     storage: "Refrigerate after opening in warm weather. Shelf life: TBC.",
     variants: ladder(499),
     featured: true,
-    customizable: true,
   },
   {
     slug: "seasonal-laddu",
@@ -181,7 +180,6 @@ export const products: Product[] = [
     preparation: "Rolled by hand in small batches.",
     storage: "Shelf life: TBC.",
     variants: ladder(479, ["out_of_stock", "out_of_stock", "out_of_stock"]),
-    customizable: true,
   },
   {
     slug: "everyday-mix",
@@ -215,6 +213,8 @@ export const products: Product[] = [
     variants: ladder(329, ["low_stock", "in_stock", "in_stock"]),
   },
 ];
+
+for (const p of products) p.customizable = CUSTOMISABLE_PRODUCTS.includes(p.slug);
 
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);

@@ -42,7 +42,7 @@ export const faqs: { group: string; items: { q: string; a: string }[] }[] = [
     items: [
       {
         q: "Which products can I customise?",
-        a: "Panjiri and laddus can be customised. You can add or leave out certain ingredients and choose a lighter sweetness.",
+        a: "Panjiri, pinni and our dry-fruit mix can be made as custom batches. You start from our house recipe and adjust each ingredient by the gram, within limits set by the kitchen, then review the full recipe and price before adding it to your cart. Other products are made to the house recipe only.",
       },
       {
         q: "Why is there a 500 g minimum for custom orders?",

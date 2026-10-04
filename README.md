@@ -1,39 +1,13 @@
 # Immunitywize — storefront
 
-A clean, premium e-commerce site for **Immunitywize**, a homegrown Indian healthy-snacking brand (panjiri, pinni,
-dry-fruit laddus and dry-fruit mixes).
+A premium, product-first e-commerce site for **Immunitywize**, a homegrown Indian healthy-snacking brand. Panjiri and pinni are the core products, alongside dry-fruit laddus and mixes. It includes a detailed **custom-batch formulation** experience.
 
-> **Everything you see is placeholder content**: prices, stock, ingredients, nutrition, certifications, testimonials, contact
-> details and benefit copy. Placeholder claims are visibly marked with a small **TBC** tag (see
-> [Placeholder markers](#placeholder-markers)). Search the code for `PLACEHOLDER` and `TODO` before launch.
+> **Placeholder content:** prices, stock, ingredient lists, house-recipe amounts and limits, surcharges, nutrition, certifications, reviews, policies, contact details and benefit copy. Unverified items carry a dashed **TBC** tag on the page. **No photographs exist yet** — see [`CODEX_IMAGES.md`](CODEX_IMAGES.md).
 
-- **Plan & design system:** [`docs/PLAN.md`](docs/PLAN.md)
-- **Images to generate (for Codex):** [`CODEX_IMAGES.md`](CODEX_IMAGES.md) — all 49 image slots, each with a prompt, file path and exact placement.
-- **Logo concepts:** [`LOGO_CONCEPTS.md`](LOGO_CONCEPTS.md) — 8 meaningful logo directions with detailed generation prompts.
-- **Stack:** Next.js 16 (App Router, static generation) · React 19 · TypeScript · Zustand (cart) · CSS Modules + design
-  tokens · native `<dialog>` for drawers · no UI kit, no animation library.
-
-### What's included
-
-- Announcement bar, sticky header with a desktop **mega menu**, **search** overlay, account link and cart count.
-- Home page: CTA-led centred hero (rotating "for new mothers / cold mornings…" synced with "Shop for" links) →
-  bestseller rail → trust bar → 01 categories → 02 live batch-builder demo → 03 scroll-drawn kitchen story → 04 shop by need →
-  05 reviews → 06 story → 07 FAQ. Every section uses the same numbered label / title / one-line / link anatomy.
-- **Batch builder** (`/customise`, `/customise/<product>`) for panjiri and laddus. It has 8 steps: size, base, dry fruits,
-  seeds & traditional extras, spices, sweetness, finish and note. Each ingredient tile has an image and a None / Less / Usual /
-  Extra control. A live animated bowl reacts to every choice: pieces drop in, lift out and the batch stirs, with floating
-  "+ Almonds" notes. There are quick presets, a recipe receipt with live pricing, and a mobile buy bar with a mini bowl. The
-  500 g rule locks every option below 500 g and explains why.
-- **Shop** with category tabs, need filter, in-stock and customisable filters, sorting and search results (all URL-driven, e.g.
-  `/shop?category=laddus&sort=price-asc`).
-- **Product cards** with badges, hover image and one-tap quick add.
-- **Product page**: gallery with thumbnails, size selector with stock, quantity, add to cart / buy it now (with confirmation
-  state), a "Customise this" entry card into the builder, PIN-code delivery check (placeholder), "What's inside" ingredient
-  strip, at-a-glance specs, detail accordions, reviews placeholder, related products and a sticky add-to-cart bar.
-- Until photos exist, products, categories and ingredients render as **drawn stand-ins**: a glass jar showing the actual
-  ingredients, a brass bowl, and ingredient specimens. There are no grey boxes.
-- **Cart drawer** (opens on add), full cart page with suggestions, checkout with validation, account (placeholder),
-  FAQ, shipping & returns, contact, our story, 404.
+- **Design direction & plan:** [`docs/PLAN.md`](docs/PLAN.md)
+- **Image brief (55 slots):** [`CODEX_IMAGES.md`](CODEX_IMAGES.md)
+- **Logo concepts:** [`LOGO_CONCEPTS.md`](LOGO_CONCEPTS.md)
+- **Stack:** Next.js 16 (App Router, static generation) · React 19 · TypeScript · Zustand (cart) · CSS Modules + design tokens · native `<dialog>` · `next/image`. No UI kit, no animation library.
 
 ## Quick start
 
@@ -43,96 +17,50 @@ cp .env.example .env.local   # optional
 pnpm dev                     # http://localhost:3000
 ```
 
-| Script           | What it does                                          |
-| ---------------- | ----------------------------------------------------- |
-| `pnpm dev`       | Dev server with hot reload                            |
-| `pnpm build`     | Production build (all pages prerendered)              |
-| `pnpm start`     | Serve the production build                            |
-| `pnpm typecheck` | TypeScript check                                      |
-| `pnpm test`      | Unit tests: 500 g rule, recipe diffs and surcharges, checkout validation, catalogue filtering (`node --test`) |
-| `pnpm images:manifest` | Re-scan `public/images` (runs automatically before dev, build and typecheck) |
+| Script | What it does |
+|---|---|
+| `pnpm dev` | Dev server (regenerates the image manifest first) |
+| `pnpm build` / `pnpm start` | Production build (all pages prerendered) / serve it |
+| `pnpm typecheck` | TypeScript check |
+| `pnpm test` | Unit tests: formulation model, house-recipe validity, checkout validation, catalogue filters (`node --test`) |
+| `pnpm images:manifest` | Re-scan `public/images` after adding photos |
 
-Node ≥ 20.9 is required (Node 22.6+ for `pnpm test`, which uses built-in TypeScript stripping).
+Node ≥ 20.9 (≥ 22.6 for `pnpm test`, which uses built-in TypeScript stripping).
 
-## Project structure
+## What's in the store
 
-```
-src/
-  app/                    Routes (App Router)
-    page.tsx              Home — the brand story
-    shop/                 Listing (/shop) and product detail (/shop/[slug])
-    cart/  checkout/      Cart and checkout (client components)
-    support/ faq/ shipping-returns/ contact/ our-story/
-    sitemap.ts robots.ts  SEO
-    globals.css           Design tokens + base + primitives (buttons, forms, chips, accordions, sheets)
-  components/
-    SiteHeader.tsx        Header, mega menu, search + mobile menu triggers
-    CartDrawer.tsx        Slide-out cart (native <dialog>)
-    ProductCard.tsx       Card with badges, hover image, quick add
-    ProductPurchase.tsx   Sizes, quantity, add to cart / buy now, sticky bar
-    builder/              BatchBuilder (steps, tiles, receipt) + BowlVisual (animated bowl)
-    art/                  Ingredient glyphs, IngredientArt, BowlArt, ProductSketch (drawn stand-ins)
-    home/                 HeroIntro (rotating audience) + BowlDemo (self-playing builder)
-    SmartImage.tsx        Renders an image slot or a neutral placeholder if the file is missing
-    KitchenScene.tsx      Scroll-driven sketch of a mother cooking
-  data/
-    products.ts           Catalogue (PLACEHOLDER data) — categories, variants, options, badges
-    content.ts            Benefits, FAQ, Indian states
-    ingredients.ts        Ingredient library + per-product house recipes for the builder (PLACEHOLDER)
-    images.ts             Image slot registry (paths, alt text) — mirrors CODEX_IMAGES.md
-    image-manifest.json   Generated: which image files exist
-  lib/
-    customization.ts      The 500 g rule, recipe diffs, signatures, surcharges (pure, unit-tested)
-    validation.ts         Checkout validation (pure, unit-tested)
-    catalog.ts            Shop filtering/sorting/search (pure, unit-tested)
-    cart.ts               Zustand cart store (persisted) + cart drawer state
-    analytics.ts          Event hooks (dataLayer + DOM event)
-    money.ts site.ts      INR formatting, shipping rules, site config
-scripts/image-manifest.mjs  Builds image-manifest.json from public/images
-public/images/            Generated/real photography goes here (see CODEX_IMAGES.md)
-```
+- **Header:** utility strip; sticky bar with logo, direct category links (current scope highlighted), a *Custom batch* entry, search, account and cart. On mobile, a menu sheet.
+- **Home:** centred hero (headline, two CTAs, category chips, product photo with shoppable caption) → Bestsellers → Shop by category → Custom batches → the scroll-drawn kitchen story → What goes in → FAQ.
+- **Shop:** category tabs, need / in-stock / customisable filters, sorting and search, all URL-driven.
+- **Product cards:** hover image, quick add with confirmation, price per 100 g, a *Customisable* badge and builder link only on eligible products.
+- **Product page:** gallery, pack-size buttons with unit price, stock, quantity, add to cart / buy now, order-total and returns note, a *Make it your way* panel (eligible products only), facts, recipe table with ingredient swatches, accordions, related products, sticky add bar.
+- **Custom batches** (`/customise` → `/customise/<product>` → review): see below.
+- **Cart drawer and cart:** custom lines list every change, surcharge and note, with an **Edit mix** link. Checkout with validation and a demo confirmation. Account, FAQ, shipping & returns, contact, our story, 404.
 
-## Customising
+## Custom batches
 
-### Products
+**Eligibility.** `CUSTOMISABLE_PRODUCTS` in `src/data/formulations.ts` lists the products that can be customised: currently `classic-panjiri`, `mothers-panjiri`, `atta-pinni`, `everyday-mix`. Badges, filters, product-page panels, builder routes and sitemap entries all follow this list. Every other product is a standard purchase.
 
-Edit `src/data/products.ts`. Each product has `variants` (pack sizes with price and stock), `ingredients`, `nutrition`,
-`preparation`, `storage`, and optional `customizable` + `custom` option lists. Product pages, sitemap and structured data are
-generated from this file. When a real backend/CMS arrives, keep the same `Product` shape and swap the data source.
+**House recipes.** `formulas` in the same file define each recipe in grams per 500 g of finished batch. Each line has:
 
-### The batch builder and the 500 g rule
+- `role`: `"base"` (required, can't be removed) or `"addition"` (can go to zero)
+- `options`: ingredient ids; the first is the house choice, and more than one makes it swappable (e.g. jaggery / khand / sugar)
+- `grams`, `min`, `max`, `step`
+- `fill`: exactly one line per recipe, which absorbs the remaining weight (atta for panjiri and pinni, almonds for the mix). This keeps every 500 g at 500 g, and its `min` caps how much can be added elsewhere.
 
-- `MIN_CUSTOM_GRAMS` in `src/lib/customization.ts` (default **500**) applies to the line weight (pack × quantity). In the
-  builder the 250 g size stays selectable for a standard jar, but every customisation control is disabled with an explanation
-  and a "Switch to 500 g" button. Customised cart lines can't go below the minimum.
-- `src/data/ingredients.ts` holds the ingredient library (name, local name, sensory note, colour, extra price per level per
-  500 g) and one **house recipe** per customisable product (which ingredients are adjustable, the default level, and choice
-  groups such as base, roast, ghee, sweetener, sweetness, texture and laddu size). Change this file to change the builder; no
-  UI code needs editing.
-- Only differences from the house recipe are stored on the cart line (`normalize`), so identical batches merge. Adding more
-  than the house level costs `extraPrice` per level; removing never changes the price.
-- **All ingredient options, levels and prices are placeholders** pending kitchen confirmation.
+**Ingredients.** `src/data/ingredients.ts` lists every ingredient with its name, local name, description, prep, category, allergen and price per 100 g, which drives the surcharges.
 
-### Design tokens
+**Pricing.** Extra grams above the house amount are charged at ingredient cost, and pricier swaps at the difference. The total is rounded up to ₹5 per 500 g. Reducing or removing ingredients never lowers the price.
 
-All colours, type sizes, spacing and easing live at the top of `src/app/globals.css`. See `docs/PLAN.md` for usage rules
-and contrast ratios.
+**Rules.** Custom batches start at **500 g** (500 g, 1 kg or 2 kg in the builder). Standard 250 g packs are bought from the product page. Customised cart lines can't drop below 500 g.
 
-### Images
+**Consistency.** The cart stores only the differences from the house recipe. The surcharge is recomputed from the formula wherever it's shown (builder, review, drawer, cart, checkout), so prices can't drift. **Edit mix** reopens the builder prefilled and replaces the line in place.
 
-Every image on the site is a named slot (see `src/data/images.ts`) that points to a file under `public/images/`.
-**[`CODEX_IMAGES.md`](CODEX_IMAGES.md)** lists all 49 slots with a generation prompt, final size, save path and exactly where
-each appears. Hand that file to Codex (or a photographer) and drop the results in place. No code changes are needed.
+> **All recipes, limits, steps and prices are drafts for kitchen confirmation**, marked TBC in the UI. `pnpm test` checks every formula: the fill line meets its minimum at the house recipe, totals equal 500 g, ingredient ids exist, and house amounts sit within their limits.
 
-- Files can be `.jpg`, `.webp`, `.png` or `.avif`; the manifest picks whichever exists.
-- Missing files render as a drawn stand-in (jar, bowl or ingredient specimen) or, for story photos, a quiet tonal block.
-- Images are served through `next/image` (responsive sizes, AVIF/WebP).
-- `public/images/og.jpg` (1200×630) becomes the social share image automatically.
+## Images
 
-### Placeholder markers
-
-`<Placeholder>` wraps copy that must be verified (claims, policies, certifications). It renders a small dashed **TBC** tag.
-Set `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false` to hide the tags once copy is confirmed — but replace the text first.
+Every photo is a named slot (`src/data/images.ts`) that points to a path under `public/images/`. `CODEX_IMAGES.md` specifies all 55 (prompt, size, background, crop, placement, alt, status). Drop files at those paths and run `pnpm images:manifest`; no code changes are needed. Missing photos render as same-size placeholders, and ingredients render as colour swatches.
 
 ## Integrations (placeholders)
 
@@ -142,7 +70,7 @@ Set `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false` to hide the tags once copy is c
 | Shipping   | `lib/money.ts`                          | Replace flat rates with courier API rates and a PIN-code serviceability check. |
 | Newsletter | `components/Newsletter.tsx`             | POST to your email provider.                                               |
 | Contact    | `app/contact/ContactForm.tsx`           | Send to inbox/CRM via a server action.                                     |
-| Reviews    | Home "Kind words" section               | Connect a reviews provider; add `aggregateRating` to Product JSON-LD.      |
+| Reviews    | Product page "Reviews" section          | Connect a reviews provider; add `aggregateRating` to Product JSON-LD.      |
 | Analytics  | `lib/analytics.ts`, `components/Analytics.tsx` | Set `NEXT_PUBLIC_GTM_ID` to load GTM. Add a consent banner before enabling. |
 
 ### Analytics events
@@ -151,31 +79,21 @@ Set `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false` to hide the tags once copy is c
 `page_view`, `view_item`, `view_item_list`, `search`, `select_variant`, `customize_change`, `add_to_cart`, `remove_from_cart`, `view_cart`,
 `begin_checkout`, `purchase`, `contact_submit`, `newsletter_signup`. Nothing is sent anywhere unless you configure a provider.
 
-## SEO & accessibility
+## Accessibility, motion & SEO
 
-- Static HTML for every page; per-page `metadata`, canonical URLs, Open Graph defaults, `sitemap.xml`, `robots.txt`
-  (cart/checkout disallowed and `noindex`).
-- JSON-LD: `Organization` (layout), `Product` + `BreadcrumbList` (product pages), `FAQPage` (FAQ). Add images, SKU/GTIN and
-  ratings when available.
-- Semantic landmarks, skip link, visible focus rings, labelled controls, native inputs behind custom-styled chips, error
-  summary that receives focus on checkout, `aria-live` for cart count and add-to-cart feedback, 44px+ touch targets.
-- All motion respects `prefers-reduced-motion`; content is never hidden when JavaScript is unavailable.
+- Semantic landmarks, skip link, visible focus, native radios and buttons for every control (including the builder), and labelled steppers. Polite live regions announce add-to-cart and every builder change with the new total.
+- Motion is CSS: scroll-driven reveals (`animation-timeline: view()`, progressive enhancement), hover and focus states, an eased total, and dishes in the mix composition that grow, shrink and empty. Everything is disabled under `prefers-reduced-motion`. Nothing hides content without JS or hijacks scroll.
+- Static HTML for every route; metadata, canonicals, sitemap and robots (cart and checkout are noindex); Organization, Product, BreadcrumbList and FAQPage JSON-LD.
 
 ## Deployment
 
-The site is fully static-renderable and deploys anywhere Next.js runs:
+The site deploys anywhere Next.js runs: Vercel (preset "Next.js"), a Node host (`pnpm build && pnpm start`), or Netlify/Cloudflare adapters. Set `NEXT_PUBLIC_SITE_URL` in production.
 
-- **Vercel:** import the repo, framework preset "Next.js", set `NEXT_PUBLIC_SITE_URL`. Done.
-- **Node host / Docker:** `pnpm build && pnpm start` (port 3000, override with `-p`).
-- **Netlify / Cloudflare:** use their Next.js adapters.
+## Before launch
 
-Set `NEXT_PUBLIC_SITE_URL` in production so canonical URLs, sitemap and structured data use the real domain.
-
-## Before launch checklist
-
-- [ ] Replace every `PLACEHOLDER` / `TODO` / TBC item (prices, stock, ingredients, nutrition, policies, contact details).
-- [ ] Legal/regulatory review of benefit copy (no medical claims) and FSSAI labelling details.
-- [ ] Real photography and Open Graph image (generated images from `CODEX_IMAGES.md` are stand-ins).
-- [ ] Payment, shipping, newsletter and contact integrations; order emails.
-- [ ] Consent banner before analytics.
+- [ ] Kitchen confirms ingredients, house recipes, limits, steps and per-100 g prices in `src/data/formulations.ts` and `src/data/ingredients.ts`.
+- [ ] Replace placeholder prices, stock, nutrition, allergens, shelf life, policies and contact details.
+- [ ] Legal review of benefit copy and FSSAI labelling.
+- [ ] Generate or shoot the photos in `CODEX_IMAGES.md`, then replace them with real photography.
+- [ ] Connect payments, shipping, newsletter, contact form and reviews; add a consent banner before analytics.
 - [ ] Set `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false`.

@@ -56,7 +56,7 @@ export function ShopView({ query }: { query: string }) {
   const intro = q
     ? `${list.length} ${list.length === 1 ? "product matches" : "products match"} your search.`
     : custom && !cat
-      ? "Panjiri and laddus you can adjust to your taste. Custom batches start at 500 g."
+      ? "Products you can order as a custom batch — adjust the recipe ingredient by ingredient, from 500 g."
       : (cat?.blurb ?? "Everything from our kitchen. Every product lists exactly what’s inside.");
 
   return (

@@ -12,7 +12,7 @@ const columns = [
       { href: "/shop?category=pinni", label: "Pinni" },
       { href: "/shop?category=laddus", label: "Dry-fruit laddus" },
       { href: "/shop?category=mixes", label: "Dry-fruit mixes" },
-      { href: "/customise", label: "Build your batch" },
+      { href: "/customise", label: "Custom batches" },
     ],
   },
   {

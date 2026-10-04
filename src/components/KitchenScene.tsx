@@ -75,19 +75,19 @@ const steam: Stroke[] = [
 const steps = [
   {
     title: "Before the house wakes up",
-    body: "The kitchen is quiet. The heavy kadhai goes on a low flame, and the jars come down from the shelf.",
+    body: "The heavy kadhai goes on a low flame while the house is still quiet.",
   },
   {
     title: "Roasting takes patience",
-    body: "Flour is roasted slowly and stirred without stopping, until it turns golden and smells nutty. There is no shortcut for this part.",
+    body: "Atta is stirred in ghee, without stopping, until it turns golden and smells nutty. There is no shortcut.",
   },
   {
-    title: "Folded in by hand",
-    body: "Nuts and the good things go in, a little at a time. Tasted, adjusted, tasted again — the way it was taught to us.",
+    title: "Weighed and folded in",
+    body: "Nuts, seeds and sweetener are weighed to the recipe — yours, if you made a custom batch — and folded in by hand.",
   },
   {
-    title: "Packed the same day",
-    body: "Each batch cools, gets rolled or spooned into jars, and is packed for you while it is still fresh.",
+    title: "Cooled and packed",
+    body: "Each batch cools, is pressed or spooned into jars, sealed and labelled with what’s inside.",
   },
 ];
 
@@ -107,7 +107,7 @@ function Strokes({ list }: { list: Stroke[] }) {
   );
 }
 
-export function KitchenScene({ index }: { index?: string }) {
+export function KitchenScene() {
   const sectionRef = useRef<HTMLElement>(null);
   const artRef = useRef<SVGSVGElement>(null);
   const [step, setStep] = useState(0);
@@ -190,9 +190,7 @@ export function KitchenScene({ index }: { index?: string }) {
       </div>
 
       <div className={styles.copy}>
-        <p className="section-label">
-          {index && <span>{index}</span>}How it’s made
-        </p>
+        <p className="kicker">How it’s made</p>
         <h2 id="kitchen-title" className={styles.title}>
           Every jar starts on <em>a slow flame.</em>
         </h2>
@@ -207,7 +205,11 @@ export function KitchenScene({ index }: { index?: string }) {
             </li>
           ))}
         </ol>
-        <p className={styles.note}>Story beats are placeholders — replace with the family’s own words and photos.</p>
+        <p className={styles.note}>
+          <a href="/our-story" className="arrow-link">
+            Read our story
+          </a>
+        </p>
       </div>
     </section>
   );

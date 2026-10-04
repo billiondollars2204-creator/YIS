@@ -91,3 +91,19 @@ export const ShieldIcon = ({ className }: P) => (
     <path d="m9 12 2.2 2.2L15.5 10" />
   </svg>
 );
+export const ArrowLeft = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </svg>
+);
+export const EditIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M4 20h4L19 9l-4-4L4 16v4ZM13.5 6.5l4 4" />
+  </svg>
+);
+export const ReturnIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M9 14 4 9l5-5" />
+    <path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" />
+  </svg>
+);

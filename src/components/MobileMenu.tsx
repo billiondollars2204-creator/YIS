@@ -1,12 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { categories } from "@/data/products";
-import { benefits } from "@/data/content";
-import { nav } from "@/lib/site";
+import { categories, productsIn } from "@/data/products";
+import { MIN_CUSTOM_GRAMS } from "@/lib/customization";
 import { useDialog } from "@/lib/useDialog";
-import { CloseIcon } from "./icons";
+import { ArrowRight, CloseIcon } from "./icons";
 import styles from "./MobileMenu.module.css";
+
+const secondary = [
+  { href: "/our-story", label: "Our story" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/shipping-returns", label: "Shipping & returns" },
+  { href: "/contact", label: "Contact" },
+  { href: "/account", label: "Account" },
+];
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const ref = useDialog(open, onClose);
@@ -20,45 +27,37 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           </button>
         </div>
         <nav aria-label="Mobile">
-          <p className={styles.label}>Shop</p>
           <ul className={styles.primary}>
             <li>
               <Link href="/shop" onClick={onClose}>
                 Shop all
+                <ArrowRight />
               </Link>
             </li>
             {categories.map((c) => (
               <li key={c.slug}>
                 <Link href={`/shop?category=${c.slug}`} onClick={onClose}>
-                  {c.name}
-                  {c.comingSoon && <span className={styles.soon}>Soon</span>}
+                  <span>
+                    {c.name}
+                    <small>{c.comingSoon ? "Coming soon" : `${productsIn(c.slug).length} products`}</small>
+                  </span>
+                  <ArrowRight />
                 </Link>
               </li>
             ))}
           </ul>
-          <p className={styles.label}>Shop by need</p>
+          <Link href="/customise" className={styles.custom} onClick={onClose}>
+            <span className={styles.customTitle}>Make a custom batch</span>
+            <span className={styles.customText}>Panjiri, pinni and dry-fruit mix, from {MIN_CUSTOM_GRAMS} g</span>
+          </Link>
           <ul className={styles.secondary}>
-            {benefits.map((b) => (
-              <li key={b.slug}>
-                <Link href={`/shop?need=${b.slug}`} onClick={onClose}>
-                  {b.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <ul className={styles.secondary}>
-            {nav.map((n) => (
+            {secondary.map((n) => (
               <li key={n.href}>
                 <Link href={n.href} onClick={onClose}>
                   {n.label}
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/account" onClick={onClose}>
-                Account
-              </Link>
-            </li>
           </ul>
         </nav>
       </div>

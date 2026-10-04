@@ -1,6 +1,21 @@
 .gallery {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--s-3);
+}
+
+.main {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.fade {
+  animation: fade-in 450ms ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0.35;
+  }
 }
 
 .thumbs {
@@ -8,21 +23,11 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: var(--space-2);
+  gap: var(--s-2);
 }
 
 .thumbs li {
-  width: 4.5rem;
-}
-
-.fade {
-  animation: fade-in 400ms ease;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0.4;
-  }
+  width: 4.25rem;
 }
 
 .thumb {
@@ -30,9 +35,11 @@
   width: 100%;
   padding: 0;
   border: 1px solid transparent;
+  border-radius: var(--radius);
+  overflow: hidden;
   background: none;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.65;
   transition: opacity 160ms ease, border-color 160ms ease;
 }
 
@@ -47,8 +54,8 @@
 
 @media (min-width: 960px) {
   .gallery {
-    grid-template-columns: 4.5rem 1fr;
-    gap: var(--space-4);
+    grid-template-columns: 4.25rem 1fr;
+    gap: var(--s-4);
   }
   .main {
     grid-column: 2;
@@ -58,5 +65,11 @@
     grid-column: 1;
     grid-row: 1;
     flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade {
+    animation: none;
   }
 }

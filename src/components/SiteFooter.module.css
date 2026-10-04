@@ -1,8 +1,8 @@
 .footer {
-  margin-top: var(--space-9);
+  margin-top: var(--s-9);
   background: var(--ink);
   color: #d9cfc2;
-  font-size: var(--step--1);
+  font-size: var(--t-sm);
 }
 
 .footer a {
@@ -21,15 +21,24 @@
 
 .newsletter {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--s-5);
   align-items: end;
-  padding-block: var(--space-8) var(--space-7);
-  border-bottom: 1px solid rgba(244, 236, 225, 0.14);
+  padding-block: var(--s-8) var(--s-7);
+}
+
+/* Rules span the content width, not the padded box. */
+.newsletter,
+.base {
+  background: linear-gradient(rgba(244, 236, 225, 0.14), rgba(244, 236, 225, 0.14)) var(--gutter) 100% / calc(100% - 2 * var(--gutter)) 1px no-repeat;
+}
+
+.base {
+  background-position: var(--gutter) 0;
 }
 
 .nlTitle {
-  margin: 0 0 var(--space-2);
-  font-size: var(--step-3);
+  margin: 0 0 var(--s-2);
+  font-size: var(--t-xl);
   color: #fff;
 }
 
@@ -41,8 +50,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-6);
-  padding-block: var(--space-7);
+  gap: var(--s-6);
+  padding-block: var(--s-7);
 }
 
 .brand {
@@ -54,13 +63,13 @@
   font-size: 1.75rem;
   font-weight: 600;
   color: #fff;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--s-2);
 }
 
 .colTitle {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--s-3);
   font-family: var(--font-body);
-  font-size: var(--step--2);
+  font-size: var(--t-xs);
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -84,11 +93,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--space-2) var(--space-6);
-  padding-block: var(--space-5) var(--space-6);
-  border-top: 1px solid rgba(244, 236, 225, 0.14);
+  gap: var(--s-2) var(--s-6);
+  padding-block: var(--s-5) var(--s-6);
   color: #b8ab9c;
-  font-size: var(--step--2);
+  font-size: var(--t-xs);
 }
 
 .base p {

@@ -7,12 +7,16 @@
 
 .media {
   position: relative;
-  display: block;
   overflow: hidden;
+  border-radius: var(--radius);
 }
 
-.media > :first-child {
-  transition: transform 700ms var(--ease-out);
+.mediaLink {
+  display: block;
+}
+
+.mediaLink > :first-child {
+  transition: transform 900ms var(--ease);
 }
 
 .alt {
@@ -20,15 +24,7 @@
   inset: 0;
   height: 100%;
   opacity: 0;
-  transition: opacity 400ms ease;
-}
-
-.card:hover .alt {
-  opacity: 1;
-}
-
-.card:hover .media > :first-child {
-  transform: scale(1.03);
+  transition: opacity 450ms ease;
 }
 
 .badges {
@@ -37,46 +33,49 @@
   left: 0.6rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.3rem;
+  pointer-events: none;
 }
 
-.badge {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--jaggery);
+/* Touch: a compact add button sits on the image corner. */
+.quick {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
 }
 
-.badge[data-kind="outline"] {
-  color: var(--ink);
-  background: rgba(255, 253, 249, 0.92);
-}
-
-@media (max-width: 699px) {
-  .badge[data-kind="outline"]:not(:only-child) {
-    display: none;
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .alt {
+    opacity: 1;
   }
-}
-
-.badge[data-kind="muted"] {
-  color: var(--ink);
-  background: #e9e2d7;
+  .card:hover .mediaLink > :first-child {
+    transform: scale(1.035);
+  }
+  /* Pointer: a full-width bar slides up on hover or keyboard focus. */
+  .quick {
+    left: 0.6rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 220ms ease, transform 300ms var(--ease);
+  }
+  .card:hover .quick,
+  .card:focus-within .quick {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .body {
   flex: 1;
-  padding: 0.9rem 0 0.85rem;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.85rem;
 }
 
 .name {
-  margin: 0 0 0.2rem;
-  font-family: var(--font-body);
-  font-size: var(--step-0);
+  margin: 0 0 0.15rem;
+  font-size: var(--t-base);
   font-weight: 600;
-  letter-spacing: 0;
   line-height: 1.35;
 }
 
@@ -90,16 +89,9 @@
 }
 
 .short {
-  margin: 0 0 0.3rem;
-  font-size: var(--step--1);
-  color: var(--ink-soft);
-}
-
-.sizes {
   margin: 0 0 0.5rem;
-  font-size: var(--step--2);
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
+  font-size: var(--t-sm);
+  color: var(--ink-2);
 }
 
 .price {
@@ -107,30 +99,40 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0 0.6rem;
+  gap: 0.1rem 0.55rem;
   font-weight: 600;
-  font-variant-numeric: tabular-nums;
 }
 
-.muted {
+.meta {
+  font-size: var(--t-xs);
   font-weight: 400;
-  color: var(--ink-soft);
-  font-size: var(--step--1);
+  color: var(--ink-2);
 }
 
 .low {
-  font-size: var(--step--2);
+  margin: 0.3rem 0 0;
+  font-size: var(--t-xs);
   font-weight: 600;
   color: var(--saffron);
 }
 
+.customLink {
+  align-self: flex-start;
+  margin-top: 0.55rem;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--saffron);
+  text-underline-offset: 0.2em;
+}
+
 .card[data-soldout] .media {
-  opacity: 0.7;
+  opacity: 0.72;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .media > :first-child,
-  .alt {
+  .mediaLink > :first-child,
+  .alt,
+  .quick {
     transition: none;
   }
 }

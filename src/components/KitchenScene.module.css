@@ -1,8 +1,8 @@
 .section {
   position: relative;
   display: grid;
-  gap: var(--space-6);
-  padding-block: var(--space-8) var(--space-6);
+  gap: var(--s-6);
+  padding-block: var(--s-8) var(--s-6);
 }
 
 .stickyArt {
@@ -10,8 +10,8 @@
   top: var(--header-h);
   z-index: 1;
   /* Same colour as the page so text scrolling beneath is hidden without a visible box */
-  background-color: var(--paper);
-  padding-block: var(--space-2);
+  background-color: var(--paper-2);
+  padding-block: var(--s-2);
   mask-image: linear-gradient(to bottom, #000 88%, transparent);
 }
 
@@ -74,8 +74,8 @@
 }
 
 .title {
-  font-size: var(--step-4);
-  margin-block: var(--space-2) var(--space-6);
+  font-size: var(--t-xl);
+  margin-block: var(--s-2) var(--s-6);
 }
 
 .steps {
@@ -83,7 +83,7 @@
   padding: 0;
   margin: 0;
   display: grid;
-  gap: var(--space-8);
+  gap: var(--s-8);
 }
 
 .step {
@@ -93,13 +93,13 @@
 }
 
 .step h3 {
-  font-size: var(--step-2);
-  margin: 0 0 var(--space-2);
+  font-size: var(--t-lg);
+  margin: 0 0 var(--s-2);
 }
 
 .step p {
   margin: 0;
-  color: var(--ink-soft);
+  color: var(--ink-2);
 }
 
 .num {
@@ -107,11 +107,11 @@
   left: 0;
   top: 0.45em;
   font-family: var(--font-body);
-  font-size: var(--step--2);
+  font-size: var(--t-xs);
   font-weight: 600;
   letter-spacing: 0.1em;
   line-height: 1;
-  color: var(--ink-soft);
+  color: var(--ink-2);
   transition: color 300ms ease;
 }
 
@@ -120,17 +120,16 @@
 }
 
 .note {
-  font-size: var(--step--1);
-  color: var(--ink-soft);
-  font-style: italic;
-  margin-top: var(--space-6);
+  font-size: var(--t-sm);
+  color: var(--ink-2);
+  margin-top: var(--s-6);
 }
 
 @media (min-width: 900px) {
   .section {
     grid-template-columns: 1.15fr 1fr;
     align-items: start;
-    gap: var(--space-8);
+    gap: var(--s-8);
   }
 
   .stickyArt {
@@ -144,7 +143,7 @@
   }
 
   .step {
-    min-height: 44vh;
+    min-height: 36vh;
   }
 
   .copy {

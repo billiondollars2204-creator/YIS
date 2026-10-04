@@ -1,68 +1,68 @@
 .page {
-  padding-block: var(--space-6) 0;
+  padding-block: var(--s-6) 0;
 }
 
 .title {
-  font-size: var(--step-4);
-  margin-bottom: var(--space-5);
+  font-size: var(--t-xl);
+  margin-bottom: var(--s-5);
 }
 
 .layout {
   display: grid;
-  gap: var(--space-7);
+  gap: var(--s-7);
 }
 
 .ship {
-  padding: var(--space-4);
-  margin-bottom: var(--space-3);
-  background: var(--paper-deep);
+  padding: var(--s-4);
+  margin-bottom: var(--s-3);
+  background: var(--paper-2);
 }
 
 .back {
-  margin-top: var(--space-5);
+  margin-top: var(--s-5);
 }
 
 .reassure {
-  margin: var(--space-3) 0 0;
-  font-size: var(--step--1);
-  color: var(--ink-soft);
+  margin: var(--s-3) 0 0;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
   text-align: center;
 }
 
 .empty {
-  padding: var(--space-7) 0;
+  padding: var(--s-7) 0;
   display: grid;
   justify-items: start;
-  gap: var(--space-3);
-  color: var(--ink-soft);
+  gap: var(--s-3);
+  color: var(--ink-2);
 }
 
 .suggest {
-  margin-top: var(--space-8);
-  padding-top: var(--space-7);
-  border-top: 1px solid var(--line);
+  margin-top: var(--s-8);
+  padding-top: var(--s-7);
+  border-top: 1px solid var(--rule);
 }
 
 .suggestTitle {
-  font-size: var(--step-3);
-  margin-bottom: var(--space-6);
+  font-size: var(--t-xl);
+  margin-bottom: var(--s-6);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-6) var(--space-4);
+  gap: var(--s-6) var(--s-4);
 }
 
 @media (min-width: 960px) {
   .layout {
     grid-template-columns: 1.6fr 1fr;
     align-items: start;
-    gap: var(--space-8);
+    gap: var(--s-8);
   }
   .aside {
     position: sticky;
-    top: calc(var(--header-h) + var(--space-5));
+    top: calc(var(--header-h) + var(--s-5));
   }
   .grid {
     grid-template-columns: repeat(4, 1fr);

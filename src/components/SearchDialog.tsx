@@ -61,7 +61,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                   {results.map((p) => (
                     <li key={p.slug}>
                       <Link href={`/shop/${p.slug}`} className={styles.result} onClick={onClose}>
-                        <SmartImage image={productImages(p)[0]} sizes="64px" ratio="4 / 5" decorative className={styles.thumb} />
+                        <SmartImage image={productImages(p)[0]} sizes="64px" ratio="4 / 5" decorative quiet className={styles.thumb} />
                         <span>
                           <span className={styles.name}>{p.name}</span>
                           <span className={styles.meta}>From {formatINR(fromPrice(p))}</span>

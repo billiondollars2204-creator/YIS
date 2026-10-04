@@ -1,4 +1,5 @@
 import { formatINR } from "@/lib/money";
+import { batchLabel, describeChanges } from "@/lib/describe";
 import type { ResolvedLine } from "@/lib/cart";
 import styles from "./OrderSummary.module.css";
 
@@ -23,9 +24,14 @@ export function OrderSummary({ lines, subtotal, shipping, shippingLabel = "Deliv
           {lines.map((l) => (
             <li key={l.key}>
               <span>
-                {l.qty} × {l.product.name} <span className={styles.muted}>({l.variant.label}{l.customization ? ", custom" : ""})</span>
+                {l.qty} × {l.product.name}
+                <span className={styles.lineMeta}>
+                  {l.customization
+                    ? `Custom batch · ${batchLabel(l.variant.grams, 1)} · ${describeChanges(l.slug, l.customization).length || "no"} changes`
+                    : l.variant.label}
+                </span>
               </span>
-              <span>{formatINR(l.lineTotal)}</span>
+              <span className="num">{formatINR(l.lineTotal)}</span>
             </li>
           ))}
         </ul>
@@ -33,7 +39,7 @@ export function OrderSummary({ lines, subtotal, shipping, shippingLabel = "Deliv
       <dl className={styles.totals}>
         <div>
           <dt>Subtotal</dt>
-          <dd>{formatINR(subtotal)}</dd>
+          <dd className="num">{formatINR(subtotal)}</dd>
         </div>
         <div>
           <dt>{shippingLabel}</dt>
@@ -41,7 +47,7 @@ export function OrderSummary({ lines, subtotal, shipping, shippingLabel = "Deliv
         </div>
         <div className={styles.total}>
           <dt>Total</dt>
-          <dd>{formatINR(total)}</dd>
+          <dd className="num">{formatINR(total)}</dd>
         </div>
       </dl>
       <p className={styles.muted}>Prices include taxes (placeholder — confirm GST display).</p>

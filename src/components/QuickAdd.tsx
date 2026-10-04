@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import type { Product } from "@/data/products";
 import { useCart, useCartUI } from "@/lib/cart";
+import { formatINR } from "@/lib/money";
 import { track } from "@/lib/analytics";
-import { CheckIcon } from "./icons";
+import { CheckIcon, PlusIcon } from "./icons";
 import styles from "./QuickAdd.module.css";
 
-/** Adds the smallest available pack, confirms in place, and opens the cart drawer. */
-export function QuickAdd({ product }: { product: Product }) {
+/** Adds the smallest available pack, confirms in place, then opens the cart drawer. */
+export function QuickAdd({ product, className }: { product: Product; className?: string }) {
   const add = useCart((s) => s.add);
   const openCart = useCartUI((s) => s.setOpen);
   const [added, setAdded] = useState(false);
@@ -16,38 +17,29 @@ export function QuickAdd({ product }: { product: Product }) {
 
   useEffect(() => {
     if (!added) return;
-    const t = setTimeout(() => setAdded(false), 2000);
+    const t = setTimeout(() => setAdded(false), 1800);
     return () => clearTimeout(t);
   }, [added]);
 
-  if (!variant) {
-    return (
-      <button type="button" className={`btn btn--outline btn--block btn--small ${styles.btn}`} disabled>
-        Sold out
-      </button>
-    );
-  }
+  if (!variant) return null;
 
   return (
     <button
       type="button"
-      className={`btn btn--outline btn--block btn--small ${styles.btn}`}
+      className={`${styles.btn} ${className ?? ""}`}
       data-added={added || undefined}
+      aria-label={added ? `Added ${product.name} to cart` : `Add ${variant.label} ${product.name} to cart, ${formatINR(variant.price)}`}
       onClick={() => {
         add(product.slug, variant.id, 1);
         track("add_to_cart", { item_id: product.slug, variant: variant.id, quantity: 1, value: variant.price, currency: "INR", source: "quick_add" });
         setAdded(true);
-        openCart(true);
+        setTimeout(() => openCart(true), 350);
       }}
     >
-      {added ? (
-        <>
-          <CheckIcon className={styles.icon} /> Added
-        </>
-      ) : (
-        <>Quick add · {variant.label}</>
-      )}
-      <span className="visually-hidden">, {product.name}</span>
+      {added ? <CheckIcon /> : <PlusIcon />}
+      <span className={styles.label} aria-hidden="true">
+        {added ? "Added" : `Add ${variant.label} · ${formatINR(variant.price)}`}
+      </span>
     </button>
   );
 }

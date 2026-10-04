@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Hanken_Grotesk } from "next/font/google";
+import { Mukta, Tiro_Devanagari_Hindi } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -9,13 +9,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { resolveImage } from "@/data/images";
 import { site } from "@/lib/site";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
+// Both families are by Indian type foundries and cover Latin + Devanagari,
+// so English and Hindi product names share one typographic voice.
+const tiro = Tiro_Devanagari_Hindi({ subsets: ["latin", "devanagari"], weight: "400", variable: "--font-tiro", display: "swap" });
+const mukta = Mukta({ subsets: ["latin", "devanagari"], weight: ["400", "500", "600", "700"], variable: "--font-mukta", display: "swap" });
 
 const ogImage = resolveImage("/images/og") ?? "/og-placeholder.svg";
 
@@ -37,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#faf7f2",
+  themeColor: "#8a1c2b",
   width: "device-width",
   initialScale: 1,
 };
@@ -48,17 +45,13 @@ const organizationLd = {
   name: site.name,
   url: site.url,
   logo: `${site.url}/favicon.svg`,
-  // PLACEHOLDER: add sameAs social profiles and contact point once confirmed.
+  // PLACEHOLDER: add sameAs social profiles and contactPoint once confirmed.
   sameAs: [],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${cormorant.variable} ${hanken.variable}`} suppressHydrationWarning>
-      <head>
-        {/* Lets scroll-driven art start undrawn only when JS can animate it. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-      </head>
+    <html lang="en-IN" className={`${tiro.variable} ${mukta.variable}`} suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main">
           Skip to content

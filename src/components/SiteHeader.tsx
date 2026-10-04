@@ -2,128 +2,142 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
-import { getProduct } from "@/data/products";
+import { Suspense, useState } from "react";
+import { categories, getProduct } from "@/data/products";
 import { site } from "@/lib/site";
 import { useCart, useCartUI, useHydrated } from "@/lib/cart";
+import { useSaved } from "@/lib/stores";
 import { FREE_SHIPPING_THRESHOLD, formatINR } from "@/lib/money";
 import { MIN_CUSTOM_GRAMS } from "@/lib/customization";
 import { SearchDialog } from "./SearchDialog";
 import { MobileMenu } from "./MobileMenu";
-import { BagIcon, MenuIcon, SearchIcon, UserIcon } from "./icons";
+import { Toran } from "./ui";
+import { BagIcon, HeartIcon, MenuIcon, SearchIcon, UserIcon } from "./icons";
 import styles from "./SiteHeader.module.css";
 
-export const shopNav = [
-  { href: "/shop", label: "Shop all", scope: "all" },
-  { href: "/shop?category=panjiri", label: "Panjiri", scope: "panjiri" },
-  { href: "/shop?category=pinni", label: "Pinni", scope: "pinni" },
-  { href: "/shop?category=laddus", label: "Laddus", scope: "laddus" },
-  { href: "/shop?category=mixes", label: "Dry-fruit mixes", scope: "mixes" },
-];
-
-/** Which top-level item the current page belongs to (Baymard: highlight the user's scope). */
+/** Which nav item the current page belongs to (Baymard: highlight the current scope). */
 function useScope(): string | null {
   const pathname = usePathname();
   const params = useSearchParams();
   if (pathname.startsWith("/customise")) return "custom";
+  if (pathname === "/our-story") return "story";
   if (pathname === "/shop") return params.get("category") ?? (params.toString() ? null : "all");
   if (pathname.startsWith("/shop/")) return getProduct(pathname.split("/")[2] ?? "")?.category ?? null;
   return null;
 }
 
-function NavLinks({ scope }: { scope: string | null }) {
+function CategoryNav({ scope }: { scope: string | null }) {
   return (
-    <ul className={styles.navList}>
-      {shopNav.map((n) => (
-        <li key={n.href}>
-          <Link href={n.href} className={styles.navLink} aria-current={scope === n.scope ? "page" : undefined}>
-            {n.label}
+    <ul className={styles.cats}>
+      <li>
+        <Link href="/shop" aria-current={scope === "all" ? "page" : undefined}>
+          Shop all
+        </Link>
+      </li>
+      {categories.map((c) => (
+        <li key={c.slug}>
+          <Link href={`/shop?category=${c.slug}`} aria-current={scope === c.slug ? "page" : undefined}>
+            {c.name}
+            <span className="hindi" lang="hi">
+              {c.hindi}
+            </span>
           </Link>
         </li>
       ))}
+      <li className={styles.sep} aria-hidden="true" />
+      <li>
+        <Link href="/customise" className={styles.custom} aria-current={scope === "custom" ? "page" : undefined}>
+          Custom batch
+        </Link>
+      </li>
+      <li>
+        <Link href="/our-story" aria-current={scope === "story" ? "page" : undefined}>
+          Our story
+        </Link>
+      </li>
     </ul>
   );
 }
 
 function ScopedNav() {
-  return <NavLinks scope={useScope()} />;
+  return <CategoryNav scope={useScope()} />;
 }
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [menu, setMenu] = useState(false);
   const [search, setSearch] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const openCart = useCartUI((s) => s.setOpen);
   const hydrated = useHydrated();
   const count = useCart((s) => s.lines.reduce((n, l) => n + l.qty, 0));
-  const shown = hydrated ? count : 0;
-
+  const saved = useSaved((s) => s.slugs.length);
   const [lastPath, setLastPath] = useState(pathname);
   if (pathname !== lastPath) {
     setLastPath(pathname);
     setMenu(false);
     setSearch(false);
   }
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const shownCount = hydrated ? count : 0;
+  const shownSaved = hydrated ? saved : 0;
 
   return (
     <>
-      <div className={styles.utility}>
-        <div className={`wrap ${styles.utilityInner}`}>
-          <p>Free standard delivery over {formatINR(FREE_SHIPPING_THRESHOLD)}</p>
-          <p className={styles.utilitySecond}>
+      <div className={styles.topbar}>
+        <div className={`container ${styles.topInner}`}>
+          <p>Free delivery on orders over {formatINR(FREE_SHIPPING_THRESHOLD)}</p>
+          <p className={styles.topMore}>Made fresh in small batches</p>
+          <p className={styles.topMore}>
             Custom batches from {MIN_CUSTOM_GRAMS} g ·{" "}
-            <Link href="/customise" className={styles.utilityLink}>
-              Start one
-            </Link>
+            <Link href="/customise">Start one</Link>
           </p>
         </div>
       </div>
-      <header className={styles.header} data-scrolled={scrolled || undefined}>
-        <div className={`wrap ${styles.bar}`}>
-          <div className={styles.start}>
-            <button type="button" className={`icon-btn ${styles.mobileOnly}`} onClick={() => setMenu(true)} aria-label="Open menu">
-              <MenuIcon />
-            </button>
-            <Link href="/" className={styles.logo} aria-label={`${site.name}, home`}>
-              Immunitywize
-            </Link>
-          </div>
-
-          <nav aria-label="Shop" className={styles.nav}>
-            <Suspense fallback={<NavLinks scope={null} />}>
-              <ScopedNav />
-            </Suspense>
-          </nav>
-
-          <div className={styles.end}>
-            <Link href="/customise" className={styles.custom} aria-current={pathname.startsWith("/customise") ? "page" : undefined}>
-              Custom batch
-            </Link>
-            <button type="button" className={styles.searchBtn} onClick={() => setSearch(true)}>
+      <Toran />
+      <header className={styles.header}>
+        <div className={`container ${styles.bar}`}>
+          <button type="button" className={`icon-btn ${styles.menuBtn}`} onClick={() => setMenu(true)} aria-label="Open menu">
+            <MenuIcon />
+          </button>
+          <Link href="/" className={styles.logo} aria-label={`${site.name} home`}>
+            <span className={styles.mark} aria-hidden="true" />
+            Immunitywize
+          </Link>
+          <button type="button" className={styles.search} onClick={() => setSearch(true)} aria-haspopup="dialog">
+            <SearchIcon />
+            <span>Search panjiri, pinni, almonds…</span>
+          </button>
+          <div className={styles.actions}>
+            <button type="button" className={`icon-btn ${styles.searchIcon}`} onClick={() => setSearch(true)} aria-label="Search">
               <SearchIcon />
-              <span className={styles.searchLabel}>Search</span>
             </button>
-            <Link href="/account" className={`icon-btn ${styles.desktopOnly}`} aria-label="Account">
+            <Link href="/account" className={`icon-btn ${styles.hideSm}`} aria-label="Account">
               <UserIcon />
             </Link>
-            <button type="button" className="icon-btn" onClick={() => openCart(true)} aria-label={`Cart, ${shown} ${shown === 1 ? "item" : "items"}`}>
+            <Link href="/account?tab=saved" className={`icon-btn ${styles.hideSm}`} aria-label={`Saved items, ${shownSaved}`}>
+              <HeartIcon />
+              {shownSaved > 0 && (
+                <span className="count-badge" aria-hidden="true">
+                  {shownSaved}
+                </span>
+              )}
+            </Link>
+            <button type="button" className="icon-btn" onClick={() => openCart(true)} aria-label={`Cart, ${shownCount} ${shownCount === 1 ? "item" : "items"}`}>
               <BagIcon />
-              {shown > 0 && (
-                <span key={shown} className={styles.count} aria-hidden="true">
-                  {shown}
+              {shownCount > 0 && (
+                <span key={shownCount} className={`count-badge ${styles.bump}`} aria-hidden="true">
+                  {shownCount}
                 </span>
               )}
             </button>
           </div>
         </div>
+        <nav aria-label="Categories" className={styles.nav}>
+          <div className="container">
+            <Suspense fallback={<CategoryNav scope={null} />}>
+              <ScopedNav />
+            </Suspense>
+          </div>
+        </nav>
       </header>
       <SearchDialog open={search} onClose={() => setSearch(false)} />
       <MobileMenu open={menu} onClose={() => setMenu(false)} />

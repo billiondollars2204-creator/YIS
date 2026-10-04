@@ -4,57 +4,60 @@ import Link from "next/link";
 import { categories, productsIn } from "@/data/products";
 import { MIN_CUSTOM_GRAMS } from "@/lib/customization";
 import { useDialog } from "@/lib/useDialog";
-import { ArrowRight, CloseIcon } from "./icons";
+import { ChevronRight, CloseIcon } from "./icons";
+import { Toran } from "./ui";
 import styles from "./MobileMenu.module.css";
 
-const secondary = [
+const more = [
+  { href: "/account", label: "Account & orders" },
+  { href: "/account?tab=saved", label: "Saved items" },
+  { href: "/support", label: "Help & support" },
+  { href: "/support#track", label: "Track an order" },
   { href: "/our-story", label: "Our story" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/shipping-returns", label: "Shipping & returns" },
-  { href: "/contact", label: "Contact" },
-  { href: "/account", label: "Account" },
 ];
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const ref = useDialog(open, onClose);
   return (
-    <dialog ref={ref} className={`sheet sheet--left ${styles.menu}`} aria-label="Menu">
-      <div className={styles.inner}>
-        <div className={styles.head}>
+    <dialog ref={ref} className="sheet sheet--left" aria-label="Menu">
+      <div className={styles.wrap}>
+        <div className="sheet-head">
           <span className={styles.brand}>Immunitywize</span>
           <button type="button" className="icon-btn" onClick={onClose} aria-label="Close menu">
             <CloseIcon />
           </button>
         </div>
-        <nav aria-label="Mobile">
-          <ul className={styles.primary}>
+        <Toran />
+        <nav aria-label="Mobile" className={styles.body}>
+          <p className={styles.label}>Shop</p>
+          <ul className={styles.list}>
             <li>
               <Link href="/shop" onClick={onClose}>
-                Shop all
-                <ArrowRight />
+                <span>Shop all</span>
+                <ChevronRight />
               </Link>
             </li>
             {categories.map((c) => (
               <li key={c.slug}>
                 <Link href={`/shop?category=${c.slug}`} onClick={onClose}>
                   <span>
-                    {c.name}
-                    <small>{c.comingSoon ? "Coming soon" : `${productsIn(c.slug).length} products`}</small>
+                    {c.name} <span className="hindi">{c.hindi}</span>
+                    <small>{productsIn(c.slug).length} products</small>
                   </span>
-                  <ArrowRight />
+                  <ChevronRight />
                 </Link>
               </li>
             ))}
           </ul>
           <Link href="/customise" className={styles.custom} onClick={onClose}>
-            <span className={styles.customTitle}>Make a custom batch</span>
-            <span className={styles.customText}>Panjiri, pinni and dry-fruit mix, from {MIN_CUSTOM_GRAMS} g</span>
+            <strong>Make a custom batch</strong>
+            <span>Panjiri, pinni or mewa mix — your recipe, from {MIN_CUSTOM_GRAMS} g</span>
           </Link>
-          <ul className={styles.secondary}>
-            {secondary.map((n) => (
-              <li key={n.href}>
-                <Link href={n.href} onClick={onClose}>
-                  {n.label}
+          <ul className={styles.more}>
+            {more.map((m) => (
+              <li key={m.href}>
+                <Link href={m.href} onClick={onClose}>
+                  {m.label}
                 </Link>
               </li>
             ))}

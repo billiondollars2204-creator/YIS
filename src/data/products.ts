@@ -1,4 +1,5 @@
-import { CUSTOMISABLE_PRODUCTS } from "./formulations.ts";
+import { CUSTOMISABLE_PRODUCTS, formulas } from "./formulations.ts";
+import { ingredients } from "./ingredients.ts";
 /**
  * PLACEHOLDER CATALOGUE.
  * Prices, stock, ingredients, nutrition and preparation notes are illustrative
@@ -11,8 +12,8 @@ export type BenefitSlug = "immunity" | "wellness" | "postpartum" | "bone" | "cla
 export type Category = {
   slug: string;
   name: string;
-  /** Native-script name, shown decoratively. */
-  script?: { text: string; lang: string };
+  /** Devanagari name, shown alongside the English name. */
+  hindi: string;
   blurb: string;
   comingSoon?: boolean;
 };
@@ -28,6 +29,11 @@ export type Variant = {
 export type Product = {
   slug: string;
   name: string;
+  /** Devanagari name, shown alongside the English name. */
+  hindi: string;
+  /** "bundle" products are fixed boxes of other products. */
+  kind?: "bundle";
+  contents?: { slug: string; variant: string; qty: number }[];
   category: string;
   /** One-line descriptor shown on product cards. */
   short: string;
@@ -45,39 +51,16 @@ export type Product = {
   featured?: boolean;
   /** Derived from CUSTOMISABLE_PRODUCTS in formulations.ts — don't set by hand. */
   customizable?: boolean;
+  /** Derived from SUBSCRIBABLE_PRODUCTS below — don't set by hand. */
+  subscribable?: boolean;
 };
 
 export const categories: Category[] = [
-  {
-    slug: "panjiri",
-    name: "Panjiri",
-    script: { text: "ਪੰਜੀਰੀ", lang: "pa" },
-    blurb: "Roasted wholewheat crumble, eaten by the spoonful or stirred into warm milk.",
-  },
-  {
-    slug: "pinni",
-    name: "Pinni",
-    script: { text: "ਪਿੰਨੀ", lang: "pa" },
-    blurb: "Dense, hand-pressed winter sweets from Punjabi kitchens.",
-  },
-  {
-    slug: "laddus",
-    name: "Dry-fruit laddus",
-    script: { text: "लड्डू", lang: "hi" },
-    blurb: "Rolled by hand, one at a time. A small round of something good.",
-  },
-  {
-    slug: "mixes",
-    name: "Dry-fruit mixes",
-    script: { text: "मेवा", lang: "hi" },
-    blurb: "Nuts, seeds and dried fruit, roasted lightly and mixed for everyday snacking.",
-  },
-  {
-    slug: "gift-boxes",
-    name: "Gift boxes",
-    blurb: "Festive and new-baby boxes. Coming soon (placeholder category).",
-    comingSoon: true,
-  },
+  { slug: "panjiri", name: "Panjiri", hindi: "पंजीरी", blurb: "Roasted wholewheat crumble with nuts and ghee. Eat it by the spoonful or stir it into warm milk." },
+  { slug: "pinni", name: "Pinni", hindi: "पिन्नी", blurb: "Hand-pressed rounds of roasted atta, ghee and nuts — the Punjabi winter sweet." },
+  { slug: "laddus", name: "Laddus", hindi: "लड्डू", blurb: "Dried fruit and nuts, rolled by hand into small rounds." },
+  { slug: "mixes", name: "Dry-fruit mixes", hindi: "मेवा", blurb: "Lightly roasted nuts, seeds and dried fruit for everyday snacking." },
+  { slug: "gift-boxes", name: "Gift boxes", hindi: "उपहार", blurb: "Ready-made boxes of our jars for festivals, new babies and winter visits." },
 ];
 
 // PLACEHOLDER pricing ladder used across products.
@@ -100,6 +83,7 @@ const nutritionPlaceholder = [
 export const products: Product[] = [
   {
     slug: "classic-panjiri",
+    hindi: "घर की पंजीरी",
     name: "Ghar ki Panjiri",
     category: "panjiri",
     short: "Roasted wholewheat crumble",
@@ -118,6 +102,7 @@ export const products: Product[] = [
   },
   {
     slug: "mothers-panjiri",
+    hindi: "जच्चा पंजीरी",
     name: "Panjiri for New Mothers",
     category: "panjiri",
     short: "A richer panjiri for new mothers",
@@ -134,6 +119,7 @@ export const products: Product[] = [
   },
   {
     slug: "atta-pinni",
+    hindi: "आटा पिन्नी",
     name: "Atta Pinni",
     category: "pinni",
     short: "Hand-pressed winter sweet",
@@ -151,6 +137,7 @@ export const products: Product[] = [
   },
   {
     slug: "dry-fruit-laddu",
+    hindi: "ड्राई फ्रूट लड्डू",
     name: "Dry-Fruit Laddu",
     category: "laddus",
     short: "Fruit and nuts, rolled by hand",
@@ -168,6 +155,7 @@ export const products: Product[] = [
   },
   {
     slug: "seasonal-laddu",
+    hindi: "मौसमी लड्डू",
     name: "Seasonal Laddu",
     category: "laddus",
     short: "Small seasonal runs",
@@ -183,6 +171,7 @@ export const products: Product[] = [
   },
   {
     slug: "everyday-mix",
+    hindi: "रोज़ का मेवा",
     name: "Everyday Mewa Mix",
     category: "mixes",
     short: "Lightly roasted nuts, seeds and fruit",
@@ -199,6 +188,7 @@ export const products: Product[] = [
   },
   {
     slug: "study-table-mix",
+    hindi: "पढ़ाई वाला मेवा",
     name: "Study-Table Mix",
     category: "mixes",
     short: "A crunchier mix for desk snacking",
@@ -212,9 +202,72 @@ export const products: Product[] = [
     storage: "Keep sealed after opening. Shelf life: TBC.",
     variants: ladder(329, ["low_stock", "in_stock", "in_stock"]),
   },
+  {
+    slug: "winter-trio",
+    hindi: "सर्दी की तिकड़ी",
+    kind: "bundle",
+    contents: [
+      { slug: "classic-panjiri", variant: "500g", qty: 1 },
+      { slug: "atta-pinni", variant: "500g", qty: 1 },
+      { slug: "everyday-mix", variant: "250g", qty: 1 },
+    ],
+    name: "Winter Trio Box",
+    category: "gift-boxes",
+    short: "Panjiri, pinni and mewa in one box",
+    badge: "New",
+    tagline: "Our three winter staples, packed together for gifting or the family pantry.",
+    description:
+      "Ghar ki Panjiri (500 g), Atta Pinni (500 g) and Everyday Mewa Mix (250 g) in a gift box with a handwritten note. (Placeholder — box design and price to be confirmed.)",
+    enjoyedFor: ["immunity", "wellness"],
+    ingredients: ["See each product in the box"],
+    nutrition: nutritionPlaceholder,
+    preparation: "Each jar is made in its own small batch and packed together on the day of dispatch.",
+    storage: "Store each jar in a cool, dry place. Shelf life: TBC.",
+    variants: [{ id: "box", label: "1 box · 3 jars", grams: 1250, price: 1649, stock: "in_stock" }],
+    featured: true,
+  },
+  {
+    slug: "new-mother-box",
+    hindi: "जच्चा उपहार",
+    kind: "bundle",
+    contents: [
+      { slug: "mothers-panjiri", variant: "1kg", qty: 1 },
+      { slug: "dry-fruit-laddu", variant: "500g", qty: 1 },
+    ],
+    name: "New Mother’s Box",
+    category: "gift-boxes",
+    short: "Jachcha panjiri and dry-fruit laddus",
+    tagline: "A box for the weeks after a baby arrives, from the tradition of feeding new mothers.",
+    description:
+      "Panjiri for New Mothers (1 kg) and Dry-Fruit Laddu (500 g) in a gift box with a card for your message. Always check with a doctor about diet after childbirth. (Placeholder — box design and price to be confirmed.)",
+    enjoyedFor: ["postpartum"],
+    ingredients: ["See each product in the box"],
+    nutrition: nutritionPlaceholder,
+    preparation: "Each jar is made in its own small batch and packed together on the day of dispatch.",
+    storage: "Store each jar in a cool, dry place. Shelf life: TBC.",
+    variants: [{ id: "box", label: "1 box · 2 jars", grams: 1500, price: 2199, stock: "in_stock" }],
+  },
 ];
 
-for (const p of products) p.customizable = CUSTOMISABLE_PRODUCTS.includes(p.slug);
+/**
+ * Products that can be bought on a repeat delivery ("Subscribe & save").
+ * PLACEHOLDER — the subscription offer, discount and intervals in
+ * src/lib/pricing.ts must be confirmed and connected to a billing provider.
+ */
+export const SUBSCRIBABLE_PRODUCTS = ["classic-panjiri", "atta-pinni", "everyday-mix", "study-table-mix"];
+
+for (const p of products) {
+  p.customizable = CUSTOMISABLE_PRODUCTS.includes(p.slug);
+  p.subscribable = SUBSCRIBABLE_PRODUCTS.includes(p.slug);
+}
+
+/** Words a shopper might search for: names, category, ingredients in the house recipe. */
+export function searchText(p: Product): string {
+  const f = formulas[p.slug];
+  const ing = f ? f.lines.flatMap((l) => l.options.map((o) => `${ingredients[o]?.name} ${ingredients[o]?.local}`)) : [];
+  const box = p.contents?.map((c) => getProduct(c.slug)?.name ?? "") ?? [];
+  return [p.name, p.hindi, p.short, p.tagline, p.category, getCategory(p.category)?.name, ...ing, ...box].join(" ").toLowerCase();
+}
 
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);

@@ -20,24 +20,25 @@ export function hasImage(ref?: ImageRef): boolean {
 }
 
 export const images = {
-  hero: {
-    id: "home-hero",
-    src: "/images/home/hero",
-    alt: "Jars of Ghar ki Panjiri, Atta Pinni and Dry-Fruit Laddu on a stone kitchen counter in morning light",
-    label: "Home hero · desktop 2400×1100",
-  },
-  heroMobile: {
-    id: "home-hero-mobile",
-    src: "/images/home/hero-mobile",
-    alt: "Jars of Ghar ki Panjiri, Atta Pinni and Dry-Fruit Laddu on a stone kitchen counter in morning light",
-    label: "Home hero · mobile 1200×1500",
-  },
   customise: {
     id: "home-customise",
     src: "/images/home/customise",
     alt: "Small brass bowls of almonds, cashews, raisins, makhana and cardamom arranged around a bowl of roasted panjiri",
-    label: "Custom batches · 1600×1200",
+    label: "Custom batches",
     tone: "clay",
+  },
+  gifting: {
+    id: "home-gifting",
+    src: "/images/home/gifting",
+    alt: "A kraft gift box holding three jars of panjiri, pinni and mewa, tied with red cotton string",
+    label: "Gift boxes",
+    tone: "clay",
+  },
+  story: {
+    id: "home-story",
+    src: "/images/home/story",
+    alt: "A woman stirring panjiri in a heavy kadhai in a sunlit home kitchen",
+    label: "Our story",
   },
   storyHero: {
     id: "story-hero",
@@ -68,6 +69,11 @@ export const images = {
 } satisfies Record<string, ImageRef>;
 
 const categoryTone: Record<string, Tone> = { panjiri: "sand", pinni: "clay", laddus: "clay", mixes: "sage", "gift-boxes": "sand" };
+
+/** Arch-cropped occasion tiles on the home page ("Shop by occasion"). */
+export function occasionImage(slug: string, title: string): ImageRef {
+  return { id: `occasion-${slug}`, src: `/images/occasions/${slug}`, alt: title, label: title, tone: "sand" };
+}
 
 const categoryAlt: Record<string, string> = {
   panjiri: "A brass bowl of golden panjiri with a spoon",

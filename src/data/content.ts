@@ -5,12 +5,12 @@ import type { BenefitSlug } from "./products";
  * PLACEHOLDER: all wording must be reviewed for regulatory compliance
  * (e.g. FSSAI advertising rules) before launch. No medical claims.
  */
-export const benefits: { slug: BenefitSlug; title: string; occasion: string; line: string }[] = [
-  { slug: "immunity", title: "Immunity", occasion: "cold mornings", line: "Winter foods families reach for when the weather turns." },
-  { slug: "postpartum", title: "Postpartum care", occasion: "new mothers", line: "From the tradition of nourishing mothers after a baby arrives." },
-  { slug: "clarity", title: "Mental clarity", occasion: "exam season", line: "A handful at the desk instead of something from a packet." },
-  { slug: "wellness", title: "Everyday wellness", occasion: "long workdays", line: "Real food for steady energy between meals." },
-  { slug: "bone", title: "Bone health", occasion: "growing kids", line: "Foods long given to growing children and grandparents." },
+export const benefits: { slug: BenefitSlug; title: string; occasion: string; hindi: string; line: string }[] = [
+  { slug: "immunity", title: "Immunity", occasion: "Winter mornings", hindi: "सर्दी", line: "Winter foods families reach for when the weather turns." },
+  { slug: "postpartum", title: "Postpartum care", occasion: "New mothers", hindi: "जच्चा", line: "From the tradition of nourishing mothers after a baby arrives." },
+  { slug: "clarity", title: "Mental clarity", occasion: "Exam season", hindi: "पढ़ाई", line: "A handful at the desk instead of something from a packet." },
+  { slug: "wellness", title: "Everyday wellness", occasion: "Long workdays", hindi: "रोज़", line: "Real food for steady energy between meals." },
+  { slug: "bone", title: "Bone health", occasion: "Growing kids", hindi: "बच्चे", line: "Foods long given to growing children and grandparents." },
 ];
 
 export const benefitTitle = Object.fromEntries(benefits.map((b) => [b.slug, b.title])) as Record<BenefitSlug, string>;

@@ -16,7 +16,20 @@ export type AnalyticsEvent =
   | "begin_checkout"
   | "purchase"
   | "contact_submit"
-  | "newsletter_signup";
+  | "newsletter_signup"
+  | "select_item"
+  | "view_promotion"
+  | "select_promotion"
+  | "add_to_wishlist"
+  | "remove_from_wishlist"
+  | "select_purchase_option"
+  | "check_pincode"
+  | "apply_coupon"
+  | "add_shipping_info"
+  | "add_payment_info"
+  | "login"
+  | "track_order"
+  | "experiment_exposure";
 
 type Params = Record<string, string | number | boolean | undefined | object>;
 

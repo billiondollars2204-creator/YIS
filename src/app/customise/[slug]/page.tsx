@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { getProduct } from "@/data/products";
 import { CUSTOMISABLE_PRODUCTS, getFormula } from "@/data/formulations";
-import { Formulator } from "@/components/formulate/Formulator";
 import { ingredients } from "@/data/ingredients";
 import { EMPTY_CUSTOMIZATION, resolveFormula } from "@/lib/customization";
 import { formatGrams } from "@/lib/units";
+import { Builder } from "@/components/builder/Builder";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!p) return {};
   return {
     title: `Custom ${p.name}`,
-    description: `Formulate your own ${p.name}: adjust the base, nuts, seeds, spices and sweetener. Custom batches from 500 g.`,
+    description: `Set every ingredient in your ${p.name} by the gram: base, nuts, seeds, spices and sweetener. Custom batches from 500 g.`,
     alternates: { canonical: `/customise/${slug}` },
   };
 }
@@ -32,12 +32,11 @@ export default async function CustomisePage({ params }: Params) {
   const product = getProduct(slug);
   const formula = getFormula(slug);
   if (!product || !formula) notFound();
-  // Server-rendered house recipe shown until the interactive builder loads.
+  // Server-rendered house recipe, shown until the interactive builder hydrates.
   const fallback = (
-    <div className="wrap" style={{ paddingBlock: "var(--s-7)" }}>
-      <p className="kicker">Custom batch</p>
-      <h1>{product.name}</h1>
-      <p className="lede">House recipe per 500 g. The interactive builder is loading.</p>
+    <div className="container" style={{ paddingBlock: "var(--sp-7)" }}>
+      <h1>Custom {product.name}</h1>
+      <p className="lead">House recipe per 500 g. Loading the builder…</p>
       <ul>
         {resolveFormula(formula, EMPTY_CUSTOMIZATION)
           .filter((r) => r.grams > 0)
@@ -51,7 +50,7 @@ export default async function CustomisePage({ params }: Params) {
   );
   return (
     <Suspense fallback={fallback}>
-      <Formulator slug={slug} />
+      <Builder slug={slug} />
     </Suspense>
   );
 }

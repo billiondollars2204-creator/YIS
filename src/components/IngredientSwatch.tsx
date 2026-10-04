@@ -1,13 +1,9 @@
+import Image from "next/image";
 import { ingredients } from "@/data/ingredients";
 import { ingredientImage, resolveImage } from "@/data/images";
-import Image from "next/image";
 import styles from "./IngredientSwatch.module.css";
 
-/**
- * Ingredient image cropped to its container. Until the photo in
- * CODEX_IMAGES.md exists, shows a material swatch in the ingredient's colour
- * (a placeholder, not an illustration).
- */
+/** Ingredient photo cropped to its container, or a textured colour swatch until the photo exists. */
 export function IngredientSwatch({ id, sizes = "96px", className }: { id: string; sizes?: string; className?: string }) {
   const ing = ingredients[id];
   const src = resolveImage(ingredientImage(id, ing?.name ?? id).src);

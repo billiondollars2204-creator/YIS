@@ -6,31 +6,29 @@ import styles from "./SmartImage.module.css";
 type Props = {
   image: ImageRef;
   sizes: string;
-  /** CSS aspect-ratio, e.g. "4 / 5". Omit when the class sets the size. */
   ratio?: string;
   preload?: boolean;
   decorative?: boolean;
   className?: string;
-  /** Rendered instead of the default placeholder while the photo is missing. */
-  fallback?: React.ReactNode;
-  /** Hide the slot label even when placeholder markers are on (small thumbnails). */
+  /** Short caption shown on the placeholder (e.g. a Hindi name). */
+  caption?: string;
   quiet?: boolean;
 };
 
 /**
- * Renders the slot's photo if it exists in /public, otherwise a placeholder of
- * the same size so layout never shifts when real photography lands.
+ * Renders the slot's photo when it exists in /public; otherwise a same-size
+ * placeholder (cream with a faint jaali lattice), so layout never shifts.
  */
-export function SmartImage({ image, sizes, ratio, preload, decorative, className, fallback, quiet }: Props) {
+export function SmartImage({ image, sizes, ratio, preload, decorative, className, caption, quiet }: Props) {
   const src = resolveImage(image.src);
   return (
-    <div className={`${styles.frame} ${className ?? ""}`} style={ratio ? { aspectRatio: ratio } : undefined} data-tone={image.tone ?? "sand"}>
+    <div className={`${styles.frame} ${className ?? ""}`} style={ratio ? { aspectRatio: ratio } : undefined}>
       {src ? (
         <Image src={src} alt={decorative ? "" : image.alt} fill sizes={sizes} preload={preload} className={styles.img} />
       ) : (
-        <div className={styles.placeholder} {...(decorative ? { "aria-hidden": true } : { role: "img", "aria-label": image.alt })}>
-          {fallback}
-          {!fallback && showPlaceholderMarkers && !quiet && <span className={styles.label}>{image.label}</span>}
+        <div className={`${styles.placeholder} jaali`} {...(decorative ? { "aria-hidden": true } : { role: "img", "aria-label": image.alt })}>
+          {caption && <span className={`${styles.caption} hindi`}>{caption}</span>}
+          {showPlaceholderMarkers && !quiet && <span className={styles.label}>Photo: {image.id}</span>}
         </div>
       )}
     </div>

@@ -4,135 +4,108 @@
   flex-direction: column;
   min-width: 0;
 }
-
 .media {
   position: relative;
+  border-radius: var(--r-lg);
   overflow: hidden;
-  border-radius: var(--radius);
+  background: var(--cream);
 }
-
 .mediaLink {
   display: block;
 }
-
 .mediaLink > :first-child {
-  transition: transform 900ms var(--ease);
+  transition: transform 700ms var(--ease);
 }
-
 .alt {
   position: absolute !important;
   inset: 0;
   height: 100%;
   opacity: 0;
-  transition: opacity 450ms ease;
+  transition: opacity 350ms ease;
 }
-
-.badges {
-  position: absolute;
-  top: 0.6rem;
-  left: 0.6rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  pointer-events: none;
-}
-
-/* Touch: a compact add button sits on the image corner. */
-.quick {
-  position: absolute;
-  right: 0.6rem;
-  bottom: 0.6rem;
-}
-
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) {
   .card:hover .alt {
     opacity: 1;
   }
   .card:hover .mediaLink > :first-child {
-    transform: scale(1.035);
-  }
-  /* Pointer: a full-width bar slides up on hover or keyboard focus. */
-  .quick {
-    left: 0.6rem;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 220ms ease, transform 300ms var(--ease);
-  }
-  .card:hover .quick,
-  .card:focus-within .quick {
-    opacity: 1;
-    transform: none;
+    transform: scale(1.04);
   }
 }
-
+.tags {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 52px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  pointer-events: none;
+}
+.save {
+  position: absolute !important;
+  top: 4px;
+  right: 4px;
+  background: rgba(255, 255, 255, 0.9) !important;
+}
 .body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: 0.85rem;
+  gap: 2px;
+  padding: var(--sp-3) 2px var(--sp-2);
 }
-
 .name {
-  margin: 0 0 0.15rem;
-  font-size: var(--t-base);
+  margin: 2px 0 0;
+  font-size: var(--fs-16);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.3;
 }
-
 .name a {
   text-decoration: none;
 }
-
+.name a::after {
+  /* Whole card text area is clickable via the title link. */
+  content: "";
+  position: absolute;
+  inset: 0 0 96px;
+}
 .name a:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+  color: var(--brand);
 }
-
 .short {
-  margin: 0 0 0.5rem;
-  font-size: var(--t-sm);
+  margin: 0 0 6px;
+  font-size: var(--fs-14);
   color: var(--ink-2);
+  line-height: 1.35;
 }
-
 .price {
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.1rem 0.55rem;
-  font-weight: 600;
+  display: grid;
+  gap: 0;
+  margin-top: auto;
 }
-
-.meta {
-  font-size: var(--t-xs);
-  font-weight: 400;
-  color: var(--ink-2);
-}
-
 .low {
-  margin: 0.3rem 0 0;
-  font-size: var(--t-xs);
-  font-weight: 600;
-  color: var(--saffron);
+  margin: 4px 0 0;
+  font-size: var(--fs-12);
+  font-weight: 700;
+  color: var(--brand);
 }
-
-.customLink {
-  align-self: flex-start;
-  margin-top: 0.55rem;
-  font-size: var(--t-xs);
-  font-weight: 600;
-  color: var(--saffron);
-  text-underline-offset: 0.2em;
+.actions {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 6px;
 }
-
+.custom {
+  justify-self: center;
+  font-size: var(--fs-12);
+  font-weight: 600;
+  color: var(--peacock);
+}
 .card[data-soldout] .media {
-  opacity: 0.72;
+  opacity: 0.7;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .mediaLink > :first-child,
-  .alt,
-  .quick {
-    transition: none;
-  }
+.save,
+.actions :global(.btn) {
+  position: relative;
+  z-index: 1;
 }

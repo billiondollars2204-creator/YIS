@@ -1,153 +1,123 @@
 .lines {
-  list-style: none;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
-
 .line {
   display: grid;
-  grid-template-columns: 5rem 1fr;
-  gap: var(--s-4);
-  padding-block: var(--s-5);
-  border-bottom: 1px solid var(--rule);
+  grid-template-columns: 88px 1fr;
+  gap: var(--sp-4);
+  padding-block: var(--sp-4);
+  border-bottom: 1px solid var(--line);
 }
-
-.line:first-child {
-  padding-top: var(--s-2);
+.lines[data-compact] .line {
+  grid-template-columns: 72px 1fr;
 }
-
 .thumb {
   display: block;
-  border-radius: var(--radius);
+  border-radius: var(--r-md);
   overflow: hidden;
 }
-
 .top {
   display: flex;
   justify-content: space-between;
-  gap: var(--s-3);
+  gap: var(--sp-3);
 }
-
 .name {
   margin: 0;
-  font-size: var(--t-base);
+  font-size: var(--fs-16);
 }
-
 .name a {
   text-decoration: none;
 }
-
 .name a:hover {
-  text-decoration: underline;
+  color: var(--brand);
 }
-
 .total {
   margin: 0;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
+  text-align: right;
 }
-
+.total s {
+  display: block;
+  font-size: var(--fs-12);
+  font-weight: 400;
+}
 .meta {
-  margin: 0.2rem 0 0;
-  font-size: var(--t-sm);
+  margin: 2px 0 0;
+  font-size: var(--fs-14);
   color: var(--ink-2);
 }
-
-.custom {
-  margin-top: var(--s-3);
-  padding: var(--s-3);
-  border-radius: var(--radius);
-  background: var(--paper-2);
-  font-size: var(--t-xs);
-  color: var(--ink-2);
-}
-
-.custom ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.2rem;
-}
-
-.custom li {
-  position: relative;
-  padding-left: 0.85rem;
-}
-
-.custom li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--ink-3);
-}
-
-.custom li[data-kind="more"]::before,
-.custom li[data-kind="added"]::before {
-  background: var(--leaf);
-}
-
-.custom li[data-kind="less"]::before,
-.custom li[data-kind="removed"]::before {
-  background: var(--chilli);
-}
-
-.custom li[data-kind="swapped"]::before {
-  background: var(--saffron);
-}
-
-.custom strong {
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.custom p {
-  margin: 0;
-}
-
-.note,
-.extra {
-  margin-top: 0.35rem !important;
-}
-
-.edit {
-  display: inline-flex;
+.sub {
+  display: flex;
   align-items: center;
-  gap: 0.3rem;
-  margin-top: 0.5rem;
+  gap: 6px;
+  margin: 4px 0 0;
+  font-size: var(--fs-12);
   font-weight: 600;
-  color: var(--ink);
+  color: var(--marigold-ink);
 }
-
-.edit svg {
+.sub svg {
   width: 14px;
   height: 14px;
 }
-
+.custom {
+  margin-top: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-left: 3px solid var(--peacock);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  background: var(--peacock-tint);
+  font-size: var(--fs-12);
+  color: var(--ink-2);
+}
+.custom ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.custom li[data-kind="more"] strong,
+.custom li[data-kind="added"] strong {
+  color: var(--peacock);
+}
+.custom li[data-kind="less"] strong,
+.custom li[data-kind="removed"] strong {
+  color: var(--danger);
+}
+.custom p {
+  margin: 4px 0 0;
+}
+.edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-weight: 700;
+  color: var(--peacock);
+}
+.edit svg {
+  width: 13px;
+  height: 13px;
+}
 .controls {
   display: flex;
   align-items: center;
-  gap: var(--s-4);
-  margin-top: var(--s-3);
+  gap: var(--sp-4);
+  margin-top: var(--sp-3);
 }
-
 .remove {
   min-height: 40px;
   padding: 0;
   border: 0;
   background: none;
   font: inherit;
-  font-size: var(--t-sm);
+  font-size: var(--fs-14);
   color: var(--ink-2);
   text-decoration: underline;
-  text-underline-offset: 0.2em;
   cursor: pointer;
 }
-
 .remove:hover {
-  color: var(--chilli);
+  color: var(--danger);
 }

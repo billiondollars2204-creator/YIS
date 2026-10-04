@@ -4,18 +4,15 @@
   overflow: hidden;
   background: var(--tone);
 }
-
 .img {
   object-fit: cover;
 }
-
-/* Grainy material texture tinted by --tone: reads as "ingredient" without drawing one. */
 .material {
   position: absolute;
   inset: 0;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--tone) 70%, #fff) 0%, var(--tone) 55%, color-mix(in srgb, var(--tone) 78%, #000) 100%);
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(circle at 30% 28%, color-mix(in srgb, var(--tone) 72%, #fff), var(--tone) 55%, color-mix(in srgb, var(--tone) 80%, #000));
   background-size: 120px 120px, 100% 100%;
   background-blend-mode: soft-light, normal;
 }

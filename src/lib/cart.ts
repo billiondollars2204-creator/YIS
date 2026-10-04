@@ -7,6 +7,7 @@ import { getProduct, type Product, type Variant } from "@/data/products";
 import { getFormula } from "@/data/formulations";
 import { ingredientPrices } from "@/data/ingredients";
 import { customizationSignature, isCustomized, minQtyForCustom, packSurcharge, type Customization } from "./customization";
+import { unitPriceFor, type Plan } from "./pricing";
 
 export type CartLine = {
   key: string;
@@ -14,6 +15,8 @@ export type CartLine = {
   variantId: string;
   qty: number;
   customization?: Customization;
+  /** Present when the line is a repeat delivery ("Subscribe & save"). */
+  plan?: Plan;
 };
 
 export type ResolvedLine = CartLine & {
@@ -21,6 +24,8 @@ export type ResolvedLine = CartLine & {
   variant: Variant;
   /** Custom-batch surcharge per pack, recomputed from the formulation. */
   unitExtra: number;
+  /** Full price per pack before any subscription discount. */
+  listPrice: number;
   unitPrice: number;
   lineTotal: number;
   minQty: number;
@@ -28,7 +33,9 @@ export type ResolvedLine = CartLine & {
 
 type CartState = {
   lines: CartLine[];
-  add: (slug: string, variantId: string, qty: number, customization?: Customization) => void;
+  giftNote: string;
+  setGiftNote: (note: string) => void;
+  add: (slug: string, variantId: string, qty: number, customization?: Customization, plan?: Plan) => void;
   /** Replaces an existing line (used when editing a custom batch). */
   replace: (oldKey: string, slug: string, variantId: string, qty: number, customization?: Customization) => void;
   setQty: (key: string, qty: number) => void;
@@ -43,21 +50,26 @@ export const useCartUI = create<{ open: boolean; setOpen: (open: boolean) => voi
   setOpen: (open) => set({ open }),
 }));
 
-const lineKey = (slug: string, variantId: string, c?: Customization) => `${slug}:${variantId}:${customizationSignature(c)}`;
+const lineKey = (slug: string, variantId: string, c?: Customization, plan?: Plan) =>
+  `${slug}:${variantId}:${customizationSignature(c)}${plan ? `:sub${plan.every}` : ""}`;
 
-function addTo(lines: CartLine[], slug: string, variantId: string, qty: number, customization?: Customization): CartLine[] {
+function addTo(lines: CartLine[], slug: string, variantId: string, qty: number, customization?: Customization, plan?: Plan): CartLine[] {
   const custom = isCustomized(customization) ? customization : undefined;
-  const key = lineKey(slug, variantId, custom);
+  // Custom batches are one-off orders; subscriptions apply to standard recipes only.
+  const p = custom ? undefined : plan;
+  const key = lineKey(slug, variantId, custom, p);
   const existing = lines.find((l) => l.key === key);
   if (existing) return lines.map((l) => (l.key === key ? { ...l, qty: Math.min(MAX_QTY, l.qty + qty) } : l));
-  return [...lines, { key, slug, variantId, qty: Math.min(MAX_QTY, qty), customization: custom }];
+  return [...lines, { key, slug, variantId, qty: Math.min(MAX_QTY, qty), customization: custom, ...(p ? { plan: p } : {}) }];
 }
 
 export const useCart = create<CartState>()(
   persist(
     (set) => ({
       lines: [],
-      add: (slug, variantId, qty, customization) => set((s) => ({ lines: addTo(s.lines, slug, variantId, qty, customization) })),
+      giftNote: "",
+      setGiftNote: (giftNote) => set({ giftNote: giftNote.slice(0, 200) }),
+      add: (slug, variantId, qty, customization, plan) => set((s) => ({ lines: addTo(s.lines, slug, variantId, qty, customization, plan) })),
       replace: (oldKey, slug, variantId, qty, customization) =>
         set((s) => {
           const index = s.lines.findIndex((l) => l.key === oldKey);
@@ -74,10 +86,10 @@ export const useCart = create<CartState>()(
         }),
       setQty: (key, qty) => set((s) => ({ lines: s.lines.map((l) => (l.key === key ? { ...l, qty: Math.max(1, Math.min(MAX_QTY, qty)) } : l)) })),
       remove: (key) => set((s) => ({ lines: s.lines.filter((l) => l.key !== key) })),
-      clear: () => set({ lines: [] }),
+      clear: () => set({ lines: [], giftNote: "" }),
     }),
-    // v3: formulation-based customisation; older carts are discarded.
-    { name: "iw-cart-v3" },
+    // v4: subscriptions and gift note; older carts are discarded.
+    { name: "iw-cart-v4" },
   ),
 );
 
@@ -90,9 +102,10 @@ export function resolveLines(lines: CartLine[]): ResolvedLine[] {
     // A custom line for a product that is no longer customisable is dropped rather than mispriced.
     if (l.customization && !formula) return [];
     const unitExtra = formula && l.customization ? packSurcharge(formula, l.customization, ingredientPrices, variant.grams) : 0;
-    const unitPrice = variant.price + unitExtra;
+    const listPrice = variant.price + unitExtra;
+    const unitPrice = l.plan && product.subscribable ? unitPriceFor(listPrice, l.plan) : listPrice;
     const minQty = l.customization ? minQtyForCustom(variant.grams) : 1;
-    return [{ ...l, product, variant, unitExtra, unitPrice, lineTotal: unitPrice * l.qty, minQty }];
+    return [{ ...l, product, variant, unitExtra, listPrice, unitPrice, lineTotal: unitPrice * l.qty, minQty }];
   });
 }
 

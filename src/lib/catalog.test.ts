@@ -29,3 +29,8 @@ test("sorting keeps sold-out items last", () => {
   assert.deepEqual(slugs(filterProducts(list, { sort: "price-asc" })), ["d", "a", "b", "c"]);
   assert.deepEqual(slugs(filterProducts(list, { sort: "featured" })), ["b", "a", "d", "c"]);
 });
+
+test("price bands match any size in range", () => {
+  assert.deepEqual(slugs(filterProducts(list, { price: "under-500" })).sort(), ["a", "b", "c", "d"]);
+  assert.deepEqual(slugs(filterProducts(list, { price: "over-1000" })), []);
+});

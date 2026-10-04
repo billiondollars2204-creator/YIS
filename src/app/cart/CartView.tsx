@@ -2,74 +2,101 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { resolveLines, useCart, useHydrated } from "@/lib/cart";
-import { shippingCost } from "@/lib/money";
-import { track } from "@/lib/analytics";
 import { products } from "@/data/products";
-import { OrderSummary } from "@/components/OrderSummary";
+import { resolveLines, useCart, useHydrated } from "@/lib/cart";
+import { track } from "@/lib/analytics";
 import { CartLines } from "@/components/CartLines";
 import { FreeShippingBar } from "@/components/FreeShippingBar";
+import { OrderSummary } from "@/components/OrderSummary";
 import { ProductCard } from "@/components/ProductCard";
+import { CheckoutTrust } from "@/components/TrustStrip";
+import { Breadcrumbs } from "@/components/ui";
+import { GiftIcon, LockIcon } from "@/components/icons";
 import styles from "./cart.module.css";
 
 export function CartView() {
   const hydrated = useHydrated();
   const raw = useCart((s) => s.lines);
+  const giftNote = useCart((s) => s.giftNote);
+  const setGiftNote = useCart((s) => s.setGiftNote);
   const lines = hydrated ? resolveLines(raw) : [];
   const subtotal = lines.reduce((n, l) => n + l.lineTotal, 0);
-  const shipping = shippingCost(subtotal, "standard");
+  const savings = lines.reduce((n, l) => n + (l.listPrice - l.unitPrice) * l.qty, 0);
   const inCart = new Set(lines.map((l) => l.slug));
   const suggestions = products.filter((p) => p.featured && !inCart.has(p.slug)).slice(0, 4);
 
   useEffect(() => {
-    if (hydrated) track("view_cart", { value: subtotal, currency: "INR" });
-    // Once per visit, not on every quantity change.
+    if (hydrated) track("view_cart", { value: subtotal, currency: "INR", items: lines.length });
+    // Once per visit.
   }, [hydrated]);
 
   return (
-    <div className={`wrap ${styles.page}`}>
+    <div className="container">
+      <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Cart" }]} />
       <h1 className={styles.title}>Your cart</h1>
 
       {!hydrated ? (
-        <p aria-busy="true">Loading your cart…</p>
+        <div aria-busy="true" style={{ display: "grid", gap: 12 }}>
+          <span className="skeleton" style={{ height: 96 }} />
+          <span className="skeleton" style={{ height: 96 }} />
+        </div>
       ) : lines.length === 0 ? (
         <div className={styles.empty}>
-          <p>Your cart is empty.</p>
-          <Link href="/shop" className="btn">
-            Shop all products
-          </Link>
+          <p className="display" style={{ fontSize: "var(--fs-24)" }}>
+            Your cart is empty
+          </p>
+          <p className="muted">Start with a bestseller, or build a custom batch.</p>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+            <Link href="/shop" className="btn">
+              Shop bestsellers
+            </Link>
+            <Link href="/customise" className="btn btn--outline">
+              Build a custom batch
+            </Link>
+          </div>
         </div>
       ) : (
         <div className={styles.layout}>
-          <section aria-labelledby="items-title">
-            <h2 id="items-title" className="visually-hidden">
-              Items
-            </h2>
+          <div>
             <div className={styles.ship}>
               <FreeShippingBar subtotal={subtotal} />
             </div>
             <CartLines lines={lines} />
-            <Link href="/shop" className={`arrow-link ${styles.back}`}>
+            <div className={styles.gift}>
+              <label htmlFor="gift-note" className="label">
+                <GiftIcon /> Sending a gift? Add a note
+              </label>
+              <textarea
+                id="gift-note"
+                className="textarea"
+                rows={2}
+                maxLength={200}
+                value={giftNote}
+                onChange={(e) => setGiftNote(e.target.value)}
+                placeholder="We’ll handwrite it on a card in the box. Prices aren’t printed on gift orders."
+              />
+            </div>
+          </div>
+          <aside className={styles.aside}>
+            <OrderSummary lines={lines} subtotal={subtotal + savings} savings={savings} shipping={null}>
+              <Link href="/checkout" className="btn btn--lg btn--block">
+                <LockIcon /> Checkout
+              </Link>
+              <CheckoutTrust />
+            </OrderSummary>
+            <Link href="/shop" className="more" style={{ justifySelf: "center" }}>
               Continue shopping
             </Link>
-          </section>
-          <aside className={styles.aside}>
-            <OrderSummary lines={lines} subtotal={subtotal} shipping={shipping} shippingLabel="Standard delivery (estimate)">
-              <Link href="/checkout" className="btn btn--block btn--lg">
-                Checkout
-              </Link>
-              <p className={styles.reassure}>Secure payment via our payment partner (placeholder).</p>
-            </OrderSummary>
           </aside>
         </div>
       )}
 
       {hydrated && suggestions.length > 0 && (
-        <section className={styles.suggest} aria-labelledby="suggest-title">
-          <h2 id="suggest-title" className={styles.suggestTitle}>
-            {lines.length ? "Add something else" : "Bestsellers"}
+        <section className="section" aria-labelledby="sugg-title">
+          <h2 id="sugg-title" style={{ fontSize: "var(--fs-24)" }}>
+            {lines.length ? "You might also like" : "Bestsellers"}
           </h2>
-          <div className={styles.grid}>
+          <div className="grid-products">
             {suggestions.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}

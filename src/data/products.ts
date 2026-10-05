@@ -92,10 +92,10 @@ export const products: Product[] = [
     description:
       "Wholewheat flour roasted low and slow, folded with nuts and a gentle sweetness. Eat a spoonful with your morning chai, or stir into warm milk on cold evenings. (Placeholder description — refine with the family’s own words.)",
     enjoyedFor: ["immunity", "wellness"],
-    ingredients: ["Ingredient list to be confirmed (TODO)", "Wholewheat flour (TBC)", "Ghee (TBC)", "Nuts — variety TBC", "Sweetener — type TBC"],
+    ingredients: ["Ingredient list to be confirmed", "Wholewheat flour (TBC)", "Ghee (TBC)", "Nuts — variety TBC", "Sweetener — type TBC"],
     nutrition: nutritionPlaceholder,
     preparation:
-      "Made in small batches on a slow flame in a home kitchen. Batch size, roasting time and process details to be added (TODO).",
+      "Made in small batches on a slow flame in a home kitchen. Batch size, roasting time and process details to be added.",
     storage: "Store in an airtight jar, away from moisture. Shelf life: TBC.",
     variants: ladder(349),
     featured: true,
@@ -110,9 +110,9 @@ export const products: Product[] = [
     description:
       "A richer panjiri in the tradition of post-delivery foods across North India. Always check with your doctor about diet after childbirth. (Placeholder — all copy and ingredients to be reviewed.)",
     enjoyedFor: ["postpartum", "bone", "wellness"],
-    ingredients: ["Ingredient list to be confirmed (TODO)", "Wholewheat flour (TBC)", "Ghee (TBC)", "Traditional additions — TBC"],
+    ingredients: ["Ingredient list to be confirmed", "Wholewheat flour (TBC)", "Ghee (TBC)", "Traditional additions — TBC"],
     nutrition: nutritionPlaceholder,
-    preparation: "Prepared to order in small batches. Process details to be added (TODO).",
+    preparation: "Prepared to order in small batches. Process details to be added.",
     storage: "Store in an airtight jar, away from moisture. Shelf life: TBC.",
     variants: ladder(449, ["in_stock", "in_stock", "low_stock"]),
     featured: true,
@@ -128,7 +128,7 @@ export const products: Product[] = [
     description:
       "Roasted flour and ghee pressed into rounds by hand — a winter staple in Punjabi homes. (Placeholder description.)",
     enjoyedFor: ["wellness", "bone"],
-    ingredients: ["Ingredient list to be confirmed (TODO)"],
+    ingredients: ["Ingredient list to be confirmed"],
     nutrition: nutritionPlaceholder,
     preparation: "Hand-pressed after roasting. Approximate piece weight and count per pack: TBC.",
     storage: "Keep in a cool, dry place. Shelf life: TBC.",
@@ -146,7 +146,7 @@ export const products: Product[] = [
     description:
       "Dried fruit and nuts bound together and rolled by hand into small rounds — a sweet that doesn’t feel like a compromise. (Placeholder description.)",
     enjoyedFor: ["wellness", "clarity", "immunity"],
-    ingredients: ["Ingredient list to be confirmed (TODO)", "Dates (TBC)", "Nuts — variety TBC"],
+    ingredients: ["Ingredient list to be confirmed", "Dates (TBC)", "Nuts — variety TBC"],
     nutrition: nutritionPlaceholder,
     preparation: "Rolled by hand in small batches. Pieces per pack: TBC.",
     storage: "Refrigerate after opening in warm weather. Shelf life: TBC.",
@@ -179,7 +179,7 @@ export const products: Product[] = [
     description:
       "Lightly roasted nuts, seeds and dried fruit, mixed for snacking between meals. (Placeholder description — exact mix TBC.)",
     enjoyedFor: ["clarity", "wellness"],
-    ingredients: ["Mix composition to be confirmed (TODO)"],
+    ingredients: ["Mix composition to be confirmed"],
     nutrition: nutritionPlaceholder,
     preparation: "Dry-roasted in small batches and mixed by hand.",
     storage: "Keep sealed after opening. Shelf life: TBC.",
@@ -196,7 +196,7 @@ export const products: Product[] = [
     tagline: "For exam season, long shifts, and late nights.",
     description: "A crunchier mix built for desk snacking. (Placeholder product — composition TBC.)",
     enjoyedFor: ["clarity"],
-    ingredients: ["Mix composition to be confirmed (TODO)"],
+    ingredients: ["Mix composition to be confirmed"],
     nutrition: nutritionPlaceholder,
     preparation: "Dry-roasted in small batches and mixed by hand.",
     storage: "Keep sealed after opening. Shelf life: TBC.",

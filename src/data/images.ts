@@ -20,6 +20,20 @@ export function hasImage(ref?: ImageRef): boolean {
 }
 
 export const images = {
+  homeHero: {
+    id: "home-hero",
+    src: "/images/home/hero",
+    alt: "Atta pinni and a bowl of roasted panjiri on a kitchen counter, ready for the snack cupboard",
+    label: "Home hero · landscape",
+    tone: "sand",
+  },
+  homeHeroMobile: {
+    id: "home-hero-mobile",
+    src: "/images/home/hero-mobile",
+    alt: "Atta pinni and a bowl of roasted panjiri on a kitchen counter, ready for the snack cupboard",
+    label: "Home hero · portrait crop",
+    tone: "sand",
+  },
   customise: {
     id: "home-customise",
     src: "/images/home/customise",

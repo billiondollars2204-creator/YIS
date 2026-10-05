@@ -374,6 +374,14 @@ export function CheckoutForm() {
           </button>
           <p className="hint" style={{ textAlign: "center", marginTop: -16 }}>
             By placing your order you agree to our{" "}
+            <Link href="/terms" className="link">
+              terms
+            </Link>
+            ,{" "}
+            <Link href="/privacy" className="link">
+              privacy policy
+            </Link>{" "}
+            and{" "}
             <Link href="/shipping-returns" className="link">
               shipping & returns policy
             </Link>

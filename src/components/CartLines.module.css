@@ -121,3 +121,9 @@
 .remove:hover {
   color: var(--danger);
 }
+.info {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}

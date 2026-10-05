@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Immunitywize · Panjiri, pinni and everyday mixes</title>
+  <meta name="description" content="Immunitywize makes panjiri, pinni, dry-fruit laddus and mewa mixes by hand, in small batches, from family recipes." />
+  <meta name="theme-color" content="#FFF9EF" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- One warm grotesk family for heading + UI (brief §9.3) and a compatible Devanagari face for product names (§9.3, §18.1). -->
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Mukta:wght@500;600&display=swap" rel="stylesheet" />
+
+  <!-- Hero image gets priority (brief §15.5, §20.1). -->
+  <link rel="preload" as="image" type="image/webp" media="(min-width: 760px)"
+        imagesrcset="images/pinni-chai-hero-1280w.webp 1280w, images/pinni-chai-hero-1916w.webp 1916w" imagesizes="(min-width: 1360px) 1280px, 94vw" />
+  <link rel="preload" as="image" type="image/webp" media="(max-width: 759px)" href="images/pinni-chai-hero-portrait-900w.webp" />
+
+  <link rel="stylesheet" href="hero.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Header (brief §10.1, §8.5): where to shop, where the cart is. No announcement bar: there's no verified message to put in it yet. -->
+  <header class="top">
+    <div class="top__inner">
+      <a class="brand" href="/" aria-label="Immunitywize home">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <!-- A hand-pressed round with a piece broken off: the pinni as the signature shape. -->
+          <path d="M25.6 9.2A12 12 0 1 1 19.4 4.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M19.4 4.5 18.2 9.6l4.9 1.4 2.5-1.8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="27.4" cy="4.6" r="1.6" fill="currentColor"/>
+          <circle cx="12.5" cy="18.5" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="brand__word">immunitywize</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="/shop">Shop</a>
+        <a href="/our-kitchen">Our Kitchen</a>
+      </nav>
+
+      <div class="tools">
+        <a class="tool" href="/search" aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+        </a>
+        <a class="tool" href="/cart" aria-label="Cart">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16l-1.4 11.2a2 2 0 0 1-2 1.8H7.4a2 2 0 0 1-2-1.8L4 7Z"/><path d="M8.5 9.5V6.5a3.5 3.5 0 0 1 7 0v3"/></svg>
+        </a>
+        <a class="tool tool--menu" href="/menu" aria-label="Menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero (brief §10.2): centred vertical stack, product-led, one primary action. -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__copy">
+        <p class="hero__eyebrow">Panjiri · Pinni · Laddus · Mewa mixes</p>
+        <h1 id="hero-title" class="hero__title">A little taste <span class="nowrap">of home.</span></h1>
+        <p class="hero__sub">Panjiri, pinni and everyday mixes for the snack cupboard, made by hand in small batches.</p>
+        <div class="hero__actions">
+          <a class="btn" href="/shop">Shop snacks</a>
+          <a class="quiet" href="/shop/atta-pinni">Meet Atta Pinni <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <figure class="hero__media">
+        <div class="hero__frame">
+          <picture>
+            <source media="(max-width: 759px)" type="image/webp" srcset="images/pinni-chai-hero-portrait-900w.webp" width="900" height="1125" />
+            <source media="(max-width: 759px)" srcset="images/pinni-chai-hero-portrait-900w.jpg" width="900" height="1125" />
+            <source type="image/webp" srcset="images/pinni-chai-hero-1280w.webp 1280w, images/pinni-chai-hero-1916w.webp 1916w" sizes="(min-width: 1360px) 1280px, 94vw" />
+            <img
+              src="images/pinni-chai-hero-1916w.jpg"
+              srcset="images/pinni-chai-hero-1280w.jpg 1280w, images/pinni-chai-hero-1916w.jpg 1916w"
+              sizes="(min-width: 1360px) 1280px, 94vw"
+              width="1916" height="821"
+              alt="Three atta pinni on a cream table, one broken open to show its crumbly, nutty inside, beside a steel katori of panjiri with a brass spoon and a glass of chai"
+              fetchpriority="high" decoding="async" />
+          </picture>
+
+          <!-- Shoppable labels are real HTML, not baked into the photo (brief §10.2). -->
+          <a class="tag tag--pinni" href="/shop/atta-pinni">
+            <span class="tag__dot" aria-hidden="true"></span>
+            <span class="tag__text"><strong>Atta Pinni</strong> <span lang="hi" class="hi">पिन्नी</span><small>Hand-pressed, nutty, a little crumbly</small></span>
+          </a>
+          <a class="tag tag--panjiri" href="/shop/classic-panjiri">
+            <span class="tag__dot" aria-hidden="true"></span>
+            <span class="tag__text"><strong>Ghar ki Panjiri</strong> <span lang="hi" class="hi">पंजीरी</span><small>Roasted wholewheat crumble, by the spoonful</small></span>
+          </a>
+        </div>
+        <figcaption class="hero__note">Temporary AI-generated image. Replace with real Atta Pinni pack and texture photography (brief §15.2, H01/H02) before launch.</figcaption>
+      </figure>
+
+      <!-- Concise, verifiable fact row (brief §10.3). Only brand facts already stated; no unverified claims. -->
+      <ul class="facts" aria-label="About the food">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 13.5c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5"/><path d="M4 13.5h16l-1.5 4.2a2 2 0 0 1-1.9 1.3H7.4a2 2 0 0 1-1.9-1.3L4 13.5Z"/><path d="M12 8V5"/></svg>
+          Made by hand, in small batches
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h9l3 3v13H6z"/><path d="M9 11h6M9 15h4"/></svg>
+          From family recipes
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="7" width="14" height="13" rx="2"/><path d="M8 7V5h8v2"/><path d="M9 12h6"/></svg>
+          Ingredients and shelf life on every pack
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

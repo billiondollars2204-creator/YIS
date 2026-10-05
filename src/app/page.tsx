@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { categories, getProduct, isSoldOut, products, productsIn } from "@/data/products";
+import { getProduct, productsIn } from "@/data/products";
 import { benefits, faqs } from "@/data/content";
-import { categoryImage, images, occasionImage } from "@/data/images";
+import { images, occasionImage } from "@/data/images";
 import { formulas, getFormula } from "@/data/formulations";
 import { ingredients } from "@/data/ingredients";
 import { EMPTY_CUSTOMIZATION, MIN_CUSTOM_GRAMS, resolveFormula } from "@/lib/customization";
@@ -10,19 +10,14 @@ import { formatGrams, formatShare } from "@/lib/units";
 import { ProductCard } from "@/components/ProductCard";
 import { SmartImage } from "@/components/SmartImage";
 import { IngredientSwatch } from "@/components/IngredientSwatch";
-import { TrustStrip } from "@/components/TrustStrip";
 import { Placeholder } from "@/components/Placeholder";
-import { HeroActions } from "@/components/home/HeroActions";
-import { BestsellerTabs } from "@/components/home/BestsellerTabs";
+import { Hero } from "@/components/home/Hero";
+import { FactRow, StartWith } from "@/components/home/StartWith";
 import { Toran, VegMark } from "@/components/ui";
 import { ArrowRight, GiftIcon } from "@/components/icons";
 import styles from "./home.module.css";
 
-const heroCats = ["panjiri", "pinni", "laddus"];
-
 export default function HomePage() {
-  const ranked = [...products].sort((a, b) => Number(!!b.featured) - Number(!!a.featured) || Number(isSoldOut(a)) - Number(isSoldOut(b)));
-  const tabs = [{ id: "all", label: "All" }, ...categories.map((c) => ({ id: c.slug, label: c.name }))];
   const bundles = productsIn("gift-boxes");
   const showcase = getProduct("classic-panjiri")!;
   const showcaseRows = resolveFormula(getFormula("classic-panjiri")!, EMPTY_CUSTOMIZATION)
@@ -32,54 +27,10 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero: one promise, two actions, three shoppable windows. */}
-      <section className={`${styles.hero} jaali`} aria-labelledby="hero-title">
-        <div className={`container ${styles.heroInner}`}>
-          <p className="eyebrow">Homemade in small batches</p>
-          <h1 id="hero-title" className={styles.heroTitle}>
-            Panjiri, pinni &amp; laddus, <span>roasted slowly at home.</span>
-          </h1>
-          <p className={styles.heroSub}>Real ghee, whole nuts and jaggery, made by hand in our family kitchen. Every jar lists exactly what’s inside, by weight.</p>
-          <div className={styles.heroCtas}>
-            <HeroActions />
-          </div>
-          <ul className={styles.windows}>
-            {heroCats.map((slug, i) => {
-              const c = categories.find((x) => x.slug === slug)!;
-              const from = Math.min(...productsIn(slug).flatMap((p) => p.variants.map((v) => v.price)));
-              return (
-                <li key={slug} className={styles.window} style={{ "--i": i } as React.CSSProperties}>
-                  <Link href={`/shop?category=${slug}`}>
-                    <SmartImage image={categoryImage(slug, c.name)} sizes="(min-width: 900px) 280px, 60vw" ratio="4 / 5" className="arch" caption={c.hindi} preload={i === 1} />
-                    <span className={styles.windowText}>
-                      <strong>{c.name}</strong>
-                      <span className="num">from {formatINR(from)}</span>
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <Toran />
-      </section>
-
-      <section className="container" aria-label="Why shop with us" style={{ paddingBlock: "var(--sp-6)" }}>
-        <TrustStrip />
-      </section>
-
-      <section className="container section" aria-labelledby="best-title" style={{ paddingTop: "var(--sp-4)" }}>
-        <div className="section-title">
-          <div>
-            <h2 id="best-title">Bestsellers</h2>
-            <p>Start with our core range, by category.</p>
-          </div>
-          <Link href="/shop" className="more">
-            Shop all {products.length} <ArrowRight />
-          </Link>
-        </div>
-        <BestsellerTabs tabs={tabs} items={ranked.map((p, i) => ({ product: p, node: <ProductCard product={p} preload={i < 2} /> }))} />
-      </section>
+      {/* v6 hero (phase 1 of the 2026-10-05 brief): centred, product-led, one action. */}
+      <Hero />
+      <FactRow />
+      <StartWith />
 
       <section className="section section--cream" aria-labelledby="occ-title">
         <div className="container">

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Mukta, Tiro_Devanagari_Hindi } from "next/font/google";
+import { Bricolage_Grotesque, Mukta, Tiro_Devanagari_Hindi } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -10,9 +10,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { resolveImage } from "@/data/images";
 import { site } from "@/lib/site";
 
-// Both families are by Indian type foundries and cover Latin + Devanagari,
-// so English and Hindi product names share one typographic voice.
+// v6: a warm grotesk (Bricolage Grotesque) carries headings and UI; Mukta
+// covers Devanagari so Hindi names sit comfortably beside it.
 const tiro = Tiro_Devanagari_Hindi({ subsets: ["latin", "devanagari"], weight: "400", variable: "--font-tiro", display: "swap" });
+const grotesk = Bricolage_Grotesque({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-grotesk", display: "swap" });
 const mukta = Mukta({ subsets: ["latin", "devanagari"], weight: ["400", "500", "600", "700"], variable: "--font-mukta", display: "swap" });
 
 const ogImage = resolveImage("/images/og") ?? "/og-placeholder.svg";
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#8a1c2b",
+  themeColor: "#24372e",
   width: "device-width",
   initialScale: 1,
 };
@@ -52,7 +53,7 @@ const organizationLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${tiro.variable} ${mukta.variable}`} suppressHydrationWarning>
+    <html lang="en-IN" className={`${grotesk.variable} ${tiro.variable} ${mukta.variable}`} suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main">
           Skip to content

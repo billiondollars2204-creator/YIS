@@ -1,0 +1,138 @@
+.buy {
+  display: grid;
+  gap: var(--sp-5);
+}
+.group {
+  display: grid;
+  gap: 8px;
+}
+.sizes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.size {
+  text-align: center;
+}
+.size strong {
+  font-size: var(--fs-16);
+}
+.size small {
+  font-size: var(--fs-12);
+  color: var(--ink-2);
+}
+.modes {
+  display: grid;
+  gap: 8px;
+}
+.modes :global(.choice) > span {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.modes strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ri {
+  width: 16px;
+  height: 16px;
+  color: var(--marigold-ink);
+}
+.modes :global(.choice) span span {
+  font-size: var(--fs-14);
+  color: var(--ink-2);
+}
+.every {
+  display: grid;
+  gap: 6px;
+  max-width: 260px;
+}
+.stock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: var(--fs-14);
+  font-weight: 700;
+  color: var(--peacock);
+}
+.stock > span:first-child {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.stock[data-stock="low_stock"] {
+  color: var(--marigold-ink);
+}
+.stock[data-stock="out_of_stock"] {
+  color: var(--danger);
+}
+.stock .muted {
+  font-weight: 400;
+}
+.actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+}
+.actions :global(.stepper) {
+  height: 54px;
+}
+.actions :global(.stepper button) {
+  height: 52px;
+}
+.btnPrice {
+  font-weight: 400;
+  opacity: 0.9;
+}
+.save {
+  padding-inline: 16px !important;
+  border-color: var(--line-2) !important;
+}
+.buyNow {
+  grid-column: 1 / -1;
+}
+.pin {
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--cream);
+}
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 -10px 30px -20px rgba(0, 0, 0, 0.4);
+  transform: translateY(110%);
+  transition: transform 300ms var(--ease);
+}
+.bar[data-show] {
+  transform: none;
+}
+.barInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-block: 10px;
+}
+.barName {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 560px) {
+  .barName {
+    display: none;
+  }
+  .barInner :global(.btn) {
+    width: 100%;
+  }
+}

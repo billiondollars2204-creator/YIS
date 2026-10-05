@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Immunitywize · Hero demo</title>
+  <meta name="theme-color" content="#FFF9EF" />
+  <!-- Warm, substantial grotesk for heading + UI from one family (brief §9.3). Gabarito is a free stand-in for the Good Sans reference. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="images/atta-pinni-hero-desktop.webp" media="(min-width: 700px)" />
+  <link rel="preload" as="image" href="images/atta-pinni-hero-mobile.webp" media="(max-width: 699px)" />
+  <link rel="stylesheet" href="hero.css" />
+</head>
+<body>
+  <!-- Hero (brief §10.2): centred vertical stack, not a split screen. -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">Panjiri · Pinni · Mixes</p>
+      <h1 id="hero-title" class="hero__title">A little taste of home.</h1>
+      <p class="hero__sub">Panjiri, pinni and everyday mixes for the snack cupboard.</p>
+      <div class="hero__actions">
+        <a class="btn" href="/shop">Shop snacks</a>
+        <a class="link" href="/shop/atta-pinni">Meet Atta Pinni</a>
+      </div>
+    </div>
+
+    <figure class="hero__media">
+      <picture>
+        <source media="(max-width: 699px)" type="image/webp" srcset="images/atta-pinni-hero-mobile.webp" width="1122" height="1402" />
+        <source media="(max-width: 699px)" srcset="images/atta-pinni-hero-mobile.jpg" width="1122" height="1402" />
+        <source type="image/webp" srcset="images/atta-pinni-hero-desktop.webp" />
+        <img
+          src="images/atta-pinni-hero-desktop.jpg"
+          width="1916" height="821"
+          alt="Atta pinni on a white plate, one broken open to show its crumbly inside, with a katori of panjiri and a glass of chai"
+          fetchpriority="high" decoding="async" />
+      </picture>
+      <figcaption class="hero__note">Temporary AI-generated image · replace with real product photography</figcaption>
+    </figure>
+  </section>
+</body>
+</html>

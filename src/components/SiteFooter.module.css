@@ -1,0 +1,124 @@
+.footer {
+  margin-top: var(--sp-9);
+  background: var(--ink);
+  color: #e8ddd0;
+  font-size: var(--fs-14);
+}
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+.footer :focus-visible {
+  outline-color: var(--marigold);
+}
+.nl {
+  background: var(--brand);
+  color: #fff;
+}
+.nlInner {
+  display: grid;
+  gap: var(--sp-4);
+  align-items: center;
+  padding-block: var(--sp-6);
+}
+.nlTitle {
+  margin: 0 0 4px;
+  font-size: var(--fs-24);
+  color: #fff;
+}
+.nlText {
+  margin: 0;
+  color: #f4dcd8;
+}
+.nlForm {
+  width: 100%;
+  max-width: 480px;
+}
+.nlRow {
+  display: flex;
+  gap: var(--sp-2);
+}
+.nlRow :global(.btn) {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.nlErr {
+  margin: 6px 0 0;
+  font-weight: 600;
+  color: #ffd6cc;
+}
+.done {
+  margin: 0;
+  font-size: var(--fs-18);
+}
+@media (min-width: 860px) {
+  .nlInner {
+    grid-template-columns: 1fr auto;
+  }
+  .nlForm {
+    width: 460px;
+  }
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-6) var(--sp-5);
+  padding-block: var(--sp-7);
+}
+.brand {
+  grid-column: 1 / -1;
+}
+.logo {
+  margin: 0 0 var(--sp-2);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: #fff;
+}
+.contact {
+  display: grid;
+  gap: 4px;
+  margin: var(--sp-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.colTitle {
+  margin: 0 0 var(--sp-3);
+  font-family: var(--font-ui);
+  font-size: var(--fs-12);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--marigold);
+}
+.col ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.legal {
+  display: grid;
+  gap: 4px;
+  padding-block: var(--sp-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: var(--fs-12);
+  color: #b9ab9c;
+}
+.legal p {
+  margin: 0;
+}
+.tbc {
+  border-bottom: 1px dashed currentColor;
+}
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+  .brand {
+    grid-column: auto;
+  }
+}

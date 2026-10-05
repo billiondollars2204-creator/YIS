@@ -5,7 +5,7 @@ A premium, product-first e-commerce site for **Immunitywize**, a homegrown India
 > **Placeholder content:** prices, stock, ingredient lists, house-recipe amounts and limits, surcharges, nutrition, certifications, reviews, policies, contact details and benefit copy. Unverified items carry a dashed **TBC** tag on the page. **No photographs exist yet** — see [`CODEX_IMAGES.md`](CODEX_IMAGES.md).
 
 - **Design direction & plan:** [`docs/PLAN.md`](docs/PLAN.md)
-- **Image brief (55 slots):** [`CODEX_IMAGES.md`](CODEX_IMAGES.md)
+- **Image brief (66 slots):** [`CODEX_IMAGES.md`](CODEX_IMAGES.md)
 - **Logo concepts:** [`LOGO_CONCEPTS.md`](LOGO_CONCEPTS.md)
 - **Stack:** Next.js 16 (App Router, static generation) · React 19 · TypeScript · Zustand (cart) · CSS Modules + design tokens · native `<dialog>` · `next/image`. No UI kit, no animation library.
 
@@ -30,12 +30,14 @@ Node ≥ 20.9 (≥ 22.6 for `pnpm test`, which uses built-in TypeScript strippin
 ## What's in the store
 
 - **Header:** utility strip; sticky bar with logo, direct category links (current scope highlighted), a *Custom batch* entry, search, account and cart. On mobile, a menu sheet.
-- **Home:** centred hero (headline, two CTAs, category chips, product photo with shoppable caption) → Bestsellers → Shop by category → Custom batches → the scroll-drawn kitchen story → What goes in → FAQ.
-- **Shop:** category tabs, need / in-stock / customisable filters, sorting and search, all URL-driven.
+- **Design (v5, “Mithai-shop modern”):** a clean Western e-commerce layout with Indian festive details: toran border, jaali lattice, arch-framed photos and Hindi product names. Type is Tiro Devanagari Hindi (display) and Mukta (UI).
+- **Home:** hero with three arch “windows” (Panjiri, Pinni, Laddus, each with a from-price) and an A/B-tested CTA → Bestsellers (category tabs) → Shop by occasion → Custom batches → Gift boxes → What goes in → Our story → FAQ.
+- **Shop:** category tabs, need / in-stock / customisable filters (bottom sheet on mobile), sorting and search, all URL-driven. Includes two gift-box bundles.
 - **Product cards:** hover image, quick add with confirmation, price per 100 g, a *Customisable* badge and builder link only on eligible products.
-- **Product page:** gallery, pack-size buttons with unit price, stock, quantity, add to cart / buy now, order-total and returns note, a *Make it your way* panel (eligible products only), facts, recipe table with ingredient swatches, accordions, related products, sticky add bar.
+- **Product page:** gallery, one-time or **Subscribe & save** (10%, every 2/4/6 weeks), PIN-code delivery check, FSSAI / legal accordion, pack-size buttons with unit price, stock, quantity, add to cart / buy now, order-total and returns note, a *Make it your way* panel (eligible products only), facts, recipe table with ingredient swatches, accordions, related products, sticky add bar.
 - **Custom batches** (`/customise` → `/customise/<product>` → review): see below.
-- **Cart drawer and cart:** custom lines list every change, surcharge and note, with an **Edit mix** link. Checkout with validation and a demo confirmation. Account, FAQ, shipping & returns, contact, our story, 404.
+- **Cart drawer and cart:** custom lines list every change, surcharge and note, with an **Edit mix** link. Checkout with validation, coupon `WELCOME10`, a COD limit, the state filled from the PIN code, and a demo confirmation.
+- **Account** (demo OTP login, orders, reorder, saved items, subscriptions), **Support** (order tracking), FAQ, shipping & returns, contact, our story, 404 and error pages. Demo data is stored on the device (`src/lib/stores.ts`).
 
 ## Custom batches
 
@@ -60,14 +62,16 @@ Node ≥ 20.9 (≥ 22.6 for `pnpm test`, which uses built-in TypeScript strippin
 
 ## Images
 
-Every photo is a named slot (`src/data/images.ts`) that points to a path under `public/images/`. `CODEX_IMAGES.md` specifies all 55 (prompt, size, background, crop, placement, alt, status). Drop files at those paths and run `pnpm images:manifest`; no code changes are needed. Missing photos render as same-size placeholders, and ingredients render as colour swatches.
+Every photo is a named slot (`src/data/images.ts`) that points to a path under `public/images/`. `CODEX_IMAGES.md` specifies all 66 (prompt, size, background, crop, placement, alt, status). Drop files at those paths and run `pnpm images:manifest`; no code changes are needed. Missing photos render as same-size placeholders, and ingredients render as colour swatches.
 
 ## Integrations (placeholders)
 
 | Area       | Where                                   | What to do                                                                 |
 | ---------- | --------------------------------------- | -------------------------------------------------------------------------- |
 | Payments   | `app/checkout/CheckoutForm.tsx` `onSubmit` | Create the order server-side (route handler / server action), hand off to a provider (e.g. Razorpay, Cashfree, Stripe India), confirm via webhook. Keep keys server-side only. |
-| Shipping   | `lib/money.ts`                          | Replace flat rates with courier API rates and a PIN-code serviceability check. |
+| Shipping   | `lib/money.ts`, `lib/pricing.ts`        | Replace flat rates with courier API rates and a real PIN-code serviceability check (the PIN → state map is a stub). |
+| Subscriptions | `lib/pricing.ts`, `app/account/`     | Connect a recurring-billing provider (e.g. Razorpay Subscriptions). Plans are stored on the device today. |
+| Login & orders | `lib/stores.ts`, `app/account/`, `app/support/` | Replace the demo OTP and on-device orders with real auth, an orders API and courier tracking. |
 | Newsletter | `components/Newsletter.tsx`             | POST to your email provider.                                               |
 | Contact    | `app/contact/ContactForm.tsx`           | Send to inbox/CRM via a server action.                                     |
 | Reviews    | Product page "Reviews" section          | Connect a reviews provider; add `aggregateRating` to Product JSON-LD.      |
@@ -76,8 +80,8 @@ Every photo is a named slot (`src/data/images.ts`) that points to a path under `
 ### Analytics events
 
 `track(event, params)` pushes to `window.dataLayer` and dispatches a `iw:analytics` DOM event. Events fired today:
-`page_view`, `view_item`, `view_item_list`, `search`, `select_variant`, `customize_change`, `add_to_cart`, `remove_from_cart`, `view_cart`,
-`begin_checkout`, `purchase`, `contact_submit`, `newsletter_signup`. Nothing is sent anywhere unless you configure a provider.
+`page_view`, `view_item`, `view_item_list`, `search`, `select_variant`, `select_purchase_option`, `select_promotion`, `customize_change`, `add_to_cart`, `remove_from_cart`, `view_cart`,
+`begin_checkout`, `apply_coupon`, `add_shipping_info`, `add_payment_info`, `purchase`, `check_pincode`, `login`, `track_order`, `contact_submit`, `newsletter_signup`, `experiment_exposure`. The `hero-cta` A/B test lives in `src/lib/experiments.ts`. Nothing is sent anywhere unless you configure a provider.
 
 ## Accessibility, motion & SEO
 
@@ -93,6 +97,7 @@ The site deploys anywhere Next.js runs: Vercel (preset "Next.js"), a Node host (
 
 - [ ] Kitchen confirms ingredients, house recipes, limits, steps and per-100 g prices in `src/data/formulations.ts` and `src/data/ingredients.ts`.
 - [ ] Replace placeholder prices, stock, nutrition, allergens, shelf life, policies and contact details.
+- [ ] Add FSSAI licence and GSTIN numbers, the grievance officer, and confirm coupon, COD and subscription rules.
 - [ ] Legal review of benefit copy and FSSAI labelling.
 - [ ] Generate or shoot the photos in `CODEX_IMAGES.md`, then replace them with real photography.
 - [ ] Connect payments, shipping, newsletter, contact form and reviews; add a consent banner before analytics.

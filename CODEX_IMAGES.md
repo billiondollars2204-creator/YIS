@@ -1,6 +1,6 @@
-# Image brief for Codex — Immunitywize (v4)
+# Image brief for Codex — Immunitywize (v5)
 
-Every photograph the redesigned store needs: **55 images**. Each entry gives the exact path, prompt, size, background, crop guidance, where it appears, variants, alt text, and whether it replaces an earlier brief.
+Every photograph the v5 (“Mithai-shop modern”) store needs: **66 images** (65 in use; `category-mixes` is deferred). Each entry gives the exact path, prompt, size, background, crop guidance, where it appears, variants, alt text, and whether it replaces an earlier brief.
 
 ## Asset status — read this first
 
@@ -10,7 +10,7 @@ Every photograph the redesigned store needs: **55 images**. Each entry gives the
 
 ## How to deliver (Codex)
 
-1. Work in order: **A → B → D → C → E**. The hero, packshots and ingredient textures matter most.
+1. Work in order: **C → B → E → D**. The three hero arches (C), the packshots (B) and the occasion arches (E) matter most.
 2. Generate at the largest supported size near the target ratio, **centre-crop to the exact ratio, then resize** to the listed size. Don't upscale more than 1.6×.
 3. Save as JPEG (quality 82, sRGB) at the exact path. `.webp` or `.avif` with the same name also works. Create folders as needed.
 4. **Don't edit code.** Images are found by path. Then run:
@@ -18,7 +18,8 @@ Every photograph the redesigned store needs: **55 images**. Each entry gives the
    pnpm images:manifest   # also runs automatically before dev/build
    pnpm build && pnpm start
    ```
-   Check `/`, `/shop`, `/shop/classic-panjiri`, `/customise`, `/customise/classic-panjiri` (watch the mix composition) and `/our-story`.
+   Check `/`, `/shop`, `/shop/classic-panjiri`, `/shop/winter-trio`, `/customise`, `/customise/classic-panjiri` (watch the mix composition) and `/our-story`.
+   Arch-framed slots (hero, occasions, story, `/customise` chooser) are clipped to a rounded-top arch by CSS: keep the subject inside the lower 80% and away from the top corners.
 5. Commit `public/images/**` together with the updated `src/data/image-manifest.json`.
 
 ## Photographic direction (applies to every image)
@@ -35,20 +36,24 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 | Old id / path | Why |
 |---|---|
-| `public/images/home/story.jpg` (`home-story`) | Home story teaser removed; the kitchen illustration links to Our story instead. |
-| `public/images/categories/gift-boxes.jpg` | Category is "coming soon" and not shown as a tile. Deferred. |
+| `home-hero`, `home-hero-mobile` (`public/images/home/hero*.jpg`) | v5 hero uses three arch-framed category photos instead (section C). Don't generate. |
+| `public/images/categories/gift-boxes.jpg`, `categories/mixes.jpg` | Not shown anywhere in v5 (gift boxes use their own product photos; the hero shows Panjiri, Pinni and Laddus only). Deferred. |
+| v4 product specs at 4:5 | Superseded: product images are now shown **1:1** (cards, gallery, cart). Same paths, regenerate square. |
+| v4 category specs at 1:1 | Superseded: categories now appear only as hero arches at **4:5**. |
 | v3 ingredient specs (heap on a sand backdrop) | Superseded: ingredient images must now be full-bleed textures (section D). Same paths, so regenerate. |
-| v3 category specs at 4:5 | Superseded: category tiles are now **1:1**. |
 | Any request for jars, bowls or drawn ingredients as illustrations | The redesign uses photography only; drawings were removed. |
 
 ## Where each image appears
 
 | Page / component | Image ids |
 |---|---|
-| Home → hero | `home-hero` (≥700 px), `home-hero-mobile` (<700 px) |
+| Home → hero (three arch windows) | `category-panjiri`, `category-pinni`, `category-laddus` |
 | Product cards (home, shop, related), search, cart, cart drawer, `/customise` chooser | `<product>-1`; `<product>-2` on card hover |
 | Product page gallery `/shop/<product>` | `<product>-1`, `-2`, `-3` |
-| Home → Shop by category | `category-panjiri`, `category-pinni`, `category-laddus`, `category-mixes` |
+| Home → Shop by occasion (arches) | `occasion-immunity`, `-postpartum`, `-clarity`, `-wellness`, `-bone` |
+| Home → Gift boxes | `home-gifting`; gift-box products use `winter-trio-*`, `new-mother-box-*` |
+| Home → Our story teaser | `home-story` |
+| `/customise` chooser (4:5 arch crop of the square packshot) | `<product>-1` |
 | Custom-batch builder rows + mix composition; ingredient swatches site-wide | `ingredient-*` (22) |
 | Home → Custom batches | `home-customise` |
 | Our story | `story-hero`, `story-roasting`, `story-rolling`, `story-packing` |
@@ -56,64 +61,30 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 ---
 
-## A. Home hero (do first)
+## B. Product photography (27 images, 3 per product)
 
-### 1. `home-hero` — Hero, desktop
-
-| | |
-|---|---|
-| **Save to** | `public/images/home/hero.jpg` |
-| **Size · ratio · format** | 2400 × 1100 px · 24:11 · JPEG q82, sRGB |
-| **Background** | Full-bleed photograph, no transparency. |
-| **Placement** | Home `/` → hero, the wide photo directly under the headline, CTAs and category chips (`src/app/page.tsx` → `HeroImage`). Shown from 700 px wide. The caption under it links the three products in the photo. |
-| **Variants** | Desktop file. The phone version is `home-hero-mobile` (next entry). |
-| **Alt text** | Describe what's in the frame: “Jars of Ghar ki Panjiri, Atta Pinni and Dry-Fruit Laddu on a stone kitchen counter in morning light” (already in code — update if the styling changes). |
-| **Status** | **New slot** (re-introduced; the v3 design had no hero image). |
-
-**Prompt:** Wide still life on a honed grey Kadappa stone counter: three clear glass jars with brass lids and blank kraft bands, left to right containing golden coarse panjiri, golden-brown hand-pressed pinni, and deep-brown dry-fruit laddus; in front of them a shallow brass bowl of panjiri with a brass spoon, two pinni on a small stoneware plate and three laddus on a folded unbleached cotton cloth; a few loose almonds and cardamom pods. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
-
-**Composition, lighting & crop:** Eye-level to 15° above, centred group occupying the middle 60% of the width so the 4:5 phone crop can be taken from the same scene. Keep 15% clear counter at left and right and a calm, slightly out-of-focus wall above. Light rakes from the left to show crumb texture. No hands.
-
-### 2. `home-hero-mobile` — Hero, mobile
-
-| | |
-|---|---|
-| **Save to** | `public/images/home/hero-mobile.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
-| **Background** | Full-bleed photograph. |
-| **Placement** | Same position as `home-hero`, used below 700 px wide via `<picture>`. |
-| **Variants** | Phone crop of the hero scene. |
-| **Alt text** | Same as home-hero. |
-| **Status** | **New slot.** |
-
-**Prompt:** Same scene, styling and light as home-hero, recomposed vertically: the three jars in a tight row in the upper-middle, the brass bowl of panjiri and plate of pinni in the foreground. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
-
-**Composition, lighting & crop:** Recompose rather than crop the wide image: jars fill ~70% of the width, top of the lids ~20% from the top edge. Must look like the same shoot as the desktop file.
-
-## B. Product photography (21 images, 3 per product)
-
-### 3. `classic-panjiri-1` — Ghar ki Panjiri — packshot
+### 1. `classic-panjiri-1` — Ghar ki Panjiri — packshot
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/classic-panjiri/1.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand paper sweep (#EFE7DA), no transparency. |
 | **Placement** | Main product image: product cards (home Bestsellers, `/shop`, “You may also like”), search results, cart drawer and cart thumbnails, and image 1 of the gallery on `/shop/classic-panjiri`. Customisable products also show this image on the Custom batches chooser (`/customise`). |
-| **Variants** | One file serves desktop and mobile (cards crop nothing at 4:5). |
+| **Variants** | One file serves desktop and mobile (square everywhere; the `/customise` chooser centre-crops image 1 to a 4:5 arch, so keep the jar centred). |
 | **Alt text** | Alt: “Ghar ki Panjiri in a glass jar” (in code). |
-| **Status** | Replaces the v3 brief (same path; prompt updated). |
+| **Status** | Replaces the v4 brief (same path; now **1:1**). |
 
 **Prompt:** Studio packshot of a clear cylindrical glass jar with a brushed brass screw lid and a plain blank kraft-paper band, filled with coarse golden-brown roasted wholewheat crumble with visible slivers of almond and cashew and a few raisins; a small spill of the product in front of the jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Straight-on, camera at jar mid-height, jar centred and ~62% of the frame height, base ~18% from the bottom edge. Soft key light from upper left, white bounce right, soft contact shadow. **Identical jar, angle, backdrop, light and scale across all seven products.** Keep the top-left 25% calm: badges overlay there.
 
-### 4. `classic-panjiri-2` — Ghar ki Panjiri — texture
+### 2. `classic-panjiri-2` — Ghar ki Panjiri — texture
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/classic-panjiri/2.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Product-card **hover** image (desktop pointer only) and gallery image 2 on `/shop/classic-panjiri`. |
 | **Variants** | Single file. |
@@ -124,12 +95,12 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** Overhead, katori fills ~80% of the frame, crisp texture front to back, shadows soft. Colour must match the packshot exactly.
 
-### 5. `classic-panjiri-3` — Ghar ki Panjiri — served
+### 3. `classic-panjiri-3` — Ghar ki Panjiri — served
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/classic-panjiri/3.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Gallery image 3 on `/shop/classic-panjiri`. |
 | **Variants** | Single file. |
@@ -140,28 +111,28 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** 45° angle, bowl on the left third, tumbler right, generous negative space at top. Warm morning light.
 
-### 6. `mothers-panjiri-1` — Panjiri for New Mothers — packshot
+### 4. `mothers-panjiri-1` — Panjiri for New Mothers — packshot
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/mothers-panjiri/1.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand paper sweep (#EFE7DA), no transparency. |
 | **Placement** | Main product image: product cards (home Bestsellers, `/shop`, “You may also like”), search results, cart drawer and cart thumbnails, and image 1 of the gallery on `/shop/mothers-panjiri`. Customisable products also show this image on the Custom batches chooser (`/customise`). |
-| **Variants** | One file serves desktop and mobile (cards crop nothing at 4:5). |
+| **Variants** | One file serves desktop and mobile (square everywhere; the `/customise` chooser centre-crops image 1 to a 4:5 arch, so keep the jar centred). |
 | **Alt text** | Alt: “Panjiri for New Mothers in a glass jar” (in code). |
-| **Status** | Replaces the v3 brief (same path; prompt updated). |
+| **Status** | Replaces the v4 brief (same path; now **1:1**). |
 
 **Prompt:** Studio packshot of a clear cylindrical glass jar with a brushed brass screw lid and a plain blank kraft-paper band, filled with a richer, darker roasted crumble flecked with chopped almond, walnut, melon seeds and puffed edible gum; a small spill of the product in front of the jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Straight-on, camera at jar mid-height, jar centred and ~62% of the frame height, base ~18% from the bottom edge. Soft key light from upper left, white bounce right, soft contact shadow. **Identical jar, angle, backdrop, light and scale across all seven products.** Keep the top-left 25% calm: badges overlay there.
 
-### 7. `mothers-panjiri-2` — Panjiri for New Mothers — texture
+### 5. `mothers-panjiri-2` — Panjiri for New Mothers — texture
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/mothers-panjiri/2.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Product-card **hover** image (desktop pointer only) and gallery image 2 on `/shop/mothers-panjiri`. |
 | **Variants** | Single file. |
@@ -172,12 +143,12 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** Overhead, katori fills ~80% of the frame, crisp texture front to back, shadows soft. Colour must match the packshot exactly.
 
-### 8. `mothers-panjiri-3` — Panjiri for New Mothers — served
+### 6. `mothers-panjiri-3` — Panjiri for New Mothers — served
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/mothers-panjiri/3.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Gallery image 3 on `/shop/mothers-panjiri`. |
 | **Variants** | Single file. |
@@ -188,28 +159,28 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** 45° angle, bowl on the left third, tumbler right, generous negative space at top. Warm morning light.
 
-### 9. `atta-pinni-1` — Atta Pinni — packshot
+### 7. `atta-pinni-1` — Atta Pinni — packshot
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/atta-pinni/1.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand paper sweep (#EFE7DA), no transparency. |
 | **Placement** | Main product image: product cards (home Bestsellers, `/shop`, “You may also like”), search results, cart drawer and cart thumbnails, and image 1 of the gallery on `/shop/atta-pinni`. Customisable products also show this image on the Custom batches chooser (`/customise`). |
-| **Variants** | One file serves desktop and mobile (cards crop nothing at 4:5). |
+| **Variants** | One file serves desktop and mobile (square everywhere; the `/customise` chooser centre-crops image 1 to a 4:5 arch, so keep the jar centred). |
 | **Alt text** | Alt: “Atta Pinni in a glass jar” (in code). |
-| **Status** | Replaces the v3 brief (same path; prompt updated). |
+| **Status** | Replaces the v4 brief (same path; now **1:1**). |
 
 **Prompt:** Studio packshot of a clear cylindrical glass jar with a brushed brass screw lid and a plain blank kraft-paper band, filled with dense round hand-pressed pinni, golden brown and slightly crumbly, with soft finger-press marks and almond slivers on top; a small spill of the product in front of the jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Straight-on, camera at jar mid-height, jar centred and ~62% of the frame height, base ~18% from the bottom edge. Soft key light from upper left, white bounce right, soft contact shadow. **Identical jar, angle, backdrop, light and scale across all seven products.** Keep the top-left 25% calm: badges overlay there.
 
-### 10. `atta-pinni-2` — Atta Pinni — texture
+### 8. `atta-pinni-2` — Atta Pinni — texture
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/atta-pinni/2.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Product-card **hover** image (desktop pointer only) and gallery image 2 on `/shop/atta-pinni`. |
 | **Variants** | Single file. |
@@ -220,12 +191,12 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** Overhead, katori fills ~80% of the frame, crisp texture front to back, shadows soft. Colour must match the packshot exactly.
 
-### 11. `atta-pinni-3` — Atta Pinni — served
+### 9. `atta-pinni-3` — Atta Pinni — served
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/atta-pinni/3.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Gallery image 3 on `/shop/atta-pinni`. |
 | **Variants** | Single file. |
@@ -236,28 +207,28 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** 45° angle, bowl on the left third, tumbler right, generous negative space at top. Warm morning light.
 
-### 12. `dry-fruit-laddu-1` — Dry-Fruit Laddu — packshot
+### 10. `dry-fruit-laddu-1` — Dry-Fruit Laddu — packshot
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/dry-fruit-laddu/1.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand paper sweep (#EFE7DA), no transparency. |
 | **Placement** | Main product image: product cards (home Bestsellers, `/shop`, “You may also like”), search results, cart drawer and cart thumbnails, and image 1 of the gallery on `/shop/dry-fruit-laddu`. |
-| **Variants** | One file serves desktop and mobile (cards crop nothing at 4:5). |
+| **Variants** | One file serves desktop and mobile (square everywhere; the `/customise` chooser centre-crops image 1 to a 4:5 arch, so keep the jar centred). |
 | **Alt text** | Alt: “Dry-Fruit Laddu in a glass jar” (in code). |
-| **Status** | Replaces the v3 brief (same path; prompt updated). |
+| **Status** | Replaces the v4 brief (same path; now **1:1**). |
 
 **Prompt:** Studio packshot of a clear cylindrical glass jar with a brushed brass screw lid and a plain blank kraft-paper band, filled with deep brown glossy laddus of finely chopped dates studded with pistachio and almond; a small spill of the product in front of the jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Straight-on, camera at jar mid-height, jar centred and ~62% of the frame height, base ~18% from the bottom edge. Soft key light from upper left, white bounce right, soft contact shadow. **Identical jar, angle, backdrop, light and scale across all seven products.** Keep the top-left 25% calm: badges overlay there.
 
-### 13. `dry-fruit-laddu-2` — Dry-Fruit Laddu — texture
+### 11. `dry-fruit-laddu-2` — Dry-Fruit Laddu — texture
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/dry-fruit-laddu/2.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Product-card **hover** image (desktop pointer only) and gallery image 2 on `/shop/dry-fruit-laddu`. |
 | **Variants** | Single file. |
@@ -268,12 +239,12 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** Overhead, katori fills ~80% of the frame, crisp texture front to back, shadows soft. Colour must match the packshot exactly.
 
-### 14. `dry-fruit-laddu-3` — Dry-Fruit Laddu — served
+### 12. `dry-fruit-laddu-3` — Dry-Fruit Laddu — served
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/dry-fruit-laddu/3.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Gallery image 3 on `/shop/dry-fruit-laddu`. |
 | **Variants** | Single file. |
@@ -284,28 +255,28 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** 45° angle, bowl on the left third, tumbler right, generous negative space at top. Warm morning light.
 
-### 15. `seasonal-laddu-1` — Seasonal Laddu — packshot
+### 13. `seasonal-laddu-1` — Seasonal Laddu — packshot
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/seasonal-laddu/1.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand paper sweep (#EFE7DA), no transparency. |
 | **Placement** | Main product image: product cards (home Bestsellers, `/shop`, “You may also like”), search results, cart drawer and cart thumbnails, and image 1 of the gallery on `/shop/seasonal-laddu`. |
-| **Variants** | One file serves desktop and mobile (cards crop nothing at 4:5). |
+| **Variants** | One file serves desktop and mobile (square everywhere; the `/customise` chooser centre-crops image 1 to a 4:5 arch, so keep the jar centred). |
 | **Alt text** | Alt: “Seasonal Laddu in a glass jar” (in code). |
-| **Status** | Replaces the v3 brief (same path; prompt updated). |
+| **Status** | Replaces the v4 brief (same path; now **1:1**). |
 
 **Prompt:** Studio packshot of a clear cylindrical glass jar with a brushed brass screw lid and a plain blank kraft-paper band, filled with pale golden laddus coated in fine desiccated coconut, flecked with chopped nuts; a small spill of the product in front of the jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Straight-on, camera at jar mid-height, jar centred and ~62% of the frame height, base ~18% from the bottom edge. Soft key light from upper left, white bounce right, soft contact shadow. **Identical jar, angle, backdrop, light and scale across all seven products.** Keep the top-left 25% calm: badges overlay there.
 
-### 16. `seasonal-laddu-2` — Seasonal Laddu — texture
+### 14. `seasonal-laddu-2` — Seasonal Laddu — texture
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/seasonal-laddu/2.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Product-card **hover** image (desktop pointer only) and gallery image 2 on `/shop/seasonal-laddu`. |
 | **Variants** | Single file. |
@@ -316,12 +287,12 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** Overhead, katori fills ~80% of the frame, crisp texture front to back, shadows soft. Colour must match the packshot exactly.
 
-### 17. `seasonal-laddu-3` — Seasonal Laddu — served
+### 15. `seasonal-laddu-3` — Seasonal Laddu — served
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/seasonal-laddu/3.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Gallery image 3 on `/shop/seasonal-laddu`. |
 | **Variants** | Single file. |
@@ -332,28 +303,28 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** 45° angle, bowl on the left third, tumbler right, generous negative space at top. Warm morning light.
 
-### 18. `everyday-mix-1` — Everyday Mewa Mix — packshot
+### 16. `everyday-mix-1` — Everyday Mewa Mix — packshot
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/everyday-mix/1.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand paper sweep (#EFE7DA), no transparency. |
 | **Placement** | Main product image: product cards (home Bestsellers, `/shop`, “You may also like”), search results, cart drawer and cart thumbnails, and image 1 of the gallery on `/shop/everyday-mix`. Customisable products also show this image on the Custom batches chooser (`/customise`). |
-| **Variants** | One file serves desktop and mobile (cards crop nothing at 4:5). |
+| **Variants** | One file serves desktop and mobile (square everywhere; the `/customise` chooser centre-crops image 1 to a 4:5 arch, so keep the jar centred). |
 | **Alt text** | Alt: “Everyday Mewa Mix in a glass jar” (in code). |
-| **Status** | Replaces the v3 brief (same path; prompt updated). |
+| **Status** | Replaces the v4 brief (same path; now **1:1**). |
 
 **Prompt:** Studio packshot of a clear cylindrical glass jar with a brushed brass screw lid and a plain blank kraft-paper band, filled with lightly roasted whole almonds and cashews with golden raisins and green pumpkin seeds; a small spill of the product in front of the jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Straight-on, camera at jar mid-height, jar centred and ~62% of the frame height, base ~18% from the bottom edge. Soft key light from upper left, white bounce right, soft contact shadow. **Identical jar, angle, backdrop, light and scale across all seven products.** Keep the top-left 25% calm: badges overlay there.
 
-### 19. `everyday-mix-2` — Everyday Mewa Mix — texture
+### 17. `everyday-mix-2` — Everyday Mewa Mix — texture
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/everyday-mix/2.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Product-card **hover** image (desktop pointer only) and gallery image 2 on `/shop/everyday-mix`. |
 | **Variants** | Single file. |
@@ -364,12 +335,12 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** Overhead, katori fills ~80% of the frame, crisp texture front to back, shadows soft. Colour must match the packshot exactly.
 
-### 20. `everyday-mix-3` — Everyday Mewa Mix — served
+### 18. `everyday-mix-3` — Everyday Mewa Mix — served
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/everyday-mix/3.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Gallery image 3 on `/shop/everyday-mix`. |
 | **Variants** | Single file. |
@@ -380,28 +351,28 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** 45° angle, bowl on the left third, tumbler right, generous negative space at top. Warm morning light.
 
-### 21. `study-table-mix-1` — Study-Table Mix — packshot
+### 19. `study-table-mix-1` — Study-Table Mix — packshot
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/study-table-mix/1.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand paper sweep (#EFE7DA), no transparency. |
 | **Placement** | Main product image: product cards (home Bestsellers, `/shop`, “You may also like”), search results, cart drawer and cart thumbnails, and image 1 of the gallery on `/shop/study-table-mix`. |
-| **Variants** | One file serves desktop and mobile (cards crop nothing at 4:5). |
+| **Variants** | One file serves desktop and mobile (square everywhere; the `/customise` chooser centre-crops image 1 to a 4:5 arch, so keep the jar centred). |
 | **Alt text** | Alt: “Study-Table Mix in a glass jar” (in code). |
-| **Status** | Replaces the v3 brief (same path; prompt updated). |
+| **Status** | Replaces the v4 brief (same path; now **1:1**). |
 
 **Prompt:** Studio packshot of a clear cylindrical glass jar with a brushed brass screw lid and a plain blank kraft-paper band, filled with roasted walnut halves, fox nuts (makhana), green pumpkin seeds and flax seeds; a small spill of the product in front of the jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Straight-on, camera at jar mid-height, jar centred and ~62% of the frame height, base ~18% from the bottom edge. Soft key light from upper left, white bounce right, soft contact shadow. **Identical jar, angle, backdrop, light and scale across all seven products.** Keep the top-left 25% calm: badges overlay there.
 
-### 22. `study-table-mix-2` — Study-Table Mix — texture
+### 20. `study-table-mix-2` — Study-Table Mix — texture
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/study-table-mix/2.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Product-card **hover** image (desktop pointer only) and gallery image 2 on `/shop/study-table-mix`. |
 | **Variants** | Single file. |
@@ -412,12 +383,12 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** Overhead, katori fills ~80% of the frame, crisp texture front to back, shadows soft. Colour must match the packshot exactly.
 
-### 23. `study-table-mix-3` — Study-Table Mix — served
+### 21. `study-table-mix-3` — Study-Table Mix — served
 
 | | |
 |---|---|
 | **Save to** | `public/images/products/study-table-mix/3.jpg` |
-| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
 | **Background** | Full-bleed photograph. |
 | **Placement** | Gallery image 3 on `/shop/study-table-mix`. |
 | **Variants** | Single file. |
@@ -428,77 +399,179 @@ One shoot, one kitchen, one morning. The brand is a family kitchen with care and
 
 **Composition, lighting & crop:** 45° angle, bowl on the left third, tumbler right, generous negative space at top. Warm morning light.
 
-## C. Category tiles (4)
+### 22. `winter-trio-1` — Winter Trio Box — packshot
 
-### 24. `category-panjiri` — Category — Panjiri
+| | |
+|---|---|
+| **Save to** | `public/images/products/winter-trio/1.jpg` |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
+| **Background** | Seamless warm sand paper sweep (#EFE7DA). |
+| **Placement** | Gift-box product cards (`/shop?category=gift-boxes`, home Gift boxes) and gallery image 1 on `/shop/winter-trio`. |
+| **Variants** | Single square file. |
+| **Alt text** | In code: “Winter Trio Box in a glass jar” / “Close-up of Winter Trio Box” / “Winter Trio Box served with chai” (generated per index). |
+| **Status** | New in v5. |
+
+**Prompt:** Gift box, a kraft gift box with the lid leaning behind it, holding three clear glass jars with brass lids and blank kraft bands: golden panjiri, round hand-pressed atta pinni, and a roasted nut-and-raisin mix; a loop of red cotton string beside it. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Straight-on at box mid-height, box centred and ~70% of frame width, same sand sweep, light and scale as the jar packshots. Keep the top-left 25% calm for badges.
+
+### 23. `winter-trio-2` — Winter Trio Box — contents
+
+| | |
+|---|---|
+| **Save to** | `public/images/products/winter-trio/2.jpg` |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Gift-box product cards (`/shop?category=gift-boxes`, home Gift boxes) and gallery image 2 on `/shop/winter-trio`. |
+| **Variants** | Single square file. |
+| **Alt text** | In code: “Winter Trio Box in a glass jar” / “Close-up of Winter Trio Box” / “Winter Trio Box served with chai” (generated per index). |
+| **Status** | New in v5. |
+
+**Prompt:** Gift box, Close-up looking into the open kraft box at the three jar lids and the red cotton string tie, a few almonds and a pinni resting on folded unbleached cotton tissue. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** 45° above, tight crop on the contents, shallow focus falling off toward the back.
+
+### 24. `winter-trio-3` — Winter Trio Box — served
+
+| | |
+|---|---|
+| **Save to** | `public/images/products/winter-trio/3.jpg` |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Gift-box product cards (`/shop?category=gift-boxes`, home Gift boxes) and gallery image 3 on `/shop/winter-trio`. |
+| **Variants** | Single square file. |
+| **Alt text** | In code: “Winter Trio Box in a glass jar” / “Close-up of Winter Trio Box” / “Winter Trio Box served with chai” (generated per index). |
+| **Status** | New in v5. |
+
+**Prompt:** Gift box, The open gift box on a teak table at a winter family visit, a steel tumbler of chai and a shawl edge in frame, hands (no faces) lifting out the pinni jar. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Eye-level to 20° above, lifestyle frame, subject centred so the square crop works.
+
+### 25. `new-mother-box-1` — New Mother’s Box — packshot
+
+| | |
+|---|---|
+| **Save to** | `public/images/products/new-mother-box/1.jpg` |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
+| **Background** | Seamless warm sand paper sweep (#EFE7DA). |
+| **Placement** | Gift-box product cards (`/shop?category=gift-boxes`, home Gift boxes) and gallery image 1 on `/shop/new-mother-box`. |
+| **Variants** | Single square file. |
+| **Alt text** | In code: “New Mother’s Box in a glass jar” / “Close-up of New Mother’s Box” / “New Mother’s Box served with chai” (generated per index). |
+| **Status** | New in v5. |
+
+**Prompt:** Gift box, a kraft gift box, lid leaning behind, holding a large glass jar of panjiri rich with gond and makhana and a jar of dry-fruit laddus, a folded soft cotton muslin and a sprig of dried flowers tucked beside; red cotton string. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Straight-on at box mid-height, box centred and ~70% of frame width, same sand sweep, light and scale as the jar packshots. Keep the top-left 25% calm for badges.
+
+### 26. `new-mother-box-2` — New Mother’s Box — contents
+
+| | |
+|---|---|
+| **Save to** | `public/images/products/new-mother-box/2.jpg` |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Gift-box product cards (`/shop?category=gift-boxes`, home Gift boxes) and gallery image 2 on `/shop/new-mother-box`. |
+| **Variants** | Single square file. |
+| **Alt text** | In code: “New Mother’s Box in a glass jar” / “Close-up of New Mother’s Box” / “New Mother’s Box served with chai” (generated per index). |
+| **Status** | New in v5. |
+
+**Prompt:** Gift box, Close-up into the box: the panjiri texture with visible gond and makhana, laddus in their jar, the muslin fold. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** 45° above, tight crop on the contents, shallow focus falling off toward the back.
+
+### 27. `new-mother-box-3` — New Mother’s Box — served
+
+| | |
+|---|---|
+| **Save to** | `public/images/products/new-mother-box/3.jpg` |
+| **Size · ratio · format** | 1500 × 1500 px · 1:1 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Gift-box product cards (`/shop?category=gift-boxes`, home Gift boxes) and gallery image 3 on `/shop/new-mother-box`. |
+| **Variants** | Single square file. |
+| **Alt text** | In code: “New Mother’s Box in a glass jar” / “Close-up of New Mother’s Box” / “New Mother’s Box served with chai” (generated per index). |
+| **Status** | New in v5. |
+
+**Prompt:** Gift box, The box on a bed-side wooden stool beside a brass tumbler of warm milk with a spoon of panjiri, soft morning light, a corner of a baby's cotton blanket (no people). Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Eye-level to 20° above, lifestyle frame, subject centred so the square crop works.
+
+## C. Hero arches — categories (3 used, `category-mixes` deferred)
+
+### 28. `category-panjiri` — Category — Panjiri
 
 | | |
 |---|---|
 | **Save to** | `public/images/categories/panjiri.jpg` |
-| **Size · ratio · format** | 1200 × 1200 px · 1:1 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand linen (#EDE4D6). |
-| **Placement** | Home → “Shop by category” tile for **Panjiri** (links to `/shop?category=panjiri`). |
-| **Variants** | Single square file for all widths. |
+| **Placement** | Home hero → one of three arch “windows” (**Panjiri**, links to `/shop?category=panjiri`). The middle arch (Pinni) is the LCP image. |
+| **Variants** | Single 4:5 file; CSS clips it to a rounded-top arch. |
 | **Alt text** | Decorative in the layout (the tile has a text label); in code as “Golden panjiri in a brass bowl”. |
-| **Status** | Replaces the v3 brief (ratio changed from 4:5 to **1:1**). |
+| **Status** | Replaces the v4 brief (ratio changed from 1:1 to **4:5 arch**). |
 
 **Prompt:** Three-quarter overhead view of golden roasted panjiri heaped in a shallow brass bowl with a small brass spoon, on a muted sand linen backdrop. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
-**Composition, lighting & crop:** Subject centred, ~60% of the frame, 30° above the table. Same backdrop and light across all four tiles.
+**Composition, lighting & crop:** Subject centred in the lower two-thirds, ~60% of frame width, 30° above the table; keep the top 20% calm backdrop (arch curve). Same backdrop and light across all three arches.
 
-### 25. `category-pinni` — Category — Pinni
+### 29. `category-pinni` — Category — Pinni
 
 | | |
 |---|---|
 | **Save to** | `public/images/categories/pinni.jpg` |
-| **Size · ratio · format** | 1200 × 1200 px · 1:1 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand linen (#EDE4D6). |
-| **Placement** | Home → “Shop by category” tile for **Pinni** (links to `/shop?category=pinni`). |
-| **Variants** | Single square file for all widths. |
+| **Placement** | Home hero → one of three arch “windows” (**Pinni**, links to `/shop?category=pinni`). The middle arch (Pinni) is the LCP image. |
+| **Variants** | Single 4:5 file; CSS clips it to a rounded-top arch. |
 | **Alt text** | Decorative in the layout (the tile has a text label); in code as “Hand-pressed pinni on a stoneware plate”. |
-| **Status** | Replaces the v3 brief (ratio changed from 4:5 to **1:1**). |
+| **Status** | Replaces the v4 brief (ratio changed from 1:1 to **4:5 arch**). |
 
 **Prompt:** Three-quarter overhead view of five hand-pressed pinni stacked loosely on a matte off-white stoneware plate, on a muted sand linen backdrop. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
-**Composition, lighting & crop:** Subject centred, ~60% of the frame, 30° above the table. Same backdrop and light across all four tiles.
+**Composition, lighting & crop:** Subject centred in the lower two-thirds, ~60% of frame width, 30° above the table; keep the top 20% calm backdrop (arch curve). Same backdrop and light across all three arches.
 
-### 26. `category-laddus` — Category — Dry-fruit laddus
+### 30. `category-laddus` — Category — Dry-fruit laddus
 
 | | |
 |---|---|
 | **Save to** | `public/images/categories/laddus.jpg` |
-| **Size · ratio · format** | 1200 × 1200 px · 1:1 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand linen (#EDE4D6). |
-| **Placement** | Home → “Shop by category” tile for **Dry-fruit laddus** (links to `/shop?category=laddus`). |
-| **Variants** | Single square file for all widths. |
+| **Placement** | Home hero → one of three arch “windows” (**Dry-fruit laddus**, links to `/shop?category=laddus`). The middle arch (Pinni) is the LCP image. |
+| **Variants** | Single 4:5 file; CSS clips it to a rounded-top arch. |
 | **Alt text** | Decorative in the layout (the tile has a text label); in code as “Dry-fruit laddus on a brass thali”. |
-| **Status** | Replaces the v3 brief (ratio changed from 4:5 to **1:1**). |
+| **Status** | Replaces the v4 brief (ratio changed from 1:1 to **4:5 arch**). |
 
 **Prompt:** Three-quarter overhead view of seven deep-brown dry-fruit laddus arranged in a loose ring on a small brass thali, on a muted sand linen backdrop. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
-**Composition, lighting & crop:** Subject centred, ~60% of the frame, 30° above the table. Same backdrop and light across all four tiles.
+**Composition, lighting & crop:** Subject centred in the lower two-thirds, ~60% of frame width, 30° above the table; keep the top 20% calm backdrop (arch curve). Same backdrop and light across all three arches.
 
-### 27. `category-mixes` — Category — Dry-fruit mixes
+### 31. `category-mixes` — Category — Dry-fruit mixes
 
 | | |
 |---|---|
 | **Save to** | `public/images/categories/mixes.jpg` |
-| **Size · ratio · format** | 1200 × 1200 px · 1:1 · JPEG q82, sRGB |
+| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
 | **Background** | Seamless warm sand linen (#EDE4D6). |
-| **Placement** | Home → “Shop by category” tile for **Dry-fruit mixes** (links to `/shop?category=mixes`). |
-| **Variants** | Single square file for all widths. |
+| **Placement** | Home hero → one of three arch “windows” (**Dry-fruit mixes**, links to `/shop?category=mixes`). The middle arch (Pinni) is the LCP image. |
+| **Variants** | Single 4:5 file; CSS clips it to a rounded-top arch. |
 | **Alt text** | Decorative in the layout (the tile has a text label); in code as “Roasted nuts, seeds and raisins in a glass jar”. |
-| **Status** | Replaces the v3 brief (ratio changed from 4:5 to **1:1**). |
+| **Status** | Replaces the v4 brief (ratio changed from 1:1 to **4:5 arch**). |
 
 **Prompt:** Three-quarter overhead view of an open glass jar of roasted almonds, cashews, raisins and pumpkin seeds, a few pieces spilled on the stone, on a muted sand linen backdrop. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
-**Composition, lighting & crop:** Subject centred, ~60% of the frame, 30° above the table. Same backdrop and light across all four tiles.
+**Composition, lighting & crop:** Subject centred in the lower two-thirds, ~60% of frame width, 30° above the table; keep the top 20% calm backdrop (arch curve). Same backdrop and light across all three arches.
 
 ## D. Ingredient textures for the custom-batch builder (22)
 
 These are cropped to **circles** (the dishes in the mix composition, swatches on product pages and the chooser) and **rounded squares** (ingredient rows). So each one must be a **full-bleed, top-down texture: the ingredient fills the entire frame edge to edge with no background, plate rim or props visible**. The builder sizes each dish by the ingredient's share of the recipe, so these photos are what make the mix look real.
 
-### 28. `ingredient-atta` — Ingredient — Wholewheat flour (atta)
+### 32. `ingredient-atta` — Ingredient — Wholewheat flour (atta)
 
 | | |
 |---|---|
@@ -514,7 +587,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 29. `ingredient-suji` — Ingredient — Semolina (suji)
+### 33. `ingredient-suji` — Ingredient — Semolina (suji)
 
 | | |
 |---|---|
@@ -530,7 +603,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 30. `ingredient-ghee` — Ingredient — Desi ghee
+### 34. `ingredient-ghee` — Ingredient — Desi ghee
 
 | | |
 |---|---|
@@ -546,7 +619,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 31. `ingredient-jaggery` — Ingredient — Jaggery (gur)
+### 35. `ingredient-jaggery` — Ingredient — Jaggery (gur)
 
 | | |
 |---|---|
@@ -562,7 +635,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 32. `ingredient-khand` — Ingredient — Unrefined cane sugar (khand)
+### 36. `ingredient-khand` — Ingredient — Unrefined cane sugar (khand)
 
 | | |
 |---|---|
@@ -578,7 +651,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 33. `ingredient-sugar` — Ingredient — Sugar (boora)
+### 37. `ingredient-sugar` — Ingredient — Sugar (boora)
 
 | | |
 |---|---|
@@ -594,7 +667,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 34. `ingredient-almond` — Ingredient — Almonds (badam)
+### 38. `ingredient-almond` — Ingredient — Almonds (badam)
 
 | | |
 |---|---|
@@ -610,7 +683,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 35. `ingredient-cashew` — Ingredient — Cashews (kaju)
+### 39. `ingredient-cashew` — Ingredient — Cashews (kaju)
 
 | | |
 |---|---|
@@ -626,7 +699,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 36. `ingredient-pistachio` — Ingredient — Pistachios (pista)
+### 40. `ingredient-pistachio` — Ingredient — Pistachios (pista)
 
 | | |
 |---|---|
@@ -642,7 +715,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 37. `ingredient-walnut` — Ingredient — Walnuts (akhrot)
+### 41. `ingredient-walnut` — Ingredient — Walnuts (akhrot)
 
 | | |
 |---|---|
@@ -658,7 +731,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 38. `ingredient-raisin` — Ingredient — Raisins (kishmish)
+### 42. `ingredient-raisin` — Ingredient — Raisins (kishmish)
 
 | | |
 |---|---|
@@ -674,7 +747,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 39. `ingredient-fig` — Ingredient — Figs (anjeer)
+### 43. `ingredient-fig` — Ingredient — Figs (anjeer)
 
 | | |
 |---|---|
@@ -690,7 +763,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 40. `ingredient-makhana` — Ingredient — Fox nuts (makhana)
+### 44. `ingredient-makhana` — Ingredient — Fox nuts (makhana)
 
 | | |
 |---|---|
@@ -706,7 +779,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 41. `ingredient-gond` — Ingredient — Edible gum (gond)
+### 45. `ingredient-gond` — Ingredient — Edible gum (gond)
 
 | | |
 |---|---|
@@ -722,7 +795,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 42. `ingredient-magaz` — Ingredient — Melon seeds (magaz)
+### 46. `ingredient-magaz` — Ingredient — Melon seeds (magaz)
 
 | | |
 |---|---|
@@ -738,7 +811,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 43. `ingredient-pumpkin` — Ingredient — Pumpkin seeds
+### 47. `ingredient-pumpkin` — Ingredient — Pumpkin seeds
 
 | | |
 |---|---|
@@ -754,7 +827,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 44. `ingredient-flax` — Ingredient — Flax seeds (alsi)
+### 48. `ingredient-flax` — Ingredient — Flax seeds (alsi)
 
 | | |
 |---|---|
@@ -770,7 +843,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 45. `ingredient-coconut` — Ingredient — Dry coconut (nariyal)
+### 49. `ingredient-coconut` — Ingredient — Dry coconut (nariyal)
 
 | | |
 |---|---|
@@ -786,7 +859,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 46. `ingredient-cardamom` — Ingredient — Green cardamom (elaichi)
+### 50. `ingredient-cardamom` — Ingredient — Green cardamom (elaichi)
 
 | | |
 |---|---|
@@ -802,7 +875,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 47. `ingredient-saunth` — Ingredient — Dry ginger (saunth)
+### 51. `ingredient-saunth` — Ingredient — Dry ginger (saunth)
 
 | | |
 |---|---|
@@ -818,7 +891,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 48. `ingredient-ajwain` — Ingredient — Carom seeds (ajwain)
+### 52. `ingredient-ajwain` — Ingredient — Carom seeds (ajwain)
 
 | | |
 |---|---|
@@ -834,7 +907,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead (90°), even soft light from the upper left, no hard shadows, sharp across the frame, piece size consistent across the series (an almond ≈ 1/8 of the frame width). The centre 70% must look good when cropped to a circle. **All 22 must match in light, colour temperature and scale.**
 
-### 49. `ingredient-saffron` — Ingredient — Saffron (kesar)
+### 53. `ingredient-saffron` — Ingredient — Saffron (kesar)
 
 | | |
 |---|---|
@@ -852,7 +925,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 ## E. Supporting images
 
-### 50. `home-customise` — Custom batches feature
+### 54. `home-customise` — Custom batches feature
 
 | | |
 |---|---|
@@ -868,7 +941,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Exactly overhead, paraat slightly left of centre, katoris on an even arc, generous spacing, soft directional light. Should read as ‘a recipe being weighed out’, calm and orderly.
 
-### 51. `story-hero` — Our story — hero
+### 55. `story-hero` — Our story — hero
 
 | | |
 |---|---|
@@ -884,7 +957,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Subjects in the central third, faces turned away or in soft profile only, kitchen softly out of focus.
 
-### 52. `story-roasting` — Our story — roasting
+### 56. `story-roasting` — Our story — roasting
 
 | | |
 |---|---|
@@ -900,7 +973,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Match light and palette across all three; hands only.
 
-### 53. `story-rolling` — Our story — rolling
+### 57. `story-rolling` — Our story — rolling
 
 | | |
 |---|---|
@@ -916,7 +989,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Match light and palette across all three; hands only.
 
-### 54. `story-packing` — Our story — packing
+### 58. `story-packing` — Our story — packing
 
 | | |
 |---|---|
@@ -932,7 +1005,126 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 
 **Composition, lighting & crop:** Match light and palette across all three; hands only.
 
-### 55. `og` — Social share image
+### 59. `occasion-immunity` — Occasion — Winter mornings
+
+| | |
+|---|---|
+| **Save to** | `public/images/occasions/immunity.jpg` |
+| **Size · ratio · format** | 1200 × 1600 px · 3:4 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Home → “Shop by occasion” arch tile for **Winter mornings** (सर्दी), links to `/shop?need=immunity`. |
+| **Variants** | Single file; CSS clips it to an arch. |
+| **Alt text** | Decorative (the tile has a text label). |
+| **Status** | New in v5. |
+
+**Prompt:** A steel katori of warm panjiri and a brass tumbler of haldi milk on a windowsill with winter light and a folded wool shawl. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Subject centred in the lower 70%, top 20% quiet (arch curve). Same light and palette across all five so the row reads as one set.
+
+### 60. `occasion-postpartum` — Occasion — New mothers
+
+| | |
+|---|---|
+| **Save to** | `public/images/occasions/postpartum.jpg` |
+| **Size · ratio · format** | 1200 × 1600 px · 3:4 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Home → “Shop by occasion” arch tile for **New mothers** (जच्चा), links to `/shop?need=postpartum`. |
+| **Variants** | Single file; CSS clips it to an arch. |
+| **Alt text** | Decorative (the tile has a text label). |
+| **Status** | New in v5. |
+
+**Prompt:** A brass bowl of gond panjiri beside a cup of ajwain water and a folded soft cotton muslin on a bedside stool. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Subject centred in the lower 70%, top 20% quiet (arch curve). Same light and palette across all five so the row reads as one set.
+
+### 61. `occasion-clarity` — Occasion — Exam season
+
+| | |
+|---|---|
+| **Save to** | `public/images/occasions/clarity.jpg` |
+| **Size · ratio · format** | 1200 × 1600 px · 3:4 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Home → “Shop by occasion” arch tile for **Exam season** (पढ़ाई), links to `/shop?need=clarity`. |
+| **Variants** | Single file; CSS clips it to an arch. |
+| **Alt text** | Decorative (the tile has a text label). |
+| **Status** | New in v5. |
+
+**Prompt:** A small glass jar of roasted mewa mix open on a wooden study table beside a closed notebook and a pencil, desk lamp glow. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Subject centred in the lower 70%, top 20% quiet (arch curve). Same light and palette across all five so the row reads as one set.
+
+### 62. `occasion-wellness` — Occasion — Long workdays
+
+| | |
+|---|---|
+| **Save to** | `public/images/occasions/wellness.jpg` |
+| **Size · ratio · format** | 1200 × 1600 px · 3:4 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Home → “Shop by occasion” arch tile for **Long workdays** (रोज़), links to `/shop?need=wellness`. |
+| **Variants** | Single file; CSS clips it to an arch. |
+| **Alt text** | Decorative (the tile has a text label). |
+| **Status** | New in v5. |
+
+**Prompt:** A handful of roasted nuts and seeds in a small stoneware dish beside a steel lunch tiffin on a teak desk. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Subject centred in the lower 70%, top 20% quiet (arch curve). Same light and palette across all five so the row reads as one set.
+
+### 63. `occasion-bone` — Occasion — Growing kids
+
+| | |
+|---|---|
+| **Save to** | `public/images/occasions/bone.jpg` |
+| **Size · ratio · format** | 1200 × 1600 px · 3:4 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Home → “Shop by occasion” arch tile for **Growing kids** (बच्चे), links to `/shop?need=bone`. |
+| **Variants** | Single file; CSS clips it to an arch. |
+| **Alt text** | Decorative (the tile has a text label). |
+| **Status** | New in v5. |
+
+**Prompt:** Two dry-fruit laddus on a small brass plate beside a steel glass of milk on a kitchen counter, a child's hand (no face) reaching in. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Subject centred in the lower 70%, top 20% quiet (arch curve). Same light and palette across all five so the row reads as one set.
+
+### 64. `home-gifting` — Home — Gift boxes
+
+| | |
+|---|---|
+| **Save to** | `public/images/home/gifting.jpg` |
+| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Home → “Gift boxes” band beside the copy and the “Shop gift boxes” button. |
+| **Variants** | Single file. |
+| **Alt text** | “A kraft gift box holding three jars of panjiri, pinni and mewa, tied with red cotton string” (in code). |
+| **Status** | New in v5. |
+
+**Prompt:** A kraft gift box holding three glass jars of panjiri, pinni and mewa mix, tied with red cotton string, a marigold or two and a small brass diya (unlit) beside it on aged teak. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Three-quarter view, box centred, festive but restrained.
+
+### 65. `home-story` — Home — Our story teaser
+
+| | |
+|---|---|
+| **Save to** | `public/images/home/story.jpg` |
+| **Size · ratio · format** | 1200 × 1500 px · 4:5 · JPEG q82, sRGB |
+| **Background** | Full-bleed photograph. |
+| **Placement** | Home → “Our story” teaser, arch-framed, links to `/our-story`. |
+| **Variants** | Single file; CSS clips it to an arch. |
+| **Alt text** | “A woman stirring panjiri in a heavy kadhai in a sunlit home kitchen” (in code). |
+| **Status** | Revived in v5 (was obsolete in v4). |
+
+**Prompt:** A woman's hands and forearms (face out of frame) stirring golden panjiri in a heavy iron kadhai on a home stove, sunlit kitchen behind. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens.
+- **Avoid:** No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+
+**Composition, lighting & crop:** Kadhai in the lower half, light from the window behind left; top 20% calm for the arch curve.
+
+### 66. `og` — Social share image
 
 | | |
 |---|---|
@@ -944,7 +1136,7 @@ These are cropped to **circles** (the dishes in the mix composition, swatches on
 | **Alt text** | Not shown on the page. |
 | **Status** | Existing slot. |
 
-**Prompt:** The hero scene (three jars, brass bowl of panjiri) reframed wide, with the group in the right two-thirds. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
+**Prompt:** Three clear glass jars with brass lids and blank kraft bands (panjiri, pinni, mewa mix) beside a brass bowl of panjiri on honed grey Kadappa stone, the group in the right two-thirds. Natural window light from the upper left, soft and directional, about 5500K; warm neutral palette of ivory, sand, ghee-gold, terracotta and brass; real Indian home-kitchen surfaces only (honed grey Kadappa stone, aged teak, unbleached hand-loom cotton, brass and matte stoneware); true-to-life colour, gentle contrast, soft shadows that keep detail; crisp focus on the food with a shallow, natural fall-off; photorealistic editorial food photography, as if shot on a full-frame camera with a 90 mm macro or 50 mm lens. No text, letters, numbers, logos, labels or watermarks anywhere (jar bands stay blank). No cartoon, illustration, 3D render, CGI or plastic look. No oversaturation, HDR halos, heavy vignette, fake steam, smoke, floating ingredients, splashes, glitter or bokeh balls. No props that are not Indian home-kitchen objects. No people's faces. No extra fingers or distorted hands.
 
 **Composition, lighting & crop:** Leave the left third calm (platforms overlay titles). No text in the image.
 

@@ -1,45 +1,179 @@
-# Immunitywize: brand mark concepts v2 (immunity × wisdom)
+# Immunitywize: logo concepts v2 (relevant, engineered)
 
-Eight new logo directions, a full colour system and ready-to-use image prompts. **This is a separate exploration from `LOGO_CONCEPTS.md`** (v1, which was about the kitchen and heritage). Both are kept.
+Eight logo directions for **Immunitywize, a healthy Indian snacking brand**. They're built from things customers actually eat: **almonds, laddus, chikki, makhana and the jar**. Each one is drawn on a strict grid, so it looks *engineered*, not doodled or AI-generated.
 
-v1 asked *"who makes this?"* v2 asks ***"what does it give you?"***
+Every concept passes two checks:
+1. **You can tell it's a snack brand in one second.** No abstract orbs or metaphors that need explaining.
+2. **It looks built, not drawn.** It uses a defined grid, fixed angles, one stroke weight and matched radii. Each concept lists its construction spec so a designer can rebuild it exactly.
 
-- **Immunity:** inner strength, protection, a body that holds steady.
-- **Wize:** knowing, inherited wisdom, a clear mind, and the grandmother who *knew* what to feed you.
-
-The aim is to say both quietly. No leaf-heart-shield-brain soup.
-
-> Image models are for **exploring** these directions. They can't make the final logo. Generate 20–40 variations per direction and shortlist 2–3. Then have a designer **redraw the winner as clean vector**. Never use generated lettering. Set the wordmark in real type (see §3).
+(The original `LOGO_CONCEPTS.md` in the repo is untouched.)
 
 ---
 
-## 1. The brief in one line
+## 1. The "engineered" rules (apply to every concept)
 
-**A mark that feels like a family secret, not a supplement: calm, exact, warm, and quietly strong.** It should look as at home embossed on a kraft jar lid as it does as a 48 px app icon.
-
-### Ruled out (this is what makes a mark look like AI slop or a pharmacy)
-
-| Cliché | Why it's out |
+| Rule | Spec |
 |---|---|
-| Leaf + heart, leaf + hand, leaf anything | Every second wellness brand uses it. Says "generic organic". |
-| Shield, cross, plus sign | Pharmacy and insurance. Immunity as medicine, which we're not (and FSSAI won't let us claim it). |
-| Brain, lightbulb, owl, graduation cap | Too literal for "wise". Looks like an ed-tech logo. |
-| Om, lotus, mandala, Ganesha, intricate rangoli | Religious or overused. Too detailed to survive at 16 px. |
-| DNA helix, molecules, swooshes, glowing orbs | Tech/pharma, and the standard AI-generated look. |
-| Gradients, gloss, 3D, glow, drop shadows | Slop signals. They also fail on packaging print and one-colour embossing. |
+| **Grid** | Every mark sits on a **12 × 12 unit grid**. 1 unit = 1/12 of the mark's width. |
+| **Stroke** | One stroke weight per mark: **1.5 units**. No hairlines, no tapering. |
+| **Angles** | Only **0°, 30°, 45°, 60° and 90°**. Nothing freehand. |
+| **Radii** | Corners and curves use **only 2–3 radii**, which repeat across the mark. |
+| **Shapes** | Built from circles, arcs and straight lines, and **construction can be shown** (great for brand books, packaging backs and the website). |
+| **Colour** | One or two flat colours. No gradients, shadows or texture inside the mark. |
 
-### Must-pass tests (score every shortlisted mark 1–5)
+**Still ruled out:** generic leaf + heart, brains, lightbulbs, owls, DNA, swooshes, glow and gloss. These are what make a logo look like a pharmacy, an ed-tech app or AI slop.
 
-1. **16 px:** still recognisable as a favicon.
-2. **One colour:** works in solid sindoor, in black, and as a blind emboss or foil.
-3. **Squint test:** one clear silhouette, not a texture.
-4. **No explanation needed to like it.** The story is a bonus, not a crutch.
-5. **Ownable:** a reverse image search shouldn't turn up 50 lookalikes.
-6. **Sits next to Hindi.** It looks right beside "इम्युनिटीवाइज़" as well as the English name.
+**Must-pass tests:** reads at **16 px** (favicon) · works in **one colour** and as a **blind emboss** on a jar lid · one clear silhouette when you squint · looks right next to **इम्युनिटीवाइज़** · can be printed on a kraft sticker at 25 mm.
 
 ---
 
-## 2. Colour system: "Haldi, Sindoor & Amla"
+## 2. The eight concepts
+
+Each concept has a **construction spec** and four prompts:
+
+- **A · Mark:** the logo itself on a flat background.
+- **B · App icon:** the mark in a rounded square.
+- **C · Packaging:** the mark on a jar, box or sticker.
+- **D · Blueprint:** the mark with construction lines, for the brand book and website.
+
+Append the universal blocks in §5 to every prompt.
+
+---
+
+### ① Almond W ★ recommended
+
+**Idea:** the **W of "wize" is built from four identical almonds.** Almonds are the Indian "memory food" (soaked badam every morning), so the letter for *wisdom* is literally made of the snack that stands for it. It's instantly a dry-fruit brand, and clever once you notice it.
+
+**Construction:**
+- Four **identical almond shapes**. Each is the intersection of two circles of radius 6 units, offset 4 units (a vesica), so the almond is mathematically defined.
+- Rotated **±30°** alternately to form a W, with a **0.75-unit gap** between almonds.
+- Optional: a fifth, smaller almond rotated 0° above the left stroke works as the dot of an **i** → **iW** monogram.
+
+- **A:** `A precise geometric logo: the letter W constructed from four identical almond shapes, each almond a perfect vesica made of two intersecting circles, alternately rotated plus and minus 30 degrees so together they form a W, equal small gaps between almonds, solid sindoor red #8A1C2B on warm cream #FBF3E4, flat vector, engineered and symmetrical, centred`
+- **B:** `App icon, rounded square, sindoor red #8A1C2B background, a W made of four identical geometric almond shapes in warm cream #FBF3E4, centred at 60% width, flat vector`
+- **C:** `Product photo: clear glass jar of roasted almonds and dry fruit with a brushed brass lid, the lid embossed with a W formed from four almond shapes, a kraft paper band printed with the same mark in sindoor red, soft window light, cream backdrop, editorial packaging photography, no readable text`
+- **D:** `Logo construction blueprint: a W made of four almond shapes, each almond shown built from two intersecting circles with thin construction lines, angle markers at 30 degrees, a fine square grid behind, mark in solid sindoor red, construction lines in thin grey, cream background, technical brand-guideline drawing`
+
+---
+
+### ② Formula Laddu
+
+**Idea:** a laddu seen from above, **divided into precise segments like an ingredient chart**: atta, ghee, jaggery, nuts. It says *we know exactly what goes in*, which is the "wize". It ties directly to the site's **custom-batch builder**, where customers set the formula themselves. It's a snack, a recipe and a nutrition label in one round mark.
+
+**Construction:**
+- An outer circle of radius 6 units.
+- **Four sectors at 120°, 90°, 90° and 60°**, separated by **0.75-unit gaps** (negative-space cuts, like a sliced laddu).
+- A small solid **centre circle** (radius 1.25 units) represents the ghee that binds it.
+- On the website the sectors can animate to the customer's own mix.
+
+- **A:** `A precise geometric logo: a solid circle representing a round Indian laddu seen from above, divided into four sectors of different sizes by clean straight negative-space gaps radiating from the centre, a small solid circle in the middle, like an ingredient pie chart, haldi gold #E3A72F with one sector in sindoor red #8A1C2B, on warm cream #FBF3E4, flat vector, engineered, centred`
+- **B:** `App icon, rounded square, kajal near-black #1B1511 background, a segmented circle mark with four sectors separated by clean gaps and a small centre dot, sectors in haldi gold #E3A72F and warm cream, flat vector`
+- **C:** `A round kraft gift tin of laddus, the lid printed with a large segmented circle mark in haldi gold and sindoor red, a few real laddus beside it on a brass plate, soft daylight, editorial food packaging photography, no readable text`
+- **D:** `Logo construction blueprint: a circle divided into four sectors with angle labels 120, 90, 90 and 60 degrees, gap widths dimensioned, a centre circle, thin grey construction lines on a fine grid, mark in solid haldi gold, technical drawing style on cream`
+
+---
+
+### ③ Chikki Tile
+
+**Idea:** chikki (nut brittle) is India's original **engineered snack**: nuts set in a precise square tile. The mark is a **square tile with nut shapes laid out on a grid**, arranged so the gaps spell **iw**. It's playful and very Indian, works brilliantly as a pattern on packaging and boxes, and looks great as an app icon.
+
+**Construction:**
+- A 12 × 12 square with **2-unit corner radii** (a chikki bar).
+- Inside, a **4 × 4 grid** of cells. Most cells hold a nut shape (round peanut, almond and cashew, all fitted to a 2 × 2-unit cell).
+- The **empty cells form "i" and "w"** in negative space, like a pixel font.
+- The pattern version repeats the tile with the letters removed.
+
+- **A:** `A precise geometric logo: a rounded square tile like an Indian nut brittle bar, containing a neat 4 by 4 grid of small simplified nut shapes (round peanuts, almonds, cashews), with some grid cells left empty so the empty spaces spell the lowercase letters i and w in negative space, solid sindoor red #8A1C2B tile and nuts in warm cream #FBF3E4, flat vector, modular, engineered`
+- **B:** `App icon: a rounded square nut-brittle tile with a grid of simple nut shapes where empty cells form the letters iw, haldi gold #E3A72F nuts on sindoor red #8A1C2B, flat vector`
+- **C:** `A kraft snack box covered in a repeating pattern of small square tiles with simple nut shapes on a grid, in sindoor red on kraft brown, one larger tile on the front as the logo, studio product photography, soft light, no readable text`
+- **D:** `Logo construction blueprint: a rounded square divided into a 4 by 4 grid with cell dimensions marked, nut shapes fitted into cells, empty cells highlighted forming the letters i and w, thin grey construction lines, cream background, technical drawing`
+
+---
+
+### ④ Shield W (iW monogram)
+
+**Idea:** the most direct read of the name. **i** for immunity is a solid upright bar with a **makhana-round dot**. **W** for wize has a **shield-shaped outer contour**. Together they're a compact **iW** monogram where protection comes through the letters, not through clip-art. It's strong, symmetrical and badge-ready. Think sports-nutrition precision with Indian food warmth.
+
+**Construction:**
+- The W is drawn with **1.5-unit strokes at 60°**, and its outer edge closes into a **shield silhouette** (flat top, pointed base at 90°).
+- The i sits inside the W's centre peak, a 1.5-unit bar with a circular dot of 1.5-unit diameter.
+- **All inner corners use 0.5-unit radii.**
+
+- **A:** `A precise geometric monogram: lowercase i and uppercase W combined, the W drawn with thick uniform strokes at 60 degree angles whose outer contour forms a clean shield silhouette with a flat top and pointed base, the letter i standing in the centre peak of the W with a round dot, solid sindoor red #8A1C2B on warm cream #FBF3E4, flat vector, symmetrical, engineered, badge-like`
+- **B:** `App icon, rounded square, deep amla green #2F5D46 background, the iW shield monogram in warm cream #FBF3E4 with the i dot in haldi gold #E3A72F, flat vector`
+- **C:** `Matte cream pouch of roasted makhana snacks with a large iW shield monogram printed in sindoor red on the front, standing on grey stone, soft studio light, modern Indian snack packaging photography, no readable text`
+- **D:** `Logo construction blueprint: an iW monogram with 60 degree angle markers, stroke widths dimensioned, the shield outline traced in thin grey, a square grid behind, mark in solid sindoor red on cream, technical drawing`
+
+---
+
+### ⑤ Jar Monogram
+
+**Idea:** the **jar is the product**. Every panjiri, pinni and mix ships in it. The mark is a **jar silhouette with "iw" cut into its body**, and the lid is a single bar. It's instantly a food brand, it's built for packaging (the logo *is* the packaging), and it makes a great sticker and seal.
+
+**Construction:**
+- Body: a rectangle of 8 × 9 units with **3-unit bottom radii** and **1-unit shoulder radii**.
+- Lid: a 9 × 1.5-unit bar with 0.75-unit radii, sitting 0.75 units above the body.
+- **"iw" is knocked out** of the body as a monoline 1.5-unit stroke, positioned on the jar's label band (a horizontal band 3 units tall).
+
+- **A:** `A precise geometric logo: a simple solid jar silhouette with rounded bottom corners and a flat lid bar on top, the lowercase letters iw cut out of the jar body in a clean monoline geometric style on a horizontal label band, solid sindoor red #8A1C2B on warm cream #FBF3E4, flat vector, engineered, centred`
+- **B:** `App icon, rounded square, warm cream #FBF3E4 background, a solid sindoor red jar silhouette with lid and the letters iw knocked out in cream, flat vector`
+- **C:** `A row of three glass jars of panjiri, pinni and dry-fruit mix on a teak shelf, each with a round kraft sticker printed with a small jar-silhouette logo in sindoor red, warm morning light, editorial photography, no readable text`
+- **D:** `Logo construction blueprint: a jar silhouette with corner radii dimensioned, lid bar and label band measured, letters iw on a monoline grid, thin grey construction lines, square grid behind, cream background, technical drawing`
+
+---
+
+### ⑥ Hex Pack
+
+**Idea:** seven dry fruits **packed in a hexagon**: one almond in the centre, six cashews and makhana around it, arranged by **true hexagonal close-packing**, the strongest arrangement in nature. It means *packed with goodness* and *strength in structure* (immunity). It reads like a top-down view of a handful of mix, but organised with engineering precision.
+
+**Construction:**
+- **Seven circles** of radius 1.8 units in a hexagonal close-pack, with centres 3.6 units apart.
+- Each circle is **replaced by a nut silhouette fitted inside it**: an almond in the centre, then alternating cashew, makhana and pistachio.
+- An optional **hexagonal outline** around the cluster (1-unit stroke, 1-unit corner radius) makes a badge version.
+
+- **A:** `A precise geometric logo: seven simplified dry-fruit shapes (an almond in the centre surrounded by six alternating cashews, fox nuts and pistachios) arranged in perfect hexagonal close packing, enclosed by a thin rounded hexagon outline, solid sindoor red #8A1C2B shapes on warm cream #FBF3E4, flat vector, symmetrical, engineered`
+- **B:** `App icon, rounded square, amla green #2F5D46 background, a hexagonal cluster of seven simple nut shapes in warm cream with the centre almond in haldi gold #E3A72F, flat vector`
+- **C:** `A hexagonal kraft gift box of dry-fruit mix with the hex-cluster nut logo foil-stamped in gold on the lid, real almonds and cashews scattered beside it on stone, soft light, premium snack packaging photography, no readable text`
+- **D:** `Logo construction blueprint: seven tangent circles in hexagonal packing with radius and centre distance dimensioned, nut silhouettes fitted inside each circle, hexagon outline, thin grey construction lines on a grid, cream background, technical drawing`
+
+---
+
+### ⑦ Laddu-dot Wordmark
+
+**Idea:** a fully **custom geometric wordmark**, *immunitywize*, built from circles and straight lines only. The **two i-dots are laddus** (circles with a single 45° cut, like a bite), and the **z** has a precise 45° diagonal. It's the most versatile option: it works everywhere text does, and the laddu dots become the brand's signature detail (bullets, loaders, favicon).
+
+**Construction:**
+- x-height 6 units, stroke 1.2 units, and **all bowls are perfect circles** (a, e, u, n built from the same arc).
+- The i-dots are circles with a 1.6-unit diameter, each with a **45° bite** taken out.
+- Letter spacing is a fixed 0.8 units.
+- The favicon is a **single bitten laddu-dot** above a short bar.
+
+- **Prompt note:** image models garble words, so use the prompts to explore the **laddu-dot and letter style**. Then build the actual word in a geometric typeface such as *Futura PT, Gilroy* or *Satoshi* and customise it.
+- **A:** `A precise geometric monogram: a lowercase letter i built from a thick uniform vertical bar and a perfect circle dot with a small clean 45 degree bite cut out of it like a bitten laddu, solid sindoor red #8A1C2B on warm cream #FBF3E4, flat vector, minimal, engineered`
+- **B:** `App icon, rounded square, sindoor red #8A1C2B background, a single geometric lowercase i in warm cream with its round dot in haldi gold #E3A72F with a clean bite cut out, flat vector`
+- **C:** `A row of tall kraft paper pouches for Indian snacks, each with a large clean geometric lowercase i logo in sindoor red whose dot is a round laddu with a bite taken out, studio product shot on cream, soft shadow, modern minimal packaging photography, no other text`
+- **D:** `Typography construction blueprint: a geometric lowercase i with its bitten-circle dot, built from circles and straight lines with 45 degree markers, x-height and stroke width dimensioned, thin grey construction lines on a grid, cream background, technical drawing`
+
+---
+
+### ⑧ Quality Seal
+
+**Idea:** a circular **"kitchen seal"** that feels like an old-school Indian quality stamp (the ISI/Agmark feel everyone grew up seeing on packets), redone with modern precision. In the centre is a **stacked laddu pyramid** (three circles over two over one, the way laddus are piled on a thali), and the brand name runs around the ring. It's made for **stickers, box seals, gift cards and the back of every pack**. It pairs well with any of ①–⑦ as a secondary mark.
+
+**Construction:**
+- An outer ring of radius 6 units and an inner ring of radius 4.5 units.
+- The text band between them holds *IMMUNITYWIZE · HOMEMADE · SMALL BATCH* (set in real type, never AI-generated).
+- Centre: **six circles** of radius 0.9 units stacked 3-2-1 upside down (a pyramid point-down = a heap on a plate), with tangent spacing.
+- **Two small almond shapes** act as separators in the text ring.
+
+- **A:** `A precise circular seal logo: two concentric rings with a blank text band between them, two tiny almond shapes as separators in the band, in the centre six perfect circles stacked in a neat pyramid like laddus piled on a plate, solid sindoor red #8A1C2B on warm cream #FBF3E4, flat vector, symmetrical, engineered, vintage Indian quality-stamp feel, no text`
+- **B:** `App icon, rounded square, sindoor red #8A1C2B background, a stacked pyramid of six round laddu circles in warm cream with a thin ring around them, flat vector`
+- **C:** `A kraft gift box closed with a round sindoor-red sticker seal featuring stacked circles in the centre and a ring border, red cotton string tied around, top-down view on teak, soft daylight, editorial packaging photography, no readable text`
+- **D:** `Logo construction blueprint: concentric circles with radii dimensioned, six tangent circles stacked in a pyramid in the centre, tangent points marked, thin grey construction lines on a grid, cream background, technical drawing`
+
+---
+
+## 3. Colour system: "Haldi, Sindoor & Amla"
 
 Built from Indian pantry ingredients and aligned with the website tokens (`src/app/globals.css`), so the logo drops straight into the site.
 
@@ -68,181 +202,58 @@ Built from Indian pantry ingredients and aligned with the website tokens (`src/a
 
 ---
 
-## 3. Typography for the wordmark
+## 4. Typography for the wordmark
 
-- **Wordmark:** a warm humanist serif with calligraphic stress. Shortlist: *Fraunces (soft, low "wonk"), Gambetta, Tiro Devanagari Latin*. Set "Immunitywize" in lowercase or title case at about −1% tracking. **Customise one detail only** (see each concept). Usually that's the **i-dot** or the **z**.
+- **Wordmark:** a **geometric sans built from circles and straight lines**, to match the engineered marks. Shortlist: *Futura PT, Gilroy, Satoshi, General Sans*. Set "immunitywize" in lowercase at 0 to +1% tracking, and customise the i-dots (see ⑦). For a warmer premium edition (gift boxes), pair it with *Fraunces* for taglines only.
 - **Hindi lockup:** *Tiro Devanagari Hindi*, the site's display face: **इम्युनिटीवाइज़**. Match its x-height to the Latin, not its cap height.
 - **UI and packaging body:** *Mukta* (already on the site).
 - **Lockups:** horizontal (mark left), stacked (mark above) and mark-only. Keep clear space equal to the mark's inner counter on all sides.
 
 ---
 
-## 4. The eight concepts
-
-Each concept has the idea, the construction and three prompts:
-
-- **A · Mark:** the logo itself on a flat background.
-- **B · App icon:** the mark in a rounded square.
-- **C · In use:** a packaging or card mockup to judge it in context.
-
-Append the **universal style block** and the **universal negative prompt** (§5) to every prompt.
-
----
-
-### ① Badam Eye: "Soaked almonds, every morning" ★ recommended
-
-**Idea:** Every Indian child was handed soaked almonds before school: *"for your memory."* It's the most widely understood food-as-wisdom ritual in the country. An almond, drawn as a calm, half-open **eye**, means *seeing clearly, knowing*. One shape carries nourishment (immunity) and awareness (wize).
-
-**Construction:** a single almond outline with a slightly heavier lower lid, like a brush stroke. Inside sits a small solid **round seed-dot** as the pupil, set a little off-centre (a glance, not a stare). There are no lashes and no brows. Two strokes and a dot in total.
-
-**Wordmark detail:** the dot on the *i* becomes a tiny almond.
-
-- **A:** `A minimalist logo mark: a single almond shape drawn as a calm half-open eye, the lower edge a slightly thicker confident brush-like stroke, a small solid round dot inside as the pupil set slightly off-centre, no eyelashes, no eyebrow, two strokes and one dot only, sindoor red #8A1C2B on warm cream #FBF3E4, centred with generous margin`
-- **B:** `App icon, rounded square, solid sindoor red #8A1C2B background, the almond-eye mark in warm cream #FBF3E4 centred at 55% of the icon width, perfectly flat, crisp edges`
-- **C:** `Product photo of a clear glass jar with a brushed brass lid, the lid embossed with a small almond-eye symbol, a plain kraft paper band around the jar printed with the same symbol in sindoor red, soft window light from the left, warm cream backdrop, editorial packaging photography`
-
----
-
-### ② Amla: "Six quiet lines"
-
-**Idea:** Amla (Indian gooseberry) is Ayurveda's best-known everyday immunity fruit. It has **six faint natural seams**. Abstracted, it reads as a sphere held together, like a small globe or a protected whole. People who know amla see amla. Everyone else sees a calm, balanced orb, so it never feels on the nose.
-
-**Construction:** a perfect circle containing six curved meridian lines that meet at top and bottom, drawn as thin lines and **slightly rotated** so it feels alive, not like a technical diagram. A tiny stalk nub at the top is the only literal fruit cue. There's no leaf.
-
-**Wordmark detail:** none. Let the round mark do the work. Optionally the *o*-like counter of the *w* echoes one meridian curve.
-
-- **A:** `A minimalist logo mark: a circle with six thin curved meridian lines meeting at the top and bottom like the natural seams of an Indian gooseberry, slightly rotated, a tiny stub stalk at the top, no leaf, even line weight, amla green #2F5D46 on warm cream #FBF3E4, geometric yet hand-tuned, centred`
-- **B:** `App icon, rounded square, amla green #2F5D46 background, the six-seam circle mark in haldi gold #E3A72F centred at 60% width, perfectly flat`
-- **C:** `A square kraft gift box lid with a single six-seam circle symbol hot-foil stamped in gold at its centre, red cotton string tied around the box, top-down view, soft daylight, minimal styling, editorial photography`
-
----
-
-### ③ Saptarishi: "Seven sages, seven seeds"
-
-**Idea:** The Saptarishi, the seven sages, is the Indian name for the Big Dipper. Grandparents point it out on summer nights on the roof. Here it's drawn as **seven seeds**: almond, cardamom, melon seed, makhana and others. Wisdom in the sky, made of what's in the jar. It's quietly erudite without being religious.
-
-**Construction:** the seven-point Big Dipper pattern, with each point a slightly different small seed silhouette at the same visual weight. There are **no connecting lines**, so the eye completes the shape. It's a mark for people who look twice.
-
-**Wordmark detail:** the *i*-dot is the eighth "star", a single round makhana.
-
-- **A:** `A minimalist logo mark: seven small solid seed silhouettes (almond, cardamom pod, melon seed, fox nut, raisin, pistachio, cashew) arranged in the exact pattern of the Big Dipper constellation, no connecting lines, all seeds of equal visual weight, kajal brown-black #1B1511 on warm cream #FBF3E4, generous negative space`
-- **B:** `App icon, rounded square, deep amla green #2F5D46 background, the seven-seed constellation in warm cream #FBF3E4 with the brightest seed in haldi gold #E3A72F, perfectly flat, balanced in the square`
-- **C:** `A thick cream cotton-paper greeting card with the seven-seed constellation letterpress-printed in sindoor red, deep impression visible, lying on aged teak, raking side light showing the emboss, editorial stationery photography`
-
----
-
-### ④ Nadi: "The vaidya's three fingers"
-
-**Idea:** In Ayurveda, the vaidya reads health through the **pulse (nadi)** at three points with three fingertips. It's the purest Indian picture of *knowledge about the body*. Abstracted, it becomes three dots resting on one calm wave. The rhythm reads as a heartbeat, but soft, nothing like a hospital ECG.
-
-**Construction:** one slow, low-amplitude line (one and a half gentle waves, no spikes) with **three graduated dots** above it like fingertips. The dots sit closest where the wave rises. Use round caps throughout.
-
-**Wordmark detail:** the wave underlines "wize" only, as a quiet emphasis on knowing.
-
-- **A:** `A minimalist logo mark: one slow gentle wave line with rounded ends, low amplitude, no sharp peaks, three small solid dots of slightly different sizes resting just above the wave like fingertips feeling a pulse, sindoor red #8A1C2B on warm cream #FBF3E4, calm, balanced, centred`
-- **B:** `App icon, rounded square, warm cream #FBF3E4 background, the three-dot-and-wave mark in sindoor red #8A1C2B centred, perfectly flat`
-- **C:** `A subscription welcome card and a small jar sticker on a linen surface, both printed with a three-dot-over-a-soft-wave symbol in sindoor red, warm cream paper, soft daylight, minimal flat-lay editorial photography`
-
----
-
-### ⑤ Haldi Knot: "Strength that's tied, not built"
-
-**Idea:** Turmeric root grows as a knotted rhizome, and haldi is the most universal Indian remedy-food. Drawn as **one continuous line that loops back into itself**, the root becomes a knot: connection, resilience, body and mind tied together. The single unbroken line also means "nothing added, nothing lost".
-
-**Construction:** a single monoline path forming a compact, slightly asymmetric knot with three lobes, like a rhizome drawn in one breath. Use uniform stroke and round caps. **The start and end overlap** so the line has no visible ends.
-
-**Wordmark detail:** the *z* is drawn with the same monoline stroke and turn radius.
-
-- **A:** `A minimalist logo mark: a single continuous monoline that loops into a compact three-lobed knot shaped like a turmeric root, slightly asymmetric and organic, uniform stroke weight, rounded line caps, no visible line ends, haldi gold #E3A72F outline on deep amla green #2F5D46, centred`
-- **B:** `App icon, rounded square, haldi gold #E3A72F background, the single-line knot mark in kajal brown-black #1B1511 centred at 60% width, perfectly flat`
-- **C:** `A stack of three amber glass jars with kraft labels, each label printed with a single-line knotted turmeric symbol in dark ink, fresh turmeric roots beside them on grey stone, soft morning light, editorial food packaging photography`
-
----
-
-### ⑥ Twin Arches: "Shelter and the open door"
-
-**Idea:** It's built on the site's arch motif. One arch is **shelter** (a roof, protection, immunity). A second, inner arch is the **doorway of learning**, like the arched entrance of an old pathshala. Nested, the two arches also quietly form the **w** of *wize*. It's the most system-friendly concept: it becomes frames, windows and image masks across web, app and packaging.
-
-**Construction:** two nested rounded-top arches, the outer thicker and the inner thinner, with the inner one offset slightly upward. A small solid dot sits at the inner arch's base, a person in the doorway or a seed in the shelter. Bases are flat and the arches open at the bottom.
-
-**Wordmark detail:** the *w* is drawn as two joined small arches, matching the mark.
-
-- **A:** `A minimalist logo mark: two nested rounded-top arches like an Indian doorway, the outer arch a thick stroke, the inner arch thinner and offset slightly upward, open at the bottom with flat bases, one small solid dot centred at the base of the inner arch, sindoor red #8A1C2B on warm cream #FBF3E4, architectural, calm, centred`
-- **B:** `App icon, rounded square, sindoor red #8A1C2B background, the nested double-arch mark in warm cream #FBF3E4 with the dot in haldi gold #E3A72F, perfectly flat`
-- **C:** `A minimal mobile app splash screen and a matching kraft shipping box, both featuring a nested double-arch symbol in sindoor red on cream, photographed together on a teak desk, soft daylight, clean product mockup photography, screen shows no readable text`
-
----
-
-### ⑦ Shirorekha: "The line that holds every letter"
-
-**Idea:** In Devanagari, the **shirorekha** is the headline stroke that every letter hangs from. It's what holds a word together. Here the logo is wordmark-led: "immunitywize" sits under **one confident hand-pulled bar**, so English is held together by an Indian stroke. Body (immunity) and wisdom (wize) are joined by one line. It's the most premium, most typographic and least "logo-ish" option, the one fashion and luxury food brands would choose.
-
-**Construction:** the wordmark set in a humanist serif, with a reed-pen bar running from the first *i* to the final *e*. The bar is slightly thicker at the start and lifts off at the end. **The bar replaces both i-dots.** The monogram for small sizes is the letter **i** with the bar above: ा-like, elegant and ownable.
-
-**Prompt note:** image models garble words, so **generate only the bar plus monogram**, then set the real wordmark under it in Fraunces or Tiro.
-
-- **A:** `A minimalist monogram: a single lowercase serif letter i whose dot is replaced by a short horizontal reed-pen brush bar above it, the bar thicker on the left and tapering with a lift on the right, like the headline stroke of Devanagari script, kajal brown-black #1B1511 on warm cream #FBF3E4, elegant, calligraphic, lots of negative space`
-- **B:** `App icon, rounded square, khadi cream #FBF3E4 background, a sindoor red #8A1C2B serif letter i with a calligraphic horizontal brush bar in place of its dot, centred, perfectly flat`
-- **C:** `A premium festive gift box in deep amla green with a single horizontal brush-stroke line and small serif monogram foil-stamped in gold on the lid, a cream ribbon, a sprig of dried marigold, soft studio light, luxury packaging photography, no readable text`
-
----
-
-### ⑧ Inner Ring: "Strength that grows in layers"
-
-**Idea:** It's a cross-section of a seed or grain: a soft outer shape with an **inner ring** around a protected core. It works like tree rings, where wisdom and strength accumulate slowly, layer by layer, year by year. That's exactly how traditional food works: daily, slowly, over seasons. It's the most abstract and modern of the eight, so it fits best if the brand wants to scale beyond panjiri into a wider wellness range.
-
-**Construction:** a slightly flattened oval, like a wheat grain or seed in section, with **one** offset inner ring and a solid core. The inner ring thickens on one side, the way real growth rings do. Use three shapes only.
-
-**Wordmark detail:** the *i*-dot is a miniature of the mark.
-
-- **A:** `A minimalist logo mark: the cross-section of a seed, a slightly flattened soft oval outline with one inner ring offset to one side and slightly thicker on that side like a growth ring, a small solid core, three shapes only, amla green #2F5D46 on badam beige #E9D9BF, organic geometry, centred`
-- **B:** `App icon, rounded square, amla green #2F5D46 background, the seed cross-section mark in warm cream #FBF3E4 with the solid core in haldi gold #E3A72F, perfectly flat`
-- **C:** `A row of small paper sachets and a tall jar in matte cream with the seed cross-section symbol printed small and precise in amla green, studio product shot on cream sweep, soft shadow, modern minimal wellness packaging photography, no readable text`
-
----
 
 ## 5. Universal blocks (append to every prompt)
 
-**Universal style block**
+**Style block (prompts A, B, D)**
 ```
-flat vector logo design, solid fills only, two colours maximum, crisp clean edges, balanced optical weight, designed to be legible at 16 pixels, professional brand identity work in the style of Pentagram or Landor, timeless, restrained, Indian sensibility without ornament, plain flat background, no mockup unless described
+flat vector logo, geometric construction, built on a strict grid, uniform stroke weight, perfect circles and straight lines, precise angles, crisp edges, two flat colours maximum, legible at 16 pixels, professional brand identity in the style of Pentagram, Paul Rand and Swiss modernist design, plain flat background
 ```
-For prompt **C** (in use), replace that with:
+**Style block (prompt C)**
 ```
-photorealistic editorial product photography, natural window light, real materials, true-to-life colour, shallow depth of field
+photorealistic editorial product photography, natural window light, real materials, true-to-life colour, shallow depth of field, logo printed cleanly and sharply
 ```
-
-**Universal negative prompt**
+**Negative prompt (all)**
 ```
-no gradients, no glow, no drop shadow, no bevel, no 3D, no gloss, no metallic sheen on the mark itself, no text, no letters except where requested, no fake words, no watermark, no leaf, no heart, no shield, no cross, no plus sign, no brain, no lightbulb, no owl, no lotus, no om, no mandala, no DNA, no swoosh, no sparkles, no stars except where requested, no cartoon, no mascot, no clip art, no stock-logo look, no busy detail, no thin hairlines that disappear when small
+no gradients, no glow, no drop shadow, no bevel, no 3D, no gloss, no texture inside the logo, no hand-drawn wobble, no sketch lines (except blueprint prompts), no fake text, no random letters, no watermark, no leaf, no heart, no brain, no lightbulb, no owl, no DNA, no swoosh, no sparkles, no mascot, no cartoon, no clip art, no busy detail, no thin hairlines
 ```
 
 **Tool tips**
-- **Midjourney:** add `--style raw --v 7 --ar 1:1 --no gradient, text, shadow`, and use `--sref` with your favourite result to keep a series consistent.
-- **Ideogram / Recraft:** choose the *Vector / Icon* style. Recraft can export SVG directly, which makes a useful **draft** for the designer.
-- **GPT-Image / Imagen / Flux:** say "flat vector logo on a plain background" first, then the description.
+- **Midjourney:** add `--style raw --v 7 --ar 1:1 --no gradient, text, shadow, sketch`, and use `--sref` with your favourite result to keep a series consistent.
+- **Recraft / Ideogram:** choose the *Vector* or *Icon* style. Recraft can export an SVG draft, which is useful for the designer to rebuild from.
+- **GPT-Image / Imagen / Flux:** start the prompt with "flat geometric vector logo on a plain background".
+- **Blueprint (D):** use the best result from prompt A as an image reference, so the blueprint matches.
 
 ---
 
 ## 6. How to choose
 
-| Concept | Immunity | Wisdom | Small-size strength | Packaging | Ownability | Best if the brand is… |
-|---|---|---|---|---|---|---|
-| ① Badam Eye ★ | ●●●○ | ●●●● | ●●●● | ●●●● | ●●●● | Warm, family, mass-premium |
-| ② Amla | ●●●● | ●●○○ | ●●●● | ●●●○ | ●●●○ | Ayurveda-leaning, health-first |
-| ③ Saptarishi | ●●○○ | ●●●● | ●●○○ | ●●●● | ●●●● | Story-led, gifting-heavy |
-| ④ Nadi | ●●●● | ●●●○ | ●●●○ | ●●●○ | ●●●○ | Subscription and wellness |
-| ⑤ Haldi Knot | ●●●● | ●●●○ | ●●●○ | ●●●● | ●●●○ | Bold, modern, shelf-visible |
-| ⑥ Twin Arches | ●●●○ | ●●●○ | ●●●● | ●●●● | ●●●○ | System-first (matches the website) |
-| ⑦ Shirorekha | ●●○○ | ●●●● | ●●●○ | ●●●● | ●●●● | Luxury, gift-box, premium |
-| ⑧ Inner Ring | ●●●● | ●●●○ | ●●●● | ●●●○ | ●●○○ | Scaling into a wider range |
+| Concept | Says "Indian snack" | Says "immunity / wize" | Engineered feel | 16 px | Packaging |
+|---|---|---|---|---|---|
+| ① Almond W ★ | ●●●● | ●●●● | ●●●● | ●●●○ | ●●●● |
+| ② Formula Laddu | ●●●● | ●●●○ | ●●●● | ●●●● | ●●●● |
+| ③ Chikki Tile | ●●●● | ●●○○ | ●●●● | ●●●○ | ●●●● (pattern) |
+| ④ Shield W | ●●○○ | ●●●● | ●●●● | ●●●● | ●●●○ |
+| ⑤ Jar Monogram | ●●●● | ●●○○ | ●●●○ | ●●●● | ●●●● |
+| ⑥ Hex Pack | ●●●● | ●●●○ | ●●●● | ●●○○ | ●●●● |
+| ⑦ Laddu-dot Wordmark | ●●●○ | ●●●○ | ●●●● | ●●●● | ●●●● |
+| ⑧ Quality Seal | ●●●● | ●●○○ | ●●●○ | ●●○○ | ●●●● (secondary) |
 
-**Recommended shortlist:** ① **Badam Eye** (the strongest meaning-to-simplicity ratio), ⑥ **Twin Arches** (already fits the site) and ⑦ **Shirorekha** (if you want premium gifting). Pairing a mark with the Shirorekha wordmark also works: for example, ① as the icon and ⑦ as the wordmark.
+**Recommended system:** ① **Almond W** as the primary mark, ⑦ **Laddu-dot wordmark** as the logotype, and ⑧ **Quality Seal** for stickers and box seals. A strong alternative is ② **Formula Laddu**, which also animates in the custom-batch builder.
 
 ## 7. Next steps
 
-1. Generate 20–40 variations of the shortlist with the A prompts, then pick 3 per concept.
-2. Test the best 6 with the **must-pass tests** (§1). Print them at 16 px, 48 px and the jar-lid size, and look at them from across the room.
-3. Show the top 3 to 10 real customers without explanation. Ask what each one *feels* like, not which they like.
-4. A designer redraws the winner as vector and builds lockups (horizontal, stacked, mark-only), clear-space rules and the Hindi lockup.
-5. Swap it into `public/favicon.svg`, the site header and the OG image, then update `globals.css` if Amla `#2F5D46` is adopted as a new token.
+1. Run prompt A for your top 3, generating 20–40 variations each, and pick the 2 best per concept.
+2. Check them against the must-pass tests (§1): print at 16 px, 48 px and 25 mm sticker size.
+3. Show them to 10 real customers with no explanation, and ask *"what does this brand sell?"* The right answer within 3 seconds is the goal.
+4. A designer rebuilds the winner as vector **using the construction spec**, then creates lockups (horizontal, stacked, mark-only), clear-space rules and the Hindi lockup.
+5. Swap it into `public/favicon.svg`, the site header and the OG image.

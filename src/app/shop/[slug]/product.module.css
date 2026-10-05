@@ -188,3 +188,9 @@
     gap: 0;
   }
 }
+.info {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: var(--sp-4);
+}

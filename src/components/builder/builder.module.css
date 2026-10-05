@@ -650,3 +650,24 @@
   gap: var(--sp-3);
   margin: var(--sp-3) 0;
 }
+.batch {
+  min-width: 0;
+  margin: 0;
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+.batch .hint {
+  margin: 0;
+}
+.panel {
+  min-width: 0;
+  display: grid;
+  gap: var(--sp-4);
+}
+.ingHead {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}

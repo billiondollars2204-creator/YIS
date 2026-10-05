@@ -5,6 +5,7 @@
 - v5 redesign ("Mithai-shop modern": clean Western e-commerce layout plus Indian festive details such as the toran border, jaali lattice, arch frames and Hindi names) is implemented.
 - Last verified: `pnpm test` (18 pass), `pnpm typecheck` and `pnpm build` (28 routes) were all clean before this commit.
 - Re-verified after the sitemap change: `pnpm test` (18/18), `pnpm typecheck` and `pnpm build` are clean. All 15 key routes return 200, and every internal link found on them resolves.
+- Second pass: added styles for 6 CSS-module classes that were used but never defined (product info column, cart line info, buy-box price, builder batch/panel/ingredient head). Added `/privacy` and `/terms` (drafts), linked from the footer, sitemap and checkout. Added a consent banner (`ConsentBanner`, `lib/consent.ts`); GTM now loads only after the visitor accepts. Removed customer-visible "(TODO)" text.
 - Done since then: `CODEX_IMAGES.md` updated to v5 (66 slots), `README.md` updated, `docs/PLAN.md` recreated.
 - **Not yet done:** visual and browser QA of v5. No screenshots were reviewed.
 

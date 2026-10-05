@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Analytics } from "@/components/Analytics";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { resolveImage } from "@/data/images";
 import { site } from "@/lib/site";
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter />
         <CartDrawer />
         <Analytics />
+        <ConsentBanner />
         <JsonLd data={organizationLd} />
       </body>
     </html>

@@ -100,5 +100,6 @@ The site deploys anywhere Next.js runs: Vercel (preset "Next.js"), a Node host (
 - [ ] Add FSSAI licence and GSTIN numbers, the grievance officer, and confirm coupon, COD and subscription rules.
 - [ ] Legal review of benefit copy and FSSAI labelling.
 - [ ] Generate or shoot the photos in `CODEX_IMAGES.md`, then replace them with real photography.
-- [ ] Connect payments, shipping, newsletter, contact form and reviews; add a consent banner before analytics.
+- [ ] Connect payments, shipping, newsletter, contact form and reviews. (A consent banner already gates GTM.)
+- [ ] Legal review of the draft `/privacy` and `/terms` pages.
 - [ ] Set `NEXT_PUBLIC_SHOW_PLACEHOLDER_MARKERS=false`.

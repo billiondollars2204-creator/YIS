@@ -2,6 +2,7 @@ import Link from "next/link";
 import { categories } from "@/data/products";
 import { site } from "@/lib/site";
 import { Newsletter } from "./Newsletter";
+import { CookieSettingsButton } from "./ConsentBanner";
 import { Toran } from "./ui";
 import styles from "./SiteFooter.module.css";
 
@@ -18,6 +19,8 @@ const cols = [
       { href: "/shipping-returns", label: "Shipping & returns" },
       { href: "/faq", label: "FAQ" },
       { href: "/contact", label: "Contact us" },
+      { href: "/privacy", label: "Privacy policy" },
+      { href: "/terms", label: "Terms of use" },
     ],
   },
   {
@@ -73,7 +76,7 @@ export function SiteFooter() {
           FSSAI Lic. No. <span className={styles.tbc}>to be added</span> · GSTIN <span className={styles.tbc}>to be added</span> · Grievance officer:{" "}
           <span className={styles.tbc}>name and contact to be added</span>
         </p>
-        <p>Payments: UPI, cards, net banking, cash on delivery (provider to be connected)</p>
+        <p>Payments: UPI, cards, net banking, cash on delivery (provider to be connected) · <CookieSettingsButton /></p>
         <p>
           © {new Date().getFullYear()} {site.name}. Made in India.
         </p>
